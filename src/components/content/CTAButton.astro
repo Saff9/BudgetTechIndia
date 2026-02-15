@@ -1,0 +1,336 @@
+---
+/**
+ * CTAButton Component for BudgetTechIndia
+ * Premium Dark Theme - Enhanced with glow effects, shine animations, and micro-interactions
+ */
+
+interface Props {
+  /** Button label */
+  text: string;
+  /** Target URL (affiliate link) */
+  href: string;
+  /** Button style variant */
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'premium' | 'glow';
+  /** Button size */
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** Whether this is an affiliate link */
+  isAffiliate?: boolean;
+  /** Whether to show external link icon */
+  showIcon?: boolean;
+  /** Icon variant */
+  iconVariant?: 'globe' | 'arrow' | 'cart' | 'none';
+  /** Icon position */
+  iconPosition?: 'left' | 'right';
+  /** Additional CSS classes */
+  class?: string;
+  /** Enable pulse animation */
+  pulse?: boolean;
+  /** Enable shine effect */
+  shine?: boolean;
+  /** Full width */
+  fullWidth?: boolean;
+}
+
+const {
+  text,
+  href,
+  variant = 'primary',
+  size = 'md',
+  isAffiliate = true,
+  showIcon = true,
+  iconVariant = 'globe',
+  iconPosition = 'left',
+  class: additionalClasses = '',
+  pulse = false,
+  shine = true,
+  fullWidth = false,
+} = Astro.props;
+
+// Size classes
+const sizeClasses = {
+  sm: 'px-4 py-2 text-sm rounded-lg',
+  md: 'px-6 py-3 text-base rounded-xl',
+  lg: 'px-8 py-4 text-lg rounded-xl',
+  xl: 'px-10 py-5 text-xl rounded-2xl',
+};
+
+// Variant classes - Premium Dark Theme with enhanced effects
+const variantClasses = {
+  primary: 'btn-premium-base',
+  secondary: 'btn-secondary-premium',
+  outline: 'btn-outline-premium',
+  ghost: 'btn-ghost-premium',
+  premium: 'btn-premium',
+  glow: 'btn-glow',
+};
+
+// Link attributes for affiliate links
+const affiliateAttrs = isAffiliate
+  ? { target: '_blank', rel: 'nofollow sponsored' }
+  : {};
+
+// Icon SVGs
+const icons = {
+  globe: `<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>`,
+  arrow: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>`,
+  cart: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>`,
+};
+---
+
+<a
+  href={href}
+  class:list={[
+    'cta-button',
+    'group',
+    'relative',
+    'inline-flex items-center justify-center font-semibold gap-2',
+    'transition-all duration-300 ease-out',
+    'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#C46A3A] focus:ring-offset-[#0F1F24]',
+    'overflow-hidden',
+    sizeClasses[size],
+    variantClasses[variant],
+    fullWidth ? 'w-full' : '',
+    pulse ? 'animate-pulse-glow' : '',
+    additionalClasses,
+  ]}
+  {...affiliateAttrs}
+>
+  {/* Shine effect overlay */}
+  {shine && (
+    <span class="absolute inset-0 overflow-hidden rounded-inherit">
+      <span class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-white/20 to-transparent"></span>
+    </span>
+  )}
+  
+  {/* Content wrapper */}
+  <span class="relative z-10 flex items-center gap-2">
+    {/* Left icon */}
+    {showIcon && iconVariant !== 'none' && iconPosition === 'left' && (
+      <svg
+        class="w-5 h-5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
+        fill={iconVariant === 'globe' || iconVariant === 'cart' ? 'currentColor' : 'none'}
+        stroke={iconVariant === 'arrow' || iconVariant === 'cart' ? 'currentColor' : 'none'}
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        set:html={icons[iconVariant]}
+      />
+    )}
+    
+    {/* Button text */}
+    <span class="relative">{text}</span>
+    
+    {/* Right icon */}
+    {showIcon && iconVariant !== 'none' && iconPosition === 'right' && (
+      <svg
+        class="w-5 h-5 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+        fill={iconVariant === 'globe' || iconVariant === 'cart' ? 'currentColor' : 'none'}
+        stroke={iconVariant === 'arrow' || iconVariant === 'cart' ? 'currentColor' : 'none'}
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        set:html={icons[iconVariant]}
+      />
+    )}
+  </span>
+  
+  {/* Hover glow effect */}
+  <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-inherit pointer-events-none shadow-glow-copper"></span>
+</a>
+
+<style>
+  /* Base premium button */
+  .btn-premium-base {
+    background: linear-gradient(135deg, #d4834f 0%, #C46A3A 50%, #a55a30 100%);
+    background-size: 200% 200%;
+    color: #F4F1EA;
+    box-shadow: 
+      0 4px 15px rgba(196, 106, 58, 0.3),
+      0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn-premium-base:hover {
+    background-position: 100% 100%;
+    box-shadow: 
+      0 8px 25px rgba(196, 106, 58, 0.4),
+      0 4px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  .btn-premium-base:active {
+    transform: translateY(0);
+    box-shadow: 
+      0 2px 8px rgba(196, 106, 58, 0.3),
+      0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Secondary premium button */
+  .btn-secondary-premium {
+    background: linear-gradient(135deg, #243d46 0%, #1A2E35 100%);
+    color: #F4F1EA;
+    border: 1px solid rgba(42, 68, 80, 0.8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn-secondary-premium:hover {
+    background: linear-gradient(135deg, #2a4450 0%, #243d46 100%);
+    border-color: rgba(58, 90, 104, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Outline premium button */
+  .btn-outline-premium {
+    background: transparent;
+    color: #C46A3A;
+    border: 2px solid #C46A3A;
+    position: relative;
+  }
+  
+  .btn-outline-premium::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #C46A3A 0%, #d4834f 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  
+  .btn-outline-premium:hover {
+    color: #F4F1EA;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(196, 106, 58, 0.3);
+  }
+  
+  .btn-outline-premium:hover::before {
+    opacity: 1;
+  }
+  
+  /* Ghost premium button */
+  .btn-ghost-premium {
+    background: transparent;
+    color: #a8b5ba;
+    position: relative;
+  }
+  
+  .btn-ghost-premium::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 46, 53, 0.5);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  
+  .btn-ghost-premium:hover {
+    color: #F4F1EA;
+  }
+  
+  .btn-ghost-premium:hover::before {
+    opacity: 1;
+  }
+  
+  /* Premium button with animated border */
+  .btn-premium {
+    background: linear-gradient(135deg, #1A2E35 0%, #0F1F24 100%);
+    color: #F4F1EA;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .btn-premium::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #C46A3A, #E8D8C3, #d4834f, #C46A3A);
+    background-size: 300% 100%;
+    animation: gradient-shift 3s linear infinite;
+    z-index: -2;
+    opacity: 0.8;
+  }
+  
+  .btn-premium::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #1A2E35 0%, #0F1F24 100%);
+    z-index: -1;
+  }
+  
+  .btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(196, 106, 58, 0.3);
+  }
+  
+  .btn-premium:hover::before {
+    opacity: 1;
+  }
+  
+  /* Glow button */
+  .btn-glow {
+    background: linear-gradient(135deg, #C46A3A 0%, #d4834f 100%);
+    color: #F4F1EA;
+    box-shadow: 
+      0 0 20px rgba(196, 106, 58, 0.4),
+      0 4px 15px rgba(196, 106, 58, 0.3);
+  }
+  
+  .btn-glow:hover {
+    box-shadow: 
+      0 0 30px rgba(196, 106, 58, 0.6),
+      0 0 60px rgba(196, 106, 58, 0.3),
+      0 8px 25px rgba(196, 106, 58, 0.4);
+    transform: translateY(-2px);
+  }
+  
+  /* Rounded inherit for nested elements */
+  .rounded-inherit {
+    border-radius: inherit;
+  }
+  
+  /* Pulse glow animation */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(196, 106, 58, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(196, 106, 58, 0.6);
+    }
+  }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  /* Gradient shift animation */
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .cta-button,
+    .cta-button *,
+    .btn-premium::before,
+    .animate-pulse-glow {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    
+    .cta-button:hover {
+      transform: none;
+    }
+  }
+</style>

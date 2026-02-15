@@ -1,0 +1,647 @@
+{
+  "$schema": "./affiliate-links.schema.json",
+  "version": "1.0.0",
+  "lastUpdated": "2026-02-15",
+  "defaultAffiliateTag": "budgettechin-21",
+  "stores": {
+    "amazon": {
+      "name": "Amazon India",
+      "baseUrl": "https://www.amazon.in",
+      "affiliateParam": "tag"
+    },
+    "flipkart": {
+      "name": "Flipkart",
+      "baseUrl": "https://www.flipkart.com",
+      "affiliateParam": "affid"
+    }
+  },
+  "products": {
+    "boat-bassheads-100": {
+      "title": "boAt BassHeads 100",
+      "price": 399,
+      "mrp": 999,
+      "currency": "INR",
+      "image": "/images/products/boat-bassheads-100.jpg",
+      "category": "bluetooth-earbuds",
+      "brand": "boAt",
+      "rating": 4.2,
+      "reviewCount": 125000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B07BCH6JQK?tag=budgettechin-21",
+          "asin": "B07BCH6JQK",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/boat-bassheads-100/p/itmexq5rzg8zg8hz?affid=budgettech",
+          "productId": "ITMEEXQ5RZG8ZG8HZ",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Driver Size": "10mm",
+        "Connectivity": "Wired 3.5mm",
+        "Microphone": "Yes",
+        "Cable Length": "1.2m"
+      },
+      "pros": ["Great bass response", "Value for money", "Durable build quality", "Comfortable fit"],
+      "cons": ["Wired only", "No noise cancellation", "Average call quality"],
+      "isActive": true,
+      "lastUpdated": "2026-02-15"
+    },
+    "realme-buds-q2": {
+      "title": "Realme Buds Q2",
+      "price": 1499,
+      "mrp": 2999,
+      "currency": "INR",
+      "image": "/images/products/realme-buds-q2.jpg",
+      "category": "bluetooth-earbuds",
+      "brand": "Realme",
+      "rating": 4.3,
+      "reviewCount": 45000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B09X7JZK5M?tag=budgettechin-21",
+          "asin": "B09X7JZK5M",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/realme-buds-q2/p/itm3e8qz5g6h7j8k?affid=budgettech",
+          "productId": "ITM3E8QZ5G6H7J8K",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Battery Life": "30 hours total",
+        "ANC": "Active Noise Cancellation",
+        "Driver Size": "10mm",
+        "Bluetooth": "5.2"
+      },
+      "pros": ["Active Noise Cancellation", "Great battery life", "Low latency mode", "Good sound quality"],
+      "cons": ["Bulky case", "Touch controls can be sensitive"],
+      "isActive": true,
+      "lastUpdated": "2026-02-14"
+    },
+    "oneplus-buds-z2": {
+      "title": "OnePlus Buds Z2",
+      "price": 1999,
+      "mrp": 4999,
+      "currency": "INR",
+      "image": "/images/products/oneplus-buds-z2.jpg",
+      "category": "bluetooth-earbuds",
+      "brand": "OnePlus",
+      "rating": 4.4,
+      "reviewCount": 78000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B09JQK3M5N?tag=budgettechin-21",
+          "asin": "B09JQK3M5N",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/oneplus-buds-z2/p/itm4f9r0a1b2c3d4?affid=budgettech",
+          "productId": "ITM4F9R0A1B2C3D4",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Battery Life": "38 hours total",
+        "ANC": "Active Noise Cancellation",
+        "Driver Size": "11mm",
+        "Water Resistance": "IP55"
+      },
+      "pros": ["Excellent ANC", "Premium sound quality", "Fast charging", "Comfortable fit"],
+      "cons": ["Slightly expensive", "Limited color options"],
+      "isActive": true,
+      "lastUpdated": "2026-02-13"
+    },
+    "boat-rockerz-255": {
+      "title": "boAt Rockerz 255",
+      "price": 799,
+      "mrp": 1990,
+      "currency": "INR",
+      "image": "/images/products/boat-rockerz-255.jpg",
+      "category": "bluetooth-earbuds",
+      "brand": "boAt",
+      "rating": 4.1,
+      "reviewCount": 92000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B08K7XZK5M?tag=budgettechin-21",
+          "asin": "B08K7XZK5M",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/boat-rockerz-255/p/itm5g0s1b2c3d4e5?affid=budgettech",
+          "productId": "ITM5G0S1B2C3D4E5",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Battery Life": "6 hours",
+        "Bluetooth": "5.0",
+        "Driver Size": "10mm",
+        "Fast Charge": "10 min = 45 min"
+      },
+      "pros": ["Affordable price", "Good bass", "Magnetic earbuds", "Voice assistant support"],
+      "cons": ["Average battery life", "No ANC"],
+      "isActive": true,
+      "lastUpdated": "2026-02-12"
+    },
+    "mi-20000mah-power-bank": {
+      "title": "Mi 20000mAh Power Bank",
+      "price": 1499,
+      "mrp": 2499,
+      "currency": "INR",
+      "image": "/images/products/mi-20000mah-power-bank.jpg",
+      "category": "power-banks",
+      "brand": "Xiaomi",
+      "rating": 4.3,
+      "reviewCount": 156000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B08JQK5M3N?tag=budgettechin-21",
+          "asin": "B08JQK5M3N",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/mi-20000mah-power-bank/p/itm6h1t2c3d4e5f6?affid=budgettech",
+          "productId": "ITM6H1T2C3D4E5F6",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Capacity": "20000mAh",
+        "Output": "18W Fast Charging",
+        "Ports": "2 USB-A, 1 USB-C",
+        "Weight": "434g"
+      },
+      "pros": ["High capacity", "Fast charging support", "Dual output ports", "Durable build"],
+      "cons": ["Slightly heavy", "Long charging time"],
+      "isActive": true,
+      "lastUpdated": "2026-02-15"
+    },
+    "ambrane-10000mah-power-bank": {
+      "title": "Ambrane 10000mAh Power Bank",
+      "price": 599,
+      "mrp": 1299,
+      "currency": "INR",
+      "image": "/images/products/ambrane-10000mah-power-bank.jpg",
+      "category": "power-banks",
+      "brand": "Ambrane",
+      "rating": 4.0,
+      "reviewCount": 89000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B07XZK5M3N?tag=budgettechin-21",
+          "asin": "B07XZK5M3N",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/ambrane-10000mah-power-bank/p/itm7i2u3d4e5f6g7?affid=budgettech",
+          "productId": "ITM7I2U3D4E5F6G7",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Capacity": "10000mAh",
+        "Output": "10W",
+        "Ports": "2 USB-A",
+        "Weight": "220g"
+      },
+      "pros": ["Compact and lightweight", "Budget-friendly", "Good build quality", "LED indicator"],
+      "cons": ["No fast charging", "Plastic body"],
+      "isActive": true,
+      "lastUpdated": "2026-02-14"
+    },
+    "realme-10000mah-power-bank": {
+      "title": "Realme 10000mAh Power Bank",
+      "price": 899,
+      "mrp": 1499,
+      "currency": "INR",
+      "image": "/images/products/realme-10000mah-power-bank.jpg",
+      "category": "power-banks",
+      "brand": "Realme",
+      "rating": 4.2,
+      "reviewCount": 45000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B09XZK5M3N?tag=budgettechin-21",
+          "asin": "B09XZK5M3N",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/realme-10000mah-power-bank/p/itm8j3v4e5f6g7h8?affid=budgettech",
+          "productId": "ITM8J3V4E5F6G7H8",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Capacity": "10000mAh",
+        "Output": "18W Fast Charging",
+        "Ports": "1 USB-A, 1 USB-C",
+        "Weight": "285g"
+      },
+      "pros": ["Fast charging support", "Sleek design", "Type-C input/output", "Good value"],
+      "cons": ["Only one USB-A port", "Gets warm during use"],
+      "isActive": true,
+      "lastUpdated": "2026-02-13"
+    },
+    "anker-30w-fast-charger": {
+      "title": "Anker 30W PowerPort III",
+      "price": 1299,
+      "mrp": 1999,
+      "currency": "INR",
+      "image": "/images/products/anker-30w-fast-charger.jpg",
+      "category": "fast-chargers-cables",
+      "brand": "Anker",
+      "rating": 4.5,
+      "reviewCount": 34000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B08XZK5M3N?tag=budgettechin-21",
+          "asin": "B08XZK5M3N",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/anker-30w-powerport-iii/p/itm9k4w5f6g7h8i9?affid=budgettech",
+          "productId": "ITM9K4W5F6G7H8I9",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Output": "30W Max",
+        "Technology": "PowerIQ 3.0",
+        "Ports": "1 USB-C",
+        "Compact": "Foldable pins"
+      },
+      "pros": ["Compact design", "Fast charging", "Universal compatibility", "Premium build"],
+      "cons": ["Single port", "No cable included"],
+      "isActive": true,
+      "lastUpdated": "2026-02-15"
+    },
+    "noise-colorfit-pro-4": {
+      "title": "Noise ColorFit Pro 4",
+      "price": 2999,
+      "mrp": 5999,
+      "currency": "INR",
+      "image": "/images/products/noise-colorfit-pro-4.jpg",
+      "category": "smartwatches",
+      "brand": "Noise",
+      "rating": 4.3,
+      "reviewCount": 125000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B0B1Y2ZK5M?tag=budgettechin-21",
+          "asin": "B0B1Y2ZK5M",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/noise-colorfit-pro-4/p/itm0l5x6g7h8i9j0?affid=budgettech",
+          "productId": "ITM0L5X6G7H8I9J0",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Display": "1.72\" AMOLED",
+        "Battery Life": "7 days",
+        "Water Resistance": "IP68",
+        "Health Tracking": "Heart rate, SpO2, Sleep"
+      },
+      "pros": ["AMOLED display", "Good battery life", "Multiple watch faces", "Health tracking"],
+      "cons": ["No GPS", "Limited app support"],
+      "isActive": true,
+      "lastUpdated": "2026-02-15"
+    },
+    "fire-boltt-ninja-pro": {
+      "title": "Fire-Boltt Ninja Pro",
+      "price": 1299,
+      "mrp": 3999,
+      "currency": "INR",
+      "image": "/images/products/fire-boltt-ninja-pro.jpg",
+      "category": "smartwatches",
+      "brand": "Fire-Boltt",
+      "rating": 4.0,
+      "reviewCount": 89000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B0B2Z3ALK6N?tag=budgettechin-21",
+          "asin": "B0B2Z3ALK6N",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/fire-boltt-ninja-pro/p/itm1m6y7h8i9j0k1?affid=budgettech",
+          "productId": "ITM1M6Y7H8I9J0K1",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Display": "1.69\" HD",
+        "Battery Life": "5 days",
+        "Water Resistance": "IP67",
+        "Sports Modes": "100+"
+      },
+      "pros": ["Budget-friendly", "Large display", "Multiple sports modes", "Good build quality"],
+      "cons": ["Average battery", "No always-on display"],
+      "isActive": true,
+      "lastUpdated": "2026-02-14"
+    },
+    "boat-storm-pro": {
+      "title": "boAt Storm Pro",
+      "price": 1799,
+      "mrp": 4990,
+      "currency": "INR",
+      "image": "/images/products/boat-storm-pro.jpg",
+      "category": "smartwatches",
+      "brand": "boAt",
+      "rating": 4.2,
+      "reviewCount": 67000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B0B3A4BML7O?tag=budgettechin-21",
+          "asin": "B0B3A4BML7O",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/boat-storm-pro/p/itm2n7z8i9j0k1l2?affid=budgettech",
+          "productId": "ITM2N7Z8I9J0K1L2",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Display": "1.78\" AMOLED",
+        "Battery Life": "10 days",
+        "Water Resistance": "5ATM",
+        "Health Tracking": "Comprehensive"
+      },
+      "pros": ["AMOLED display", "Excellent battery", "5ATM water resistance", "Premium look"],
+      "cons": ["Limited smart features", "No voice calling"],
+      "isActive": true,
+      "lastUpdated": "2026-02-13"
+    },
+    "boat-airdopes-141": {
+      "title": "boAt Airdopes 141",
+      "price": 999,
+      "mrp": 2990,
+      "currency": "INR",
+      "image": "/images/products/boat-airdopes-141.jpg",
+      "category": "bluetooth-earbuds",
+      "brand": "boAt",
+      "rating": 4.1,
+      "reviewCount": 234000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B09NKN3M5P?tag=budgettechin-21",
+          "asin": "B09NKN3M5P",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/boat-airdopes-141/p/itm3o8a9j0k1l2m3?affid=budgettech",
+          "productId": "ITM3O8A9J0K1L2M3",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Battery Life": "42 hours total",
+        "Driver Size": "8mm",
+        "Bluetooth": "5.1",
+        "Low Latency": "65ms"
+      },
+      "pros": ["Excellent battery life", "Low latency gaming mode", "Budget-friendly", "Good sound quality"],
+      "cons": ["No ANC", "Average call quality"],
+      "isActive": true,
+      "lastUpdated": "2026-02-15"
+    },
+    "noise-buds-vs102": {
+      "title": "Noise Buds VS102",
+      "price": 799,
+      "mrp": 1999,
+      "currency": "INR",
+      "image": "/images/products/noise-buds-vs102.jpg",
+      "category": "bluetooth-earbuds",
+      "brand": "Noise",
+      "rating": 4.0,
+      "reviewCount": 56000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B0B4B5CNM8P?tag=budgettechin-21",
+          "asin": "B0B4B5CNM8P",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/noise-buds-vs102/p/itm4p9b0k1l2m3n4?affid=budgettech",
+          "productId": "ITM4P9B0K1L2M3N4",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Battery Life": "24 hours total",
+        "Driver Size": "13mm",
+        "Bluetooth": "5.1",
+        "Water Resistance": "IPX4"
+      },
+      "pros": ["Large drivers", "Lightweight", "Good value", "Decent battery"],
+      "cons": ["No fast charging", "Basic design"],
+      "isActive": true,
+      "lastUpdated": "2026-02-14"
+    },
+    "ptron-bassbuds-juke": {
+      "title": "pTron Bassbuds Juke",
+      "price": 599,
+      "mrp": 1299,
+      "currency": "INR",
+      "image": "/images/products/ptron-bassbuds-juke.jpg",
+      "category": "bluetooth-earbuds",
+      "brand": "pTron",
+      "rating": 3.9,
+      "reviewCount": 78000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B0B5C6DOP9Q?tag=budgettechin-21",
+          "asin": "B0B5C6DOP9Q",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/ptron-bassbuds-juke/p/itm5q0c1l2m3n4o5?affid=budgettech",
+          "productId": "ITM5Q0C1L2M3N4O5",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Battery Life": "20 hours total",
+        "Driver Size": "10mm",
+        "Bluetooth": "5.1",
+        "Water Resistance": "IPX4"
+      },
+      "pros": ["Very affordable", "Compact design", "Decent sound", "Multiple colors"],
+      "cons": ["Short battery life", "No low latency mode"],
+      "isActive": true,
+      "lastUpdated": "2026-02-13"
+    },
+    "redgear-shadow-blade": {
+      "title": "Redgear Shadow Blade",
+      "price": 899,
+      "mrp": 1999,
+      "currency": "INR",
+      "image": "/images/products/redgear-shadow-blade.jpg",
+      "category": "gaming-accessories",
+      "brand": "Redgear",
+      "rating": 4.2,
+      "reviewCount": 45000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B08K8XZK5M?tag=budgettechin-21",
+          "asin": "B08K8XZK5M",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/redgear-shadow-blade/p/itm6r1d2m3n4o5p6?affid=budgettech",
+          "productId": "ITM6R1D2M3N4O5P6",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Type": "Mechanical Keyboard",
+        "Switches": "Blue switches",
+        "RGB": "Yes",
+        "Connection": "Wired USB"
+      },
+      "pros": ["Mechanical switches", "RGB lighting", "Budget-friendly", "Durable build"],
+      "cons": ["Loud typing", "No wireless option"],
+      "isActive": true,
+      "lastUpdated": "2026-02-15"
+    },
+    "ant-esports-gkm-01": {
+      "title": "Ant Esports GKM-01",
+      "price": 1499,
+      "mrp": 2999,
+      "currency": "INR",
+      "image": "/images/products/ant-esports-gkm-01.jpg",
+      "category": "gaming-accessories",
+      "brand": "Ant Esports",
+      "rating": 4.1,
+      "reviewCount": 23000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B09Y1ZAL5K?tag=budgettechin-21",
+          "asin": "B09Y1ZAL5K",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/ant-esports-gkm-01/p/itm7s2e3n4o5p6q7?affid=budgettech",
+          "productId": "ITM7S2E3N4O5P6Q7",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Type": "Gaming Keyboard Mouse Combo",
+        "Switches": "Memanical",
+        "RGB": "Yes",
+        "Connection": "Wired USB"
+      },
+      "pros": ["Complete combo", "Good value", "RGB lighting", "Gaming optimized"],
+      "cons": ["Bulky design", "Membrane feel"],
+      "isActive": true,
+      "lastUpdated": "2026-02-14"
+    },
+    "portronics-sound-drum": {
+      "title": "Portronics SoundDrum",
+      "price": 999,
+      "mrp": 2499,
+      "currency": "INR",
+      "image": "/images/products/portronics-sound-drum.jpg",
+      "category": "speakers",
+      "brand": "Portronics",
+      "rating": 4.0,
+      "reviewCount": 34000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B08L9YZK5M?tag=budgettechin-21",
+          "asin": "B08L9YZK5M",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/portronics-sounddrum/p/itm8t3f4o5p6q7r8?affid=budgettech",
+          "productId": "ITM8T3F4O5P6Q7R8",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Output": "10W",
+        "Battery Life": "8 hours",
+        "Bluetooth": "5.0",
+        "Water Resistance": "IPX5"
+      },
+      "pros": ["Portable design", "Good battery life", "Water resistant", "Budget-friendly"],
+      "cons": ["Average bass", "No aux input"],
+      "isActive": true,
+      "lastUpdated": "2026-02-15"
+    },
+    "boat-stone-650": {
+      "title": "boAt Stone 650",
+      "price": 1299,
+      "mrp": 2990,
+      "currency": "INR",
+      "image": "/images/products/boat-stone-650.jpg",
+      "category": "speakers",
+      "brand": "boAt",
+      "rating": 4.2,
+      "reviewCount": 67000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B07M1X2ZK5N?tag=budgettechin-21",
+          "asin": "B07M1X2ZK5N",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/boat-stone-650/p/itm9u4g5p6q7r8s9?affid=budgettech",
+          "productId": "ITM9U4G5P6Q7R8S9",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Output": "10W",
+        "Battery Life": "8 hours",
+        "Bluetooth": "5.0",
+        "Water Resistance": "IPX5"
+      },
+      "pros": ["Rugged design", "Good sound quality", "Water resistant", "Built-in mic"],
+      "cons": ["Bulky", "Average battery"],
+      "isActive": true,
+      "lastUpdated": "2026-02-14"
+    },
+    "zebronics-zeb-symphony": {
+      "title": "Zebronics Zeb-Symphony",
+      "price": 599,
+      "mrp": 1499,
+      "currency": "INR",
+      "image": "/images/products/zebronics-zeb-symphony.jpg",
+      "category": "speakers",
+      "brand": "Zebronics",
+      "rating": 3.8,
+      "reviewCount": 28000,
+      "links": {
+        "amazon": {
+          "url": "https://www.amazon.in/dp/B08M2Y3ZAL6N?tag=budgettechin-21",
+          "asin": "B08M2Y3ZAL6N",
+          "inStock": true
+        },
+        "flipkart": {
+          "url": "https://www.flipkart.com/zebronics-zeb-symphony/p/itm0v5h6q7r8s9t0?affid=budgettech",
+          "productId": "ITM0V5H6Q7R8S9T0",
+          "inStock": true
+        }
+      },
+      "features": {
+        "Output": "6W",
+        "Battery Life": "6 hours",
+        "Bluetooth": "5.0",
+        "Water Resistance": "No"
+      },
+      "pros": ["Very affordable", "Compact size", "Lightweight", "Multiple colors"],
+      "cons": ["No water resistance", "Low output"],
+      "isActive": true,
+      "lastUpdated": "2026-02-13"
+    }
+  }
+}

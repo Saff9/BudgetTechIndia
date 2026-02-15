@@ -1,0 +1,266 @@
+---
+import { getActiveVariation } from '../../utils/variation';
+import ThemeSwitcher from '../common/ThemeSwitcher.astro';
+
+const variation = getActiveVariation();
+const isLightTheme = variation === 'light';
+---
+
+<header class={`header ${isLightTheme ? 'light-theme' : 'dark-theme'}`} role="banner">
+  <div class="header-container">
+    <div class="logo-section">
+      <a href="/" class="logo">
+        <span class="logo-icon">🛒</span>
+        <span class="logo-text">TechStore</span>
+      </a>
+    </div>
+
+    <nav class="main-nav" role="navigation">
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="/" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="/categories" class="nav-link">Categories</a>
+        </li>
+        <li class="nav-item">
+          <a href="/reviews" class="nav-link">Reviews</a>
+        </li>
+        <li class="nav-item">
+          <a href="/top-5" class="nav-link">Top 5</a>
+        </li>
+        <li class="nav-item">
+          <a href="/blog" class="nav-link">Blog</a>
+        </li>
+        <li class="nav-item">
+          <a href="/contact" class="nav-link">Contact</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <ThemeSwitcher variation={variation} />
+    </div>
+
+    <button class="mobile-menu-toggle" aria-label="Toggle menu">
+      <span class="hamburger"></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #E5E7EB;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+
+  .header-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #1F2937;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .logo:hover {
+    color: #3B82F6;
+    transform: translateY(-2px);
+  }
+
+  .logo-icon {
+    font-size: 2rem;
+  }
+
+  .main-nav {
+    flex: 1;
+    max-width: 600px;
+    margin: 0 2rem;
+  }
+
+  .nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-link {
+    color: #6B7280;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .nav-link:hover {
+    color: #3B82F6;
+    background: #F3F4F6;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  .hamburger {
+    width: 24px;
+    height: 2px;
+    background: #1F2937;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger::before,
+  .hamburger::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background: #1F2937;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger::before {
+    top: -8px;
+  }
+
+  .hamburger::after {
+    bottom: -8px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .main-nav {
+      margin: 0 1rem;
+    }
+
+    .nav-menu {
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header-container {
+      padding: 1rem;
+    }
+
+    .main-nav {
+      position: fixed;
+      top: 60px;
+      left: -100%;
+      width: 100%;
+      height: calc(100vh - 60px);
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      margin: 0;
+      padding: 2rem;
+      transition: left 0.3s ease;
+      border-right: 1px solid #E5E7EB;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-nav.active {
+      left: 0;
+    }
+
+    .nav-menu {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .nav-link {
+      padding: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .mobile-menu-toggle {
+      display: flex;
+    }
+  }
+
+  /* Animation for mobile menu toggle */
+  .mobile-menu-toggle.active .hamburger {
+    background: transparent;
+  }
+
+  .mobile-menu-toggle.active .hamburger::before {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .mobile-menu-toggle.active .hamburger::after {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+</style>
+
+<script>
+  // Mobile menu toggle functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const nav = document.querySelector('.main-nav');
+    
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        toggle.classList.toggle('active');
+        nav.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!toggle.contains(e.target) && !nav.contains(e.target)) {
+          toggle.classList.remove('active');
+          nav.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        }
+      });
+    }
+  });
+</script>

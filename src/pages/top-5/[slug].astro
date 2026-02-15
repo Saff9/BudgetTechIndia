@@ -1,0 +1,391 @@
+---
+/**
+ * Top 5 List Article Page for BudgetTechIndia
+ * Product comparison pages with top 5 recommendations
+ */
+
+import type { Product, Article, BreadcrumbItem, Author } from '../../utils/interfaces';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import AffiliateDisclosure from '../../components/common/AffiliateDisclosure.astro';
+import ComparisonTable from '../../components/products/ComparisonTable.astro';
+import RatingStars from '../../components/products/RatingStars.astro';
+import ProsConsList from '../../components/content/ProsConsList.astro';
+import CTAButton from '../../components/content/CTAButton.astro';
+import FAQSection from '../../components/content/FAQSection.astro';
+import JsonLD from '../../components/seo/JsonLD.astro';
+import { formatDate, formatPrice } from '../../utils/helpers';
+
+// Define static paths for all top5 articles
+export async function getStaticPaths() {
+  const articlesData = await import('../../data/articles.json');
+  const top5Articles = articlesData.default.articles.filter(
+    (a: Article) => a.type === 'top5'
+  );
+  return top5Articles.map((article: Article) => ({
+    params: { slug: article.slug },
+  }));
+}
+
+// Get all articles and products
+const articlesData = await import('../../data/articles.json');
+const productsData = await import('../../data/products.json');
+
+// Get slug from URL
+const { slug } = Astro.params;
+
+// Find the top5 article
+const article = articlesData.default.articles.find(
+  (a: Article) => a.slug === slug && a.type === 'top5'
+);
+
+if (!article) {
+  return Astro.redirect('/404');
+}
+
+// Get the products in the list
+const products: Product[] = article.productIds
+  .map((id: string) => productsData.default.products.find((p: Product) => p.id === id))
+  .filter(Boolean);
+
+if (products.length === 0) {
+  return Astro.redirect('/404');
+}
+
+// Breadcrumbs
+const breadcrumbs: BreadcrumbItem[] = [
+  { name: 'Home', url: '/' },
+  { name: 'Top 5 Lists', url: '/top-5' },
+  { name: article.title },
+];
+
+// Author data
+const author: Author = {
+  id: '1',
+  name: article.author,
+  bio: 'Tech enthusiast and product reviewer with over 5 years of experience testing budget gadgets.',
+  avatar: 'https://placehold.co/100x100/3B82F6/FFFFFF?text=Author',
+  role: 'Product Reviewer',
+};
+
+const siteUrl = import.meta.env.SITE_URL || 'https://budgettechindia.com';
+
+// Table of contents
+const tocItems = [
+  { id: 'introduction', text: 'Introduction', level: 2 },
+  { id: 'comparison-table', text: 'Quick Comparison', level: 2 },
+  ...products.map((p, i) => ({ id: `product-${i + 1}`, text: `#${i + 1}: ${p.name}`, level: 2 })),
+  { id: 'faq', text: 'FAQ', level: 2 },
+  { id: 'verdict', text: 'Final Verdict', level: 2 },
+];
+
+// FAQ data
+const faqData = [
+  {
+    question: `Which ${products[0]?.category.replace(/-/g, ' ')} is best for budget buyers?`,
+    answer: `Based on our testing, the ${products[0]?.name} offers the best value for money at ${formatPrice(products[0]?.price)} with excellent features and performance.`,
+  },
+  {
+    question: 'How do I choose the right product for my needs?',
+    answer: 'Consider your primary use case, budget, and must-have features. Our comparison table above can help you identify which product best matches your requirements.',
+  },
+  {
+    question: 'Are these products available on Amazon India?',
+    answer: 'Yes, all products listed are available on Amazon India. Prices may vary based on current offers and availability.',
+  },
+];
+
+// Article schema data for JSON-LD (matching JsonLD component's expected structure)
+const articleSchemaData = {
+  article: {
+    title: article.title,
+    description: article.excerpt,
+    pubDate: article.date,
+    updatedDate: article.updatedDate,
+  },
+  url: `${siteUrl}/top-5/${article.slug}`,
+  imageUrl: article.imageUrl.startsWith('http') ? article.imageUrl : `${siteUrl}${article.imageUrl}`,
+  authorName: author.name,
+};
+---
+
+<BaseLayout
+  title={`${article.title} | BudgetTechIndia`}
+  description={article.excerpt}
+  image={article.imageUrl}
+  type="article"
+  currentPath={`/top-5/${slug}`}
+  publishedTime={new Date(article.date)}
+  author={article.author}
+>
+  <!-- Article Schema -->
+  <JsonLD type="article" data={articleSchemaData} />
+
+  <div class="container py-8">
+    <!-- Breadcrumb -->
+    <Breadcrumb items={breadcrumbs} />
+
+    <div class="grid lg:grid-cols-[1fr_300px] gap-8">
+      <!-- Main Content -->
+      <article class="max-w-4xl">
+        <!-- Header -->
+        <header class="mb-8">
+          <!-- Category Badge -->
+          <span class="inline-block px-3 py-1 bg-accent-100 text-accent-700 text-sm font-medium rounded-full mb-4">
+            Top 5 List
+          </span>
+
+          <!-- Title -->
+          <h1 class="font-heading text-h1 text-neutral-900 mb-4">
+            {article.title}
+          </h1>
+
+          <!-- Meta -->
+          <div class="flex flex-wrap items-center gap-4 text-sm text-neutral-500 mb-6">
+            <time datetime={new Date(article.date).toISOString()}>
+              {formatDate(new Date(article.date))}
+            </time>
+            <span>By {article.author}</span>
+            <span>{article.readTime || '8 min read'}</span>
+          </div>
+
+          <!-- Featured Image -->
+          <img
+            src={article.imageUrl}
+            alt={article.title}
+            class="w-full aspect-video object-cover rounded-xl shadow-soft"
+            loading="eager"
+          />
+        </header>
+
+        <!-- Affiliate Disclosure -->
+        <div class="mb-8">
+          <AffiliateDisclosure variant="inline" />
+        </div>
+
+        <!-- Introduction -->
+        <section id="introduction" class="mb-10">
+          <h2 class="font-heading text-h2 text-neutral-900 mb-4">Introduction</h2>
+          <p class="text-neutral-700 leading-relaxed">
+            {article.excerpt}
+          </p>
+          <p class="text-neutral-700 leading-relaxed mt-4">
+            We've tested dozens of products to bring you this comprehensive list. Each product has been evaluated based on build quality, features, performance, value for money, and user reviews. Here are our top picks for {products[0]?.category.replace(/-/g, ' ')} in the budget segment.
+          </p>
+        </section>
+
+        <!-- Quick Comparison Table -->
+        <section id="comparison-table" class="mb-10">
+          <h2 class="font-heading text-h2 text-neutral-900 mb-4">Quick Comparison</h2>
+          <ComparisonTable products={products} highlightBest={true} />
+        </section>
+
+        <!-- Individual Product Reviews -->
+        {products.map((product, index) => (
+          <section id={`product-${index + 1}`} class="mb-12">
+            <!-- Product Header -->
+            <div class="flex items-center gap-4 mb-6">
+              <span class="flex items-center justify-center w-10 h-10 bg-accent-500 text-white font-bold rounded-full text-lg">
+                {index + 1}
+              </span>
+              <div>
+                <h2 class="font-heading text-h2 text-neutral-900">
+                  {product.name}
+                </h2>
+                <p class="text-neutral-500">by {product.brand}</p>
+              </div>
+            </div>
+
+            <!-- Product Card -->
+            <div class="bg-white rounded-xl shadow-card overflow-hidden mb-6">
+              <div class="grid md:grid-cols-[200px_1fr] gap-6 p-6">
+                <!-- Product Image -->
+                <div class="flex items-center justify-center bg-neutral-50 rounded-lg p-4">
+                  <img
+                    src={product.imageUrl}
+                    alt={product.name}
+                    class="w-full max-w-[180px] object-contain"
+                    loading="lazy"
+                  />
+                </div>
+
+                <!-- Product Info -->
+                <div>
+                  <!-- Rating -->
+                  <div class="flex items-center gap-2 mb-3">
+                    <RatingStars rating={product.rating} reviewCount={product.reviewCount} />
+                  </div>
+
+                  <!-- Price -->
+                  <div class="flex items-baseline gap-2 mb-4">
+                    <span class="text-2xl font-bold text-accent-600">{formatPrice(product.price)}</span>
+                    <span class="text-sm text-neutral-400 line-through">{formatPrice(product.mrp)}</span>
+                    <span class="text-sm font-medium text-green-600">
+                      {Math.round((1 - product.price / product.mrp) * 100)}% off
+                    </span>
+                  </div>
+
+                  <!-- Key Features -->
+                  <div class="grid grid-cols-2 gap-2 mb-4">
+                    {Object.entries(product.features).slice(0, 4).map(([key, value]) => (
+                      <div class="text-sm">
+                        <span class="text-neutral-500">{key}:</span>
+                        <span class="text-neutral-700 ml-1">{value}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <!-- CTA -->
+                  <CTAButton
+                    text="Check Price on Amazon"
+                    href={product.affiliateUrl}
+                    variant="primary"
+                    size="md"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Features -->
+            <div class="mb-6">
+              <h3 class="font-heading text-h3 text-neutral-900 mb-3">Key Features</h3>
+              <ul class="grid sm:grid-cols-2 gap-2">
+                {product.features && Object.entries(product.features).map(([key, value]) => (
+                  <li class="flex items-start gap-2 text-sm text-neutral-700">
+                    <svg class="w-4 h-4 text-primary-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <span><strong>{key}:</strong> {value}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- Pros & Cons -->
+            <ProsConsList pros={product.pros} cons={product.cons} />
+
+            <!-- Best For -->
+            <div class="bg-primary-50 rounded-lg p-4 mt-6">
+              <p class="text-sm text-neutral-700">
+                <strong class="text-primary-700">Best For:</strong> {
+                  index === 0 ? 'Overall value and performance' :
+                  index === 1 ? 'Those who prioritize quality over price' :
+                  index === 2 ? 'Budget-conscious buyers' :
+                  index === 3 ? 'Specific use cases and features' :
+                  'Entry-level users'
+                }
+              </p>
+            </div>
+          </section>
+        ))}
+
+        <!-- FAQ Section -->
+        <section id="faq" class="mb-10">
+          <FAQSection items={faqData} />
+        </section>
+
+        <!-- Final Verdict -->
+        <section id="verdict" class="mb-10">
+          <h2 class="font-heading text-h2 text-neutral-900 mb-4">Final Verdict & Recommendations</h2>
+          <div class="bg-gradient-to-br from-primary-50 to-accent-50 rounded-xl p-6">
+            <p class="text-neutral-700 leading-relaxed mb-4">
+              After extensive testing and comparison, we've ranked these {products[0]?.category.replace(/-/g, ' ')} based on their overall value, features, and performance. Here's our recommendation:
+            </p>
+
+            <div class="space-y-4 mb-6">
+              {products.slice(0, 3).map((product, index) => (
+                <div class="flex items-start gap-3">
+                  <span class="flex items-center justify-center w-6 h-6 bg-accent-500 text-white text-sm font-bold rounded-full flex-shrink-0">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <strong class="text-neutral-900">{product.name}</strong>
+                    <p class="text-sm text-neutral-600">
+                      {index === 0 ? 'Our top pick for the best overall value. Excellent features at an unbeatable price.' :
+                       index === 1 ? 'Great alternative with premium features. Worth the extra cost for quality seekers.' :
+                       'Best budget option for those looking to save money without compromising too much.'}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p class="text-neutral-700 leading-relaxed">
+              All products listed are available on Amazon India with current pricing as shown. Prices may vary based on ongoing offers and availability. We recommend checking the product page for the most up-to-date pricing and offers.
+            </p>
+          </div>
+        </section>
+
+        <!-- Author Box -->
+        <div class="bg-neutral-50 rounded-xl p-6 mb-10">
+          <div class="flex items-start gap-4">
+            <img
+              src={author.avatar}
+              alt={author.name}
+              class="w-16 h-16 rounded-full object-cover"
+              loading="lazy"
+            />
+            <div>
+              <p class="font-semibold text-neutral-900">{author.name}</p>
+              <p class="text-sm text-neutral-500 mb-2">{author.role}</p>
+              <p class="text-sm text-neutral-600">{author.bio}</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="lg:sticky lg:top-24 lg:self-start space-y-8">
+        <!-- Table of Contents -->
+        <nav class="bg-neutral-50 rounded-xl p-5" aria-labelledby="toc-heading">
+          <h2 id="toc-heading" class="font-heading font-semibold text-neutral-900 mb-4">
+            Table of Contents
+          </h2>
+          <ul class="space-y-2 text-sm">
+            {tocItems.map((item) => (
+              <li class={item.level === 3 ? 'ml-4' : ''}>
+                <a
+                  href={`#${item.id}`}
+                  class="text-neutral-600 hover:text-primary-600 transition-colors duration-200"
+                >
+                  {item.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <!-- Quick Links -->
+        <div class="bg-accent-500 rounded-xl p-5 text-white">
+          <h3 class="font-heading font-semibold mb-4">Quick Links</h3>
+          <div class="space-y-3">
+            {products.slice(0, 3).map((product, index) => (
+              <a
+                href={product.affiliateUrl}
+                target="_blank"
+                rel="nofollow sponsored"
+                class="flex items-center justify-between bg-white/10 rounded-lg p-3 hover:bg-white/20 transition-colors"
+              >
+                <span class="text-sm">
+                  <span class="font-bold">#{index + 1}</span> {product.name}
+                </span>
+                <span class="text-sm font-bold">{formatPrice(product.price)}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Price Range Info -->
+        <div class="bg-neutral-50 rounded-xl p-5">
+          <h3 class="font-heading font-semibold text-neutral-900 mb-3">Price Range</h3>
+          <p class="text-sm text-neutral-600 mb-2">
+            From <span class="font-bold text-accent-600">{formatPrice(Math.min(...products.map(p => p.price)))}</span>
+          </p>
+          <p class="text-sm text-neutral-600">
+            To <span class="font-bold text-accent-600">{formatPrice(Math.max(...products.map(p => p.price)))}</span>
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

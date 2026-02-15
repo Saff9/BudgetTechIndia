@@ -1,0 +1,201 @@
+---
+/**
+ * ArticleLayout for BudgetTechIndia
+ * Layout for article pages with breadcrumbs, TOC, and author info
+ */
+
+import type { Article, Author, BreadcrumbItem } from '../utils/interfaces';
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumb from '../components/common/Breadcrumb.astro';
+import AffiliateDisclosure from '../components/common/AffiliateDisclosure.astro';
+import JsonLD from '../components/seo/JsonLD.astro';
+import { formatDate } from '../utils/helpers';
+
+interface Props {
+  /** Article data */
+  article: Article;
+  /** Author data */
+  author?: Author;
+  /** Breadcrumb items */
+  breadcrumbs?: BreadcrumbItem[];
+  /** Whether to show table of contents */
+  showToc?: boolean;
+  /** Table of contents items */
+  tocItems?: Array<{ id: string; text: string; level: number }>;
+  /** Related articles */
+  relatedArticles?: Article[];
+}
+
+const {
+  article,
+  author,
+  breadcrumbs,
+  showToc = false,
+  tocItems = [],
+  relatedArticles = [],
+} = Astro.props;
+
+const siteUrl = import.meta.env.SITE_URL || 'https://budgettechindia.com';
+
+// Default breadcrumbs
+const defaultBreadcrumbs: BreadcrumbItem[] = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: article.title },
+];
+
+const items = breadcrumbs || defaultBreadcrumbs;
+
+// Article schema
+const articleSchema = {
+  article,
+  url: `${siteUrl}/blog/${article.slug}`,
+  imageUrl: article.image.startsWith('http') ? article.image : `${siteUrl}${article.image}`,
+  authorName: author?.name || article.author,
+};
+---
+
+<BaseLayout
+  title={article.title}
+  description={article.description}
+  image={article.image}
+  type="article"
+  currentPath={`/blog/${article.slug}`}
+  publishedTime={article.pubDate}
+  modifiedTime={article.updatedDate}
+  author={author?.name || article.author}
+>
+  <!-- Article Schema -->
+  <JsonLD type="article" data={articleSchema} />
+
+  <div class="container py-8">
+    <!-- Breadcrumb -->
+    <Breadcrumb items={items} />
+
+    <div class="grid lg:grid-cols-[1fr_280px] gap-8">
+      <!-- Main Article Content -->
+      <article class="max-w-3xl">
+        <!-- Article Header -->
+        <header class="mb-8">
+          <!-- Category Badge -->
+          {article.category && (
+            <span class="inline-block px-3 py-1 bg-primary-100 text-primary-700 text-sm font-medium rounded-full mb-4">
+              {article.category}
+            </span>
+          )}
+
+          <!-- Title -->
+          <h1 class="font-heading text-h1 text-neutral-900 mb-4">
+            {article.title}
+          </h1>
+
+          <!-- Meta -->
+          <div class="flex flex-wrap items-center gap-4 text-sm text-neutral-500 mb-6">
+            <time datetime={article.pubDate.toISOString()}>
+              {formatDate(article.pubDate)}
+            </time>
+            {article.updatedDate && (
+              <span class="text-neutral-400">
+                (Updated: {formatDate(article.updatedDate)})
+              </span>
+            )}
+            <span>By {author?.name || article.author}</span>
+          </div>
+
+          <!-- Featured Image -->
+          <img
+            src={article.image}
+            alt={article.title}
+            class="w-full aspect-banner object-cover rounded-xl shadow-soft"
+            loading="eager"
+          />
+        </header>
+
+        <!-- Affiliate Disclosure -->
+        <div class="mb-8">
+          <AffiliateDisclosure variant="inline" />
+        </div>
+
+        <!-- Article Content -->
+        <div class="prose max-w-none">
+          <slot />
+        </div>
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="lg:sticky lg:top-24 lg:self-start space-y-8">
+        <!-- Table of Contents -->
+        {showToc && tocItems.length > 0 && (
+          <nav class="bg-neutral-50 rounded-xl p-5" aria-labelledby="toc-heading">
+            <h2 id="toc-heading" class="font-heading font-semibold text-neutral-900 mb-4">
+              Table of Contents
+            </h2>
+            <ul class="space-y-2 text-sm">
+              {tocItems.map((item) => (
+                <li class={item.level === 2 ? '' : 'ml-4'}>
+                  <a
+                    href={`#${item.id}`}
+                    class="text-neutral-600 hover:text-primary-600 transition-colors duration-200"
+                  >
+                    {item.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+
+        <!-- Author Info -->
+        {author && (
+          <div class="bg-neutral-50 rounded-xl p-5">
+            <h2 class="font-heading font-semibold text-neutral-900 mb-4">
+              About the Author
+            </h2>
+            <div class="flex items-start gap-4">
+              <img
+                src={author.avatar}
+                alt={author.name}
+                class="w-16 h-16 rounded-full object-cover"
+                loading="lazy"
+              />
+              <div>
+                <p class="font-medium text-neutral-900">{author.name}</p>
+                <p class="text-sm text-neutral-500 mb-2">{author.role}</p>
+                <p class="text-sm text-neutral-600 line-clamp-3">{author.bio}</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </aside>
+    </div>
+
+    <!-- Related Articles -->
+    {relatedArticles.length > 0 && (
+      <section class="mt-16 pt-8 border-t border-neutral-200">
+        <h2 class="font-heading text-h3 text-neutral-900 mb-6">Related Articles</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {relatedArticles.map((relatedArticle) => (
+            <article class="group">
+              <a
+                href={`/blog/${relatedArticle.slug}`}
+                class="block aspect-video bg-neutral-100 rounded-xl overflow-hidden mb-3"
+              >
+                <img
+                  src={relatedArticle.image}
+                  alt={relatedArticle.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+              </a>
+              <h3 class="font-semibold text-neutral-900 group-hover:text-primary-600 transition-colors duration-200 line-clamp-2">
+                <a href={`/blog/${relatedArticle.slug}`}>
+                  {relatedArticle.title}
+                </a>
+              </h3>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>

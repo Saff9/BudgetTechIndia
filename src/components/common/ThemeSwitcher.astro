@@ -1,0 +1,181 @@
+---
+import { getActiveVariation, setActiveVariation, toggleVariation } from '../../utils/variation';
+
+interface Props {
+  variation?: 'dark' | 'light';
+}
+
+const { variation = getActiveVariation() } = Astro.props;
+---
+
+<div class="theme-switcher-container">
+  <button
+    id="theme-switcher"
+    class="theme-switcher-button"
+    aria-label="Toggle theme"
+    title="Toggle theme"
+    data-variation={variation}
+  >
+    <span class="theme-icon dark-icon" aria-hidden="true">🌙</span>
+    <span class="theme-icon light-icon" aria-hidden="true">☀️</span>
+    <span class="theme-label">
+      {variation === 'dark' ? 'Dark' : 'Light'} Theme
+    </span>
+  </button>
+</div>
+
+<script>
+  import { getActiveVariation, setActiveVariation, toggleVariation } from '../../utils/variation';
+  
+  // Initialize theme
+  const currentVariation = getActiveVariation();
+  document.documentElement.setAttribute('data-theme', currentVariation);
+  if (currentVariation === 'light') {
+    document.body.classList.add('light-theme');
+  } else {
+    document.body.classList.remove('light-theme');
+  }
+
+  // Get switcher button
+  const switcher = document.getElementById('theme-switcher');
+  
+  if (switcher) {
+    // Handle click event
+    switcher.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Toggle variation
+      const newVariation = toggleVariation();
+      
+      // Update UI
+      document.documentElement.setAttribute('data-theme', newVariation);
+      
+      if (newVariation === 'light') {
+        document.body.classList.add('light-theme');
+        switcher.setAttribute('data-variation', 'light');
+        switcher.querySelector('.theme-label').textContent = 'Light Theme';
+      } else {
+        document.body.classList.remove('light-theme');
+        switcher.setAttribute('data-variation', 'dark');
+        switcher.querySelector('.theme-label').textContent = 'Dark Theme';
+      }
+      
+      // Add animation effect
+      switcher.classList.add('switching');
+      setTimeout(() => {
+        switcher.classList.remove('switching');
+      }, 300);
+    });
+    
+    // Handle variation change from other components
+    window.addEventListener('variationchange', (e) => {
+      const newVariation = e.detail;
+      document.documentElement.setAttribute('data-theme', newVariation);
+      
+      if (newVariation === 'light') {
+        document.body.classList.add('light-theme');
+        switcher.setAttribute('data-variation', 'light');
+        switcher.querySelector('.theme-label').textContent = 'Light Theme';
+      } else {
+        document.body.classList.remove('light-theme');
+        switcher.setAttribute('data-variation', 'dark');
+        switcher.querySelector('.theme-label').textContent = 'Dark Theme';
+      }
+    });
+  }
+</script>
+
+<style>
+  .theme-switcher-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .theme-switcher-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    color: var(--color-text);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .theme-switcher-button:hover {
+    background: var(--color-accent);
+    color: white;
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .theme-switcher-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+
+  .theme-switcher-button.switching {
+    animation: themeSwitch 0.3s ease;
+  }
+
+  .theme-icon {
+    font-size: 18px;
+    transition: all 0.3s ease;
+  }
+
+  .theme-switcher-button[data-variation="dark"] .light-icon {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  .theme-switcher-button[data-variation="dark"] .dark-icon {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .theme-switcher-button[data-variation="light"] .dark-icon {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  .theme-switcher-button[data-variation="light"] .light-icon {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .theme-label {
+    transition: color 0.3s ease;
+  }
+
+  @keyframes themeSwitch {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+
+  /* Light theme specific styles */
+  .light-theme .theme-switcher-button {
+    background: #F9FAFB;
+    border-color: #E5E7EB;
+    color: #1F2937;
+  }
+
+  .light-theme .theme-switcher-button:hover {
+    background: #3B82F6;
+    border-color: #3B82F6;
+  }
+
+  .light-theme .theme-switcher-button:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+</style>

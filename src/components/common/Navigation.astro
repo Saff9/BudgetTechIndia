@@ -1,0 +1,298 @@
+---
+/**
+ * Navigation Component for BudgetTechIndia
+ * Premium Dark Theme - Midnight Teal with Copper accents
+ * Perfect responsive design for all screen sizes (320px - 1536px+)
+ */
+
+import type { NavItem } from '../../utils/interfaces';
+
+interface Props {
+  /** Current page path for active state */
+  currentPath?: string;
+  /** Navigation items */
+  items?: NavItem[];
+}
+
+const defaultNavItems: NavItem[] = [
+  { label: 'All Categories', href: '/categories' },
+  { label: 'Reviews', href: '/reviews' },
+  { label: 'Top 5 Lists', href: '/top-5' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Today\'s Deals', href: '/reviews?sort=deals' },
+];
+
+const { currentPath = '/', items = defaultNavItems } = Astro.props;
+
+function isActive(href: string, current: string): boolean {
+  if (href === '/') return current === '/';
+  return current.startsWith(href.split('?')[0]);
+}
+---
+
+<!-- Desktop Navigation - Dark theme secondary nav -->
+<nav class="hidden lg:flex items-center gap-0.5 xl:gap-1 h-10" aria-label="Main navigation">
+  {items.map((item) => (
+    <a
+      href={item.href}
+      class={`relative px-2.5 xl:px-3 py-1.5 text-xs xl:text-sm font-medium transition-all duration-200 rounded ${
+        isActive(item.href, currentPath)
+          ? 'text-[#F4F1EA] bg-[#C46A3A]/20'
+          : 'text-[#a8b5ba] hover:text-[#F4F1EA] hover:bg-[#1A2E35]'
+      }`}
+      aria-current={isActive(item.href, currentPath) ? 'page' : undefined}
+      {...(item.external && { target: '_blank', rel: 'noopener noreferrer' })}
+    >
+      {item.label}
+    </a>
+  ))}
+</nav>
+
+<!-- Mobile Navigation Drawer -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-50 hidden lg:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Mobile navigation"
+>
+  <!-- Backdrop -->
+  <div class="fixed inset-0 bg-[#0F1F24]/80 backdrop-blur-sm" id="mobile-menu-backdrop"></div>
+  
+  <!-- Drawer -->
+  <div class="fixed top-0 left-0 h-full w-[280px] sm:w-[320px] max-w-[85vw] bg-[#0F1F24] shadow-soft-xl transform transition-transform duration-300 ease-smooth -translate-x-full border-r border-[#2a4450]" id="mobile-menu-drawer">
+    <!-- Drawer Header -->
+    <div class="flex items-center justify-between p-3 sm:p-4 border-b border-[#2a4450]">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 sm:w-9 sm:h-9 bg-gradient-to-br from-[#C46A3A] to-[#d4834f] rounded-lg flex items-center justify-center">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#F4F1EA]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div>
+          <span class="font-semibold text-sm sm:text-base text-[#F4F1EA]">Menu</span>
+          <p class="text-[10px] sm:text-xs text-[#6b7d83]">BudgetTech India</p>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="p-2 sm:p-2.5 rounded-lg text-[#a8b5ba] hover:text-[#F4F1EA] hover:bg-[#1A2E35] transition-all duration-200 touch-target"
+        aria-label="Close menu"
+        id="mobile-menu-close"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Mobile Search -->
+    <div class="p-3 sm:p-4 border-b border-[#2a4450]/50">
+      <form action="/search" method="GET" class="relative">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search products..."
+          class="w-full px-3 sm:px-4 py-2.5 text-sm text-[#F4F1EA] placeholder:text-[#6b7d83] bg-[#1A2E35] border border-[#2a4450] rounded-lg focus:border-[#C46A3A] focus:outline-none focus:ring-2 focus:ring-[#C46A3A] transition-all duration-200 pr-10"
+        />
+        <button
+          type="submit"
+          class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-[#a8b5ba] hover:text-[#C46A3A] transition-colors"
+          aria-label="Search"
+        >
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+      </form>
+    </div>
+    
+    <!-- Navigation Links -->
+    <nav class="p-3 sm:p-4 overflow-y-auto" aria-label="Mobile navigation" style="max-height: calc(100vh - 280px);">
+      <ul class="space-y-0.5 sm:space-y-1">
+        {items.map((item, index) => (
+          <li style={`animation-delay: ${index * 50}ms`}>
+            <a
+              href={item.href}
+              class={`flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-medium transition-all duration-200 touch-target ${
+                isActive(item.href, currentPath)
+                  ? 'bg-[#C46A3A]/20 text-[#C46A3A]'
+                  : 'text-[#a8b5ba] hover:bg-[#1A2E35] hover:text-[#F4F1EA]'
+              }`}
+              aria-current={isActive(item.href, currentPath) ? 'page' : undefined}
+              {...(item.external && { target: '_blank', rel: 'noopener noreferrer' })}
+            >
+              {isActive(item.href, currentPath) && (
+                <span class="w-1.5 h-1.5 rounded-full bg-[#C46A3A] flex-shrink-0"></span>
+              )}
+              <span class="text-sm sm:text-base">{item.label}</span>
+              {item.external && (
+                <svg class="w-3.5 h-3.5 ml-auto opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+      
+      <!-- Quick Links Section -->
+      <div class="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-[#2a4450]/50">
+        <p class="px-3 sm:px-4 text-[10px] sm:text-xs font-semibold text-[#6b7d83] uppercase tracking-wider mb-2 sm:mb-3">Quick Links</p>
+        <ul class="space-y-0.5 sm:space-y-1">
+          <li>
+            <a href="/about" class="flex items-center gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm text-[#a8b5ba] hover:text-[#F4F1EA] hover:bg-[#1A2E35] rounded-lg transition-all duration-200">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              About Us
+            </a>
+          </li>
+          <li>
+            <a href="/contact" class="flex items-center gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm text-[#a8b5ba] hover:text-[#F4F1EA] hover:bg-[#1A2E35] rounded-lg transition-all duration-200">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              Contact
+            </a>
+          </li>
+          <li>
+            <a href="/affiliate-disclosure" class="flex items-center gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm text-[#a8b5ba] hover:text-[#F4F1EA] hover:bg-[#1A2E35] rounded-lg transition-all duration-200">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              Affiliate Disclosure
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    
+    <!-- CTA in mobile menu -->
+    <div class="absolute bottom-0 left-0 right-0 p-3 sm:p-4 border-t border-[#2a4450] bg-[#0a1619]">
+      <a
+        href="/reviews/"
+        class="flex items-center justify-center gap-2 w-full px-4 sm:px-5 py-2.5 sm:py-3 bg-gradient-to-r from-[#C46A3A] to-[#d4834f] hover:from-[#d4834f] hover:to-[#C46A3A] text-[#F4F1EA] font-semibold rounded-lg transition-all duration-200 text-sm sm:text-base"
+      >
+        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        Browse All Reviews
+      </a>
+      <p class="text-center text-[10px] sm:text-xs text-[#6b7d83] mt-2">
+        Trusted reviews • Best prices
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Touch target size for mobile */
+  .touch-target {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Smooth slide-in animation for menu items */
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  #mobile-menu-drawer li {
+    animation: slideInLeft 0.3s ease-out forwards;
+    opacity: 0;
+  }
+  
+  /* Safe area for notched phones */
+  @supports (padding: max(0px)) {
+    #mobile-menu-drawer {
+      padding-bottom: max(0px, env(safe-area-inset-bottom));
+    }
+  }
+</style>
+
+<script>
+  // Mobile menu functionality
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuDrawer = document.getElementById('mobile-menu-drawer');
+  const backdrop = document.getElementById('mobile-menu-backdrop');
+  const closeButton = document.getElementById('mobile-menu-close');
+
+  function openMenu() {
+    if (!mobileMenu || !menuDrawer) return;
+    mobileMenu.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    // Trigger animation
+    requestAnimationFrame(() => {
+      menuDrawer.classList.remove('-translate-x-full');
+    });
+    
+    // Focus management for accessibility
+    closeButton?.focus();
+  }
+
+  function closeMenu() {
+    if (!mobileMenu || !menuDrawer) return;
+    menuDrawer.classList.add('-translate-x-full');
+    
+    // Wait for animation to complete
+    setTimeout(() => {
+      mobileMenu.classList.add('hidden');
+      document.body.style.overflow = '';
+    }, 300);
+  }
+
+  closeButton?.addEventListener('click', closeMenu);
+  backdrop?.addEventListener('click', closeMenu);
+
+  // Listen for toggle event from Header
+  document.addEventListener('toggle-mobile-menu', openMenu);
+
+  // Close on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !mobileMenu?.classList.contains('hidden')) {
+      closeMenu();
+    }
+  });
+  
+  // Close menu when clicking on a link (for same-page navigation)
+  const menuLinks = mobileMenu?.querySelectorAll('a');
+  menuLinks?.forEach(link => {
+    link.addEventListener('click', () => {
+      // Small delay to allow navigation to start
+      setTimeout(closeMenu, 100);
+    });
+  });
+  
+  // Trap focus within mobile menu when open
+  const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+  
+  mobileMenu?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    
+    const focusable = mobileMenu.querySelectorAll<HTMLElement>(focusableElements);
+    const firstFocusable = focusable[0];
+    const lastFocusable = focusable[focusable.length - 1];
+    
+    if (e.shiftKey) {
+      if (document.activeElement === firstFocusable) {
+        lastFocusable?.focus();
+        e.preventDefault();
+      }
+    } else {
+      if (document.activeElement === lastFocusable) {
+        firstFocusable?.focus();
+        e.preventDefault();
+      }
+    }
+  });
+</script>

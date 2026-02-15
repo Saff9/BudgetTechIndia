@@ -1,0 +1,287 @@
+---
+import { getActiveVariation } from '../../utils/variation';
+import CTAButton from '../content/CTAButton.astro';
+
+const variation = getActiveVariation();
+const isLightTheme = variation === 'light';
+---
+
+<section class={`hero-section ${isLightTheme ? 'light-theme' : 'dark-theme'}`} aria-label="Hero">
+  <div class="hero-container">
+    <div class="hero-content">
+      <div class="hero-badge">🔥 New Arrivals</div>
+      <h1 class="hero-title">
+        Discover the <span class="gradient-text">Latest Tech</span>
+      </h1>
+      <p class="hero-subtitle">
+        Find honest reviews and recommendations for the best gadgets at unbeatable prices. 
+        Your tech journey starts here!
+      </p>
+      <div class="hero-actions">
+        <CTAButton
+          href="/categories"
+          variant="primary"
+          size="large"
+          class="hero-button"
+        >
+          🛍️ Shop Now
+        </CTAButton>
+        <CTAButton
+          href="/reviews"
+          variant="secondary"
+          size="large"
+          class="hero-button"
+        >
+          📚 Read Reviews
+        </CTAButton>
+      </div>
+    </div>
+    
+    <div class="hero-visual">
+      <div class="visual-card">
+        <div class="card-icon">📱</div>
+        <div class="card-content">
+          <h3>Smartphones</h3>
+          <p>Latest models at great prices</p>
+        </div>
+      </div>
+      <div class="visual-card">
+        <div class="card-icon">💻</div>
+        <div class="card-content">
+          <h3>Laptops</h3>
+          <p>Powerful performance</p>
+        </div>
+      </div>
+      <div class="visual-card">
+        <div class="card-icon">🎧</div>
+        <div class="card-content">
+          <h3>Headphones</h3>
+          <p>Immersive audio</p>
+        </div>
+      </div>
+      <div class="visual-card">
+        <div class="card-icon">⌚</div>
+        <div class="card-content">
+          <h3>Smartwatches</h3>
+          <p>Stay connected</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 100%);
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-content {
+    animation: slideInLeft 0.8s ease forwards;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 24px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: #1F2937;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #6B7280;
+    margin-bottom: 2rem;
+    max-width: 500px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-button {
+    font-size: 1.125rem;
+    padding: 0.875rem 2rem;
+  }
+
+  .hero-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    animation: slideInRight 0.8s ease forwards;
+  }
+
+  .visual-card {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .visual-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: #3B82F6;
+  }
+
+  .card-icon {
+    font-size: 2rem;
+    background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .card-content h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1F2937;
+    margin-bottom: 0.25rem;
+  }
+
+  .card-content p {
+    font-size: 0.875rem;
+    color: #6B7280;
+  }
+
+  /* Animations */
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      text-align: center;
+    }
+
+    .hero-content {
+      order: 1;
+    }
+
+    .hero-visual {
+      order: 2;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-actions {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 4rem 1rem;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+
+    .hero-visual {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-button {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+</style>

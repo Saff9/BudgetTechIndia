@@ -1,0 +1,211 @@
+---
+/**
+ * Categories Index Page for BudgetTechIndia
+ * Lists all product categories with descriptions
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import type { BreadcrumbItem } from '../../utils/interfaces';
+
+// Import sample data
+import categoriesData from '../../data/categories.json';
+import productsData from '../../data/products.json';
+
+// Get categories
+const categories = categoriesData.categories;
+
+// Get product counts per category
+const getProductCount = (categoryId: string) => {
+  return productsData.products.filter((p) => p.category === categoryId).length;
+};
+
+// Breadcrumbs
+const breadcrumbs: BreadcrumbItem[] = [
+  { name: 'Home', url: '/' },
+  { name: 'Categories' },
+];
+
+// Category icons mapping
+const categoryIcons: Record<string, string> = {
+  'bluetooth-earbuds': `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg>`,
+  'power-banks': `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`,
+  'fast-chargers-cables': `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`,
+  'smartwatches': `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`,
+  'laptop-accessories': `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>`,
+  'budget-gadgets-under-999': `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>`,
+  'work-from-home-essentials': `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>`,
+};
+
+// Category colors mapping
+const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
+  'bluetooth-earbuds': { bg: 'bg-blue-100', text: 'text-blue-600', border: 'border-blue-500' },
+  'power-banks': { bg: 'bg-green-100', text: 'text-green-600', border: 'border-green-500' },
+  'fast-chargers-cables': { bg: 'bg-yellow-100', text: 'text-yellow-600', border: 'border-yellow-500' },
+  'smartwatches': { bg: 'bg-purple-100', text: 'text-purple-600', border: 'border-purple-500' },
+  'laptop-accessories': { bg: 'bg-pink-100', text: 'text-pink-600', border: 'border-pink-500' },
+  'budget-gadgets-under-999': { bg: 'bg-red-100', text: 'text-red-600', border: 'border-red-500' },
+  'work-from-home-essentials': { bg: 'bg-cyan-100', text: 'text-cyan-600', border: 'border-cyan-500' },
+};
+---
+
+<BaseLayout
+  title="All Categories - Browse Budget Tech Products | BudgetTechIndia"
+  description="Explore all product categories at BudgetTechIndia. Find the best budget tech products under ₹2,000 across earbuds, smartwatches, power banks, laptop accessories, and more."
+  currentPath="/categories"
+>
+  <div class="container py-8">
+    <!-- Breadcrumb -->
+    <Breadcrumb items={breadcrumbs} />
+
+    <!-- Page Header -->
+    <header class="mb-12">
+      <h1 class="font-heading text-h1 text-neutral-900 mb-4">
+        Product Categories
+      </h1>
+      <p class="text-neutral-600 max-w-3xl">
+        Browse our curated collection of budget tech products. Each category features 
+        carefully selected products under ₹2,000 with detailed reviews and comparisons.
+      </p>
+    </header>
+
+    <!-- Categories Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {categories.map((category) => {
+        const colors = categoryColors[category.id] || { bg: 'bg-neutral-100', text: 'text-neutral-600', border: 'border-neutral-500' };
+        const productCount = getProductCount(category.id);
+        
+        return (
+          <a
+            href={`/categories/${category.slug}`}
+            class="group block bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 border-t-4"
+            style={`border-color: ${colors.border.replace('border-', '')}`}
+          >
+            <!-- Category Image -->
+            <div class="relative h-48 overflow-hidden">
+              <img
+                src={category.imageUrl}
+                alt={category.name}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div class="absolute bottom-4 left-4 right-4">
+                <h2 class="font-heading font-bold text-xl text-white mb-1">
+                  {category.name}
+                </h2>
+                <p class="text-sm text-white/80">
+                  {productCount} products
+                </p>
+              </div>
+            </div>
+
+            <!-- Category Content -->
+            <div class="p-6">
+              <p class="text-sm text-neutral-600 line-clamp-3 mb-4">
+                {category.description}
+              </p>
+
+              <!-- Price Range -->
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2 text-sm">
+                  <svg class="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span class="text-neutral-500">
+                    ₹{category.priceRange.min.toLocaleString('en-IN')} - ₹{category.priceRange.max.toLocaleString('en-IN')}
+                  </span>
+                </div>
+                <span class={`text-sm font-medium ${colors.text} flex items-center gap-1`}>
+                  View Products
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+
+    <!-- Quick Links Section -->
+    <section class="mt-16 bg-neutral-50 rounded-2xl p-8">
+      <h2 class="font-heading text-h3 text-neutral-900 mb-6">
+        Quick Links
+      </h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div>
+          <h3 class="font-semibold text-neutral-800 mb-3">Popular Reviews</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="/reviews/oneplus-buds-z2-review" class="text-sm text-primary-600 hover:text-primary-700">
+                OnePlus Buds Z2 Review
+              </a>
+            </li>
+            <li>
+              <a href="/reviews/noise-colorfit-pro-4-review" class="text-sm text-primary-600 hover:text-primary-700">
+                Noise ColorFit Pro 4 Review
+              </a>
+            </li>
+            <li>
+              <a href="/reviews/mi-power-bank-review" class="text-sm text-primary-600 hover:text-primary-700">
+                Mi 20000mAh Power Bank Review
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold text-neutral-800 mb-3">Top 5 Lists</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="/top-5/best-budget-earbuds-2026" class="text-sm text-primary-600 hover:text-primary-700">
+                Best Budget Earbuds 2026
+              </a>
+            </li>
+            <li>
+              <a href="/top-5/top-smartwatches-under-2000" class="text-sm text-primary-600 hover:text-primary-700">
+                Top Smartwatches Under ₹2000
+              </a>
+            </li>
+            <li>
+              <a href="/top-5/best-fast-chargers-2026" class="text-sm text-primary-600 hover:text-primary-700">
+                Best Fast Chargers 2026
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold text-neutral-800 mb-3">Buying Guides</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="/blog/best-power-banks-guide" class="text-sm text-primary-600 hover:text-primary-700">
+                Power Bank Buying Guide
+              </a>
+            </li>
+            <li>
+              <a href="/blog/wfh-setup-under-5000" class="text-sm text-primary-600 hover:text-primary-700">
+                WFH Setup Under ₹5000
+              </a>
+            </li>
+            <li>
+              <a href="/blog/budget-tech-gifts-guide" class="text-sm text-primary-600 hover:text-primary-700">
+                Budget Tech Gifts Guide
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="mt-12 text-center">
+      <p class="text-neutral-600 mb-4">
+        Can't find what you're looking for?
+      </p>
+      <a href="/contact" class="btn-primary">
+        Contact Us
+      </a>
+    </section>
+  </div>
+</BaseLayout>

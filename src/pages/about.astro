@@ -1,0 +1,255 @@
+---
+/**
+ * About Us Page for BudgetTechIndia
+ * Company story, mission, team, and trust factors
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/common/Breadcrumb.astro';
+import type { BreadcrumbItem } from '../utils/interfaces';
+
+// Breadcrumbs
+const breadcrumbs: BreadcrumbItem[] = [
+  { name: 'Home', url: '/' },
+  { name: 'About Us' },
+];
+
+// Team members (placeholder)
+const teamMembers = [
+  {
+    name: 'Rahul Sharma',
+    role: 'Founder & Editor',
+    bio: 'Tech enthusiast with 10+ years of experience in consumer electronics.',
+    image: 'https://placehold.co/200x200/3B82F6/FFFFFF?text=RS',
+  },
+  {
+    name: 'Priya Patel',
+    role: 'Content Lead',
+    bio: 'Passionate about helping consumers make informed buying decisions.',
+    image: 'https://placehold.co/200x200/10B981/FFFFFF?text=PP',
+  },
+  {
+    name: 'Amit Kumar',
+    role: 'Tech Reviewer',
+    bio: 'Gadget lover who tests every product thoroughly before recommending.',
+    image: 'https://placehold.co/200x200/8B5CF6/FFFFFF?text=AK',
+  },
+  {
+    name: 'Sneha Gupta',
+    role: 'Writer & Researcher',
+    bio: 'Research specialist focused on finding the best budget tech deals.',
+    image: 'https://placehold.co/200x200/F59E0B/FFFFFF?text=SG',
+  },
+];
+---
+
+<BaseLayout
+  title="About Us - Our Story & Mission | BudgetTechIndia"
+  description="Learn about BudgetTechIndia - your trusted source for honest tech product reviews under ₹2,000. Discover our mission, team, and commitment to helping Indian consumers."
+  currentPath="/about"
+>
+  <div class="container py-8">
+    <!-- Breadcrumb -->
+    <Breadcrumb items={breadcrumbs} />
+
+    <!-- Page Header -->
+    <header class="mb-12 text-center">
+      <h1 class="font-heading text-h1 text-neutral-900 mb-4">
+        About BudgetTechIndia
+      </h1>
+      <p class="text-neutral-600 max-w-3xl mx-auto text-lg">
+        Your trusted source for honest tech product reviews and recommendations 
+        for budget-conscious Indian consumers.
+      </p>
+    </header>
+
+    <!-- Our Story Section -->
+    <section class="mb-16">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="font-heading text-h2 text-neutral-900 mb-6">
+            Our Story
+          </h2>
+          <div class="prose prose-neutral max-w-none">
+            <p>
+              BudgetTechIndia was founded in 2024 with a simple mission: to help Indian consumers 
+              find the best tech products without breaking the bank. We noticed that most tech 
+              review sites focused on premium products, leaving budget-conscious buyers with 
+              limited reliable information.
+            </p>
+            <p>
+              As a team of tech enthusiasts ourselves, we understand the frustration of wanting 
+              good technology without spending a fortune. That's why we focus exclusively on 
+              products under ₹2,000 – the sweet spot where quality meets affordability.
+            </p>
+            <p>
+              Every product we review is purchased with our own money or borrowed from friends 
+              and family. We don't accept paid reviews, ensuring our recommendations are always 
+              genuine and unbiased.
+            </p>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
+            <div class="text-center text-white p-8">
+              <div class="text-6xl font-bold mb-2">₹2,000</div>
+              <div class="text-xl">Maximum Price Limit</div>
+              <div class="mt-4 text-primary-200">for all products we review</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission Statement -->
+    <section class="mb-16 bg-primary-900 text-white rounded-2xl p-8 md:p-12">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="font-heading text-h2 mb-6">
+          Our Mission
+        </h2>
+        <blockquote class="text-xl md:text-2xl font-medium text-primary-100 mb-6">
+          "To empower every Indian consumer with honest, detailed, and actionable information 
+          about budget tech products, helping them make confident purchasing decisions that 
+          deliver real value for money."
+        </blockquote>
+        <div class="flex items-center justify-center gap-4 text-primary-300">
+          <span class="w-12 h-px bg-primary-700"></span>
+          <span>BudgetTechIndia Team</span>
+          <span class="w-12 h-px bg-primary-700"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Trust Us -->
+    <section class="mb-16">
+      <h2 class="font-heading text-h2 text-neutral-900 mb-8 text-center">
+        Why Trust Us
+      </h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white rounded-xl p-6 shadow-card text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-semibold text-lg text-neutral-900 mb-2">
+            No Paid Reviews
+          </h3>
+          <p class="text-sm text-neutral-600">
+            We never accept payment for reviews. Our opinions are always our own.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 shadow-card text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-semibold text-lg text-neutral-900 mb-2">
+            Hands-On Testing
+          </h3>
+          <p class="text-sm text-neutral-600">
+            Every product is tested in real-world conditions for at least a week.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 shadow-card text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-semibold text-lg text-neutral-900 mb-2">
+            Budget Focused
+          </h3>
+          <p class="text-sm text-neutral-600">
+            We only review products under ₹2,000, staying true to our niche.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 shadow-card text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-semibold text-lg text-neutral-900 mb-2">
+            For India, By Indians
+          </h3>
+          <p class="text-sm text-neutral-600">
+            Content tailored for Indian consumers with local pricing and availability.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="mb-16">
+      <h2 class="font-heading text-h2 text-neutral-900 mb-8 text-center">
+        Meet Our Team
+      </h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {teamMembers.map((member) => (
+          <div class="text-center">
+            <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-neutral-200">
+              <img
+                src={member.image}
+                alt={member.name}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-neutral-900">
+              {member.name}
+            </h3>
+            <p class="text-sm text-primary-600 mb-2">{member.role}</p>
+            <p class="text-sm text-neutral-600">{member.bio}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Affiliate Disclosure -->
+    <section class="mb-16 bg-neutral-50 rounded-2xl p-8">
+      <h2 class="font-heading text-h2 text-neutral-900 mb-4">
+        Affiliate Disclosure
+      </h2>
+      <div class="prose prose-neutral max-w-none">
+        <p>
+          BudgetTechIndia participates in the Amazon Associates Program, an affiliate advertising 
+          program designed to provide a means for sites to earn advertising fees by linking to Amazon.in.
+        </p>
+        <p>
+          When you click on our product links and make a purchase, we may earn a small commission 
+          at no extra cost to you. This helps support our website and allows us to continue 
+          providing free, honest reviews.
+        </p>
+        <p>
+          <strong>Important:</strong> This never influences our recommendations. We only recommend 
+          products we genuinely believe offer good value. Our editorial content is completely 
+          independent of any affiliate relationships.
+        </p>
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="text-center">
+      <h2 class="font-heading text-h2 text-neutral-900 mb-4">
+        Have Questions?
+      </h2>
+      <p class="text-neutral-600 mb-6 max-w-2xl mx-auto">
+        We'd love to hear from you! Whether you have a product suggestion, feedback, 
+        or just want to say hello, feel free to reach out.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/contact" class="btn-primary">
+          Contact Us
+        </a>
+        <a href="/reviews" class="btn-outline">
+          Browse Reviews
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

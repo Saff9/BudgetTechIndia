@@ -1,0 +1,555 @@
+---
+/**
+ * Home Page for BudgetTechIndia
+ * Premium Dark Theme - Enhanced with testimonials, brand logos, featured deals
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getActiveVariation } from '../utils/variation';
+import DarkHero from '../components/home/Hero.astro';
+import LightHero from '../components/light/Hero.astro';
+import DarkProductCard from '../components/products/ProductCard.astro';
+import LightProductCard from '../components/light/ProductCard.astro';
+
+const activeVariation = getActiveVariation();
+const isDarkTheme = activeVariation === 'dark';
+
+// Theme-specific components
+const Hero = isDarkTheme ? DarkHero : LightHero;
+const ProductCard = isDarkTheme ? DarkProductCard : LightProductCard;
+import JsonLD from '../components/seo/JsonLD.astro';
+import type { Category, Product, Article } from '../utils/interfaces';
+
+// Import sample data
+import categoriesData from '../data/categories.json';
+import productsData from '../data/products.json';
+import articlesData from '../data/articles.json';
+
+// Get featured categories
+const categories: Category[] = categoriesData.categories;
+
+// Get featured products (first 8)
+const featuredProducts: Product[] = productsData.products.slice(0, 8);
+
+// Get latest reviews
+const latestReviews = articlesData.articles
+  .filter((article) => article.type === 'review')
+  .slice(0, 3);
+
+// Get top 5 lists
+const top5Lists = articlesData.articles
+  .filter((article) => article.type === 'top5')
+  .slice(0, 3);
+
+// Testimonials data
+const testimonials = [
+  {
+    name: 'Rahul Sharma',
+    location: 'Mumbai',
+    avatar: 'RS',
+    rating: 5,
+    text: 'Found the perfect earbuds under ₹1000 thanks to BudgetTechIndia. Their detailed reviews helped me make an informed decision without overspending.',
+    product: 'Boat Airdopes 141',
+  },
+  {
+    name: 'Priya Patel',
+    location: 'Delhi',
+    avatar: 'PP',
+    rating: 5,
+    text: 'The comparison tables are so helpful! I was confused between two smartwatches, and their side-by-side comparison made my choice easy.',
+    product: 'Noise ColorFit Pro',
+  },
+  {
+    name: 'Amit Kumar',
+    location: 'Bangalore',
+    avatar: 'AK',
+    rating: 5,
+    text: 'Finally, a website that understands budget constraints. Every recommendation is practical and value-for-money. Highly recommended!',
+    product: 'Realme Power Bank',
+  },
+];
+
+// Brand logos
+const brands = [
+  { name: 'boAt', width: 80 },
+  { name: 'Noise', width: 75 },
+  { name: 'Realme', width: 85 },
+  { name: 'Redmi', width: 75 },
+  { name: 'OnePlus', width: 90 },
+  { name: 'Ambrane', width: 85 },
+];
+
+// Featured deals with countdown
+const featuredDeals = [
+  {
+    title: 'Flash Sale: Earbuds',
+    discount: 'Up to 70% OFF',
+    endTime: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
+    href: '/categories/bluetooth-earbuds',
+    image: '/images/categories/earbuds.jpg',
+  },
+  {
+    title: 'Smartwatch Deals',
+    discount: 'Starting ₹999',
+    endTime: new Date(Date.now() + 12 * 60 * 60 * 1000), // 12 hours from now
+    href: '/categories/smartwatches',
+    image: '/images/categories/smartwatches.jpg',
+  },
+];
+
+// Category icons mapping
+const categoryIcons: Record<string, string> = {
+  'bluetooth-earbuds': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg>`,
+  'power-banks': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`,
+  'fast-chargers-cables': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`,
+  'smartwatches': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`,
+  'laptop-accessories': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>`,
+  'budget-gadgets-under-999': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>`,
+  'work-from-home-essentials': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>`,
+};
+
+// Website schema for SEO
+const websiteSchema = {
+  name: 'BudgetTechIndia',
+  url: 'https://budgettechindia.com',
+  description: 'Your trusted source for honest tech product reviews under ₹2,000 in India.',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://budgettechindia.com/search?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+};
+---
+
+<BaseLayout
+  title="BudgetTechIndia - Best Budget Tech Products Under ₹2,000"
+  description="Discover the best budget tech products under ₹2,000 in India. Honest reviews, top 5 lists, and buying guides for earbuds, smartwatches, power banks, and more."
+  currentPath="/"
+  variation={activeVariation}
+>
+  <!-- Hero Section -->
+  <Hero />
+
+  <!-- Featured Deals with Countdown -->
+  <section class="py-12 relative overflow-hidden">
+    <div class="container">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold text-[#F4F1EA] mb-2">
+            🔥 Featured Deals
+          </h2>
+          <p class="text-[#a8b5ba]">Limited time offers - Don't miss out!</p>
+        </div>
+        <a href="/reviews?sort=deals" class="hidden md:flex items-center gap-2 text-[#C46A3A] hover:text-[#d4834f] transition-colors">
+          View All Deals
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        {featuredDeals.map((deal) => (
+          <a
+            href={deal.href}
+            class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#1A2E35] to-[#0F1F24] border border-[#2a4450]/50 hover:border-[#C46A3A]/50 transition-all duration-300 hover:shadow-glow-copper"
+          >
+            <div class="absolute inset-0 bg-gradient-to-r from-[#C46A3A]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="relative p-6 flex items-center justify-between">
+              <div>
+                <span class="inline-block px-3 py-1 bg-[#C46A3A] text-white text-sm font-bold rounded-lg mb-3 animate-countdown-pulse">
+                  {deal.discount}
+                </span>
+                <h3 class="text-xl font-bold text-[#F4F1EA] mb-2">{deal.title}</h3>
+                <div class="countdown" data-end-time={deal.endTime.toISOString()}>
+                  <span class="text-sm text-[#a8b5ba]">Ends in: </span>
+                  <div class="inline-flex gap-1 mt-1">
+                    <span class="countdown-item">
+                      <span class="countdown-value" data-unit="hours">00</span>
+                      <span class="countdown-label">Hrs</span>
+                    </span>
+                    <span class="countdown-item">
+                      <span class="countdown-value" data-unit="minutes">00</span>
+                      <span class="countdown-label">Min</span>
+                    </span>
+                    <span class="countdown-item">
+                      <span class="countdown-value" data-unit="seconds">00</span>
+                      <span class="countdown-label">Sec</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="w-20 h-20 bg-[#C46A3A]/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-10 h-10 text-[#C46A3A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                </svg>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Categories -->
+  <section class="py-16 relative">
+    <div class="absolute inset-0 decorative-dots opacity-20"></div>
+    <div class="container relative">
+      <div class="text-center mb-12">
+        <span class="inline-block px-4 py-1.5 bg-[#C46A3A]/10 text-[#C46A3A] text-sm font-semibold rounded-full mb-4">
+          Browse Categories
+        </span>
+        <h2 class="text-3xl md:text-4xl font-bold text-[#F4F1EA] mb-4">
+          Shop by Category
+        </h2>
+        <p class="text-[#a8b5ba] max-w-2xl mx-auto">
+          Explore our curated collection of budget tech products across popular categories
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        {categories.map((category, index) => (
+          <a
+            href={`/categories/${category.slug}`}
+            class="group card-premium p-6 text-center scroll-animate"
+            style={`animation-delay: ${index * 100}ms`}
+          >
+            <div class="w-16 h-16 mx-auto mb-4 bg-[#C46A3A]/10 text-[#C46A3A] rounded-xl flex items-center justify-center group-hover:bg-[#C46A3A] group-hover:text-[#F4F1EA] transition-all duration-300 group-hover:scale-110">
+              <Fragment set:html={categoryIcons[category.id] || `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>`} />
+            </div>
+            <h3 class="font-semibold text-[#F4F1EA] mb-2 group-hover:text-[#C46A3A] transition-colors duration-200">
+              {category.name}
+            </h3>
+            <p class="text-sm text-[#a8b5ba] line-clamp-2 mb-3">
+              {category.description}
+            </p>
+            <span class="inline-flex items-center gap-1 text-xs text-[#C46A3A] font-medium">
+              {category.productCount} products
+              <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="py-16 bg-[#0a1619]">
+    <div class="container">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-12">
+        <div>
+          <span class="inline-block px-4 py-1.5 bg-[#C46A3A]/10 text-[#C46A3A] text-sm font-semibold rounded-full mb-4">
+            Top Picks
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold text-[#F4F1EA] mb-2">
+            Featured Products
+          </h2>
+          <p class="text-[#a8b5ba]">
+            Hand-picked products offering the best value for money
+          </p>
+        </div>
+        <a href="/categories" class="btn-ghost-premium">
+          View All Products
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {featuredProducts.map((product, index) => (
+          <div class="scroll-animate" style={`animation-delay: ${index * 100}ms`}>
+            <ProductCard product={product} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="py-16 relative overflow-hidden">
+    <div class="absolute inset-0 gradient-radial-glow"></div>
+    <div class="container relative">
+      <div class="text-center mb-12">
+        <span class="inline-block px-4 py-1.5 bg-[#C46A3A]/10 text-[#C46A3A] text-sm font-semibold rounded-full mb-4">
+          Testimonials
+        </span>
+        <h2 class="text-3xl md:text-4xl font-bold text-[#F4F1EA] mb-4">
+          What Our Readers Say
+        </h2>
+        <p class="text-[#a8b5ba] max-w-2xl mx-auto">
+          Join thousands of satisfied readers who found their perfect budget tech
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        {testimonials.map((testimonial, index) => (
+          <div class="testimonial-card scroll-animate" style={`animation-delay: ${index * 150}ms`}>
+            <div class="flex items-center gap-1 mb-4">
+              {[...Array(testimonial.rating)].map(() => (
+                <svg class="w-4 h-4 text-[#ffa41c]" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+            </div>
+            <p class="text-[#a8b5ba] mb-6 leading-relaxed">
+              "{testimonial.text}"
+            </p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#C46A3A] to-[#d4834f] flex items-center justify-center text-[#F4F1EA] font-bold text-sm">
+                {testimonial.avatar}
+              </div>
+              <div>
+                <p class="font-semibold text-[#F4F1EA]">{testimonial.name}</p>
+                <p class="text-xs text-[#6b7d83]">{testimonial.location}</p>
+              </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-[#2a4450]/30">
+              <p class="text-xs text-[#6b7d83]">
+                Purchased: <span class="text-[#C46A3A]">{testimonial.product}</span>
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Logos Section -->
+  <section class="py-12 border-y border-[#2a4450]/30">
+    <div class="container">
+      <p class="text-center text-sm text-[#6b7d83] mb-8">
+        Trusted reviews for top brands
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+        {brands.map((brand) => (
+          <div class="brand-logo px-6 py-3">
+            <span class="text-xl font-bold text-[#a8b5ba]">{brand.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Reviews -->
+  <section class="py-16">
+    <div class="container">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-12">
+        <div>
+          <span class="inline-block px-4 py-1.5 bg-[#C46A3A]/10 text-[#C46A3A] text-sm font-semibold rounded-full mb-4">
+            Latest
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold text-[#F4F1EA] mb-2">
+            Latest Reviews
+          </h2>
+          <p class="text-[#a8b5ba]">
+            In-depth analysis and honest opinions on the latest budget tech
+          </p>
+        </div>
+        <a href="/reviews" class="btn-ghost-premium">
+          All Reviews
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        {latestReviews.map((article, index) => (
+          <article class="group card-premium overflow-hidden scroll-animate" style={`animation-delay: ${index * 100}ms`}>
+            <a href={`/reviews/${article.slug}`} class="block">
+              <div class="aspect-video bg-[#0F1F24] overflow-hidden">
+                <img
+                  src={article.imageUrl}
+                  alt={article.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              </div>
+              <div class="p-6">
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#C46A3A]/20 text-[#C46A3A] mb-3">
+                  Review
+                </span>
+                <h3 class="font-semibold text-lg text-[#F4F1EA] mb-2 group-hover:text-[#C46A3A] transition-colors duration-200 line-clamp-2">
+                  {article.title}
+                </h3>
+                <p class="text-sm text-[#a8b5ba] line-clamp-2 mb-4">
+                  {article.excerpt}
+                </p>
+                <div class="flex items-center gap-4 text-xs text-[#6b7d83]">
+                  <time datetime={article.date}>{article.date}</time>
+                  <span>{article.readTime}</span>
+                </div>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Top 5 Lists -->
+  <section class="py-16 bg-[#0a1619]">
+    <div class="container">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-12">
+        <div>
+          <span class="inline-block px-4 py-1.5 bg-[#C46A3A]/10 text-[#C46A3A] text-sm font-semibold rounded-full mb-4">
+            Curated Lists
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold text-[#F4F1EA] mb-2">
+            Top 5 Lists
+          </h2>
+          <p class="text-[#a8b5ba]">
+            Curated lists to help you find the best products quickly
+          </p>
+        </div>
+        <a href="/top-5" class="btn-ghost-premium">
+          All Top 5 Lists
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        {top5Lists.map((article, index) => (
+          <article class="group card-premium overflow-hidden border-l-4 border-l-[#C46A3A] scroll-animate" style={`animation-delay: ${index * 100}ms`}>
+            <a href={`/top-5/${article.slug}`} class="block p-6">
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#C46A3A]/20 text-[#C46A3A] mb-3">
+                Top 5
+              </span>
+              <h3 class="font-semibold text-lg text-[#F4F1EA] mb-2 group-hover:text-[#C46A3A] transition-colors duration-200 line-clamp-2">
+                {article.title}
+              </h3>
+              <p class="text-sm text-[#a8b5ba] line-clamp-2 mb-4">
+                {article.excerpt}
+              </p>
+              <div class="flex items-center gap-4 text-xs text-[#6b7d83]">
+                <time datetime={article.date}>{article.date}</time>
+                <span>{article.readTime}</span>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Trust Us -->
+  <section class="py-16 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-[#1A2E35] to-[#0F1F24]"></div>
+    <div class="absolute inset-0 decorative-grid opacity-20"></div>
+    <div class="container relative">
+      <div class="text-center mb-12">
+        <span class="inline-block px-4 py-1.5 bg-[#C46A3A]/10 text-[#C46A3A] text-sm font-semibold rounded-full mb-4">
+          Why Choose Us
+        </span>
+        <h2 class="text-3xl md:text-4xl font-bold text-[#F4F1EA] mb-4">
+          Why Trust BudgetTechIndia?
+        </h2>
+        <p class="text-[#a8b5ba] max-w-2xl mx-auto">
+          We're committed to providing honest, unbiased reviews to help you make informed decisions
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="trust-badge-item scroll-animate">
+          <div class="trust-badge-icon">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="font-semibold text-[#F4F1EA]">Honest Reviews</h3>
+          <p class="text-sm text-[#a8b5ba]">
+            We test products thoroughly and share both pros and cons transparently
+          </p>
+        </div>
+
+        <div class="trust-badge-item scroll-animate" style="animation-delay: 100ms">
+          <div class="trust-badge-icon">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="font-semibold text-[#F4F1EA]">Budget Focused</h3>
+          <p class="text-sm text-[#a8b5ba]">
+            All products are under ₹2,000, perfect for budget-conscious buyers
+          </p>
+        </div>
+
+        <div class="trust-badge-item scroll-animate" style="animation-delay: 200ms">
+          <div class="trust-badge-icon">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <h3 class="font-semibold text-[#F4F1EA]">Made for India</h3>
+          <p class="text-sm text-[#a8b5ba]">
+            Prices in INR, Amazon India links, and content tailored for Indian consumers
+          </p>
+        </div>
+
+        <div class="trust-badge-item scroll-animate" style="animation-delay: 300ms">
+          <div class="trust-badge-icon">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+          </div>
+          <h3 class="font-semibold text-[#F4F1EA]">Updated Regularly</h3>
+          <p class="text-sm text-[#a8b5ba]">
+            We keep our content fresh with the latest products and prices
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JSON-LD Structured Data -->
+  <JsonLD type="website" data={websiteSchema} />
+</BaseLayout>
+
+<script>
+  // Scroll animation observer
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.scroll-animate').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Countdown timer
+  function updateCountdowns() {
+    document.querySelectorAll('.countdown').forEach(countdown => {
+      const endTime = new Date(countdown.dataset.endTime);
+      const now = new Date();
+      const diff = endTime.getTime() - now.getTime();
+
+      if (diff > 0) {
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        countdown.querySelector('[data-unit="hours"]').textContent = hours.toString().padStart(2, '0');
+        countdown.querySelector('[data-unit="minutes"]').textContent = minutes.toString().padStart(2, '0');
+        countdown.querySelector('[data-unit="seconds"]').textContent = seconds.toString().padStart(2, '0');
+      }
+    });
+  }
+
+  updateCountdowns();
+  setInterval(updateCountdowns, 1000);
+</script>

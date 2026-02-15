@@ -1,0 +1,135 @@
+---
+/**
+ * 404 Error Page for BudgetTechIndia
+ * Friendly error page with search and navigation options
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Popular pages for quick links
+const popularPages = [
+  { name: 'Home', url: '/', description: 'Return to homepage' },
+  { name: 'Reviews', url: '/reviews', description: 'Browse product reviews' },
+  { name: 'Top 5 Lists', url: '/top-5', description: 'See our curated lists' },
+  { name: 'Categories', url: '/categories', description: 'Explore all categories' },
+  { name: 'Contact', url: '/contact', description: 'Get in touch with us' },
+];
+
+// Popular categories
+const popularCategories = [
+  { name: 'Bluetooth Earbuds', url: '/categories/bluetooth-earbuds' },
+  { name: 'Smartwatches', url: '/categories/smartwatches' },
+  { name: 'Power Banks', url: '/categories/power-banks' },
+  { name: 'Budget Gadgets Under ₹999', url: '/categories/budget-gadgets-under-999' },
+];
+---
+
+<BaseLayout
+  title="Page Not Found - 404 | BudgetTechIndia"
+  description="Oops! The page you're looking for doesn't exist. Let us help you find what you're looking for."
+  noindex={true}
+  currentPath="/404"
+>
+  <div class="container py-16">
+    <div class="max-w-2xl mx-auto text-center">
+      <!-- 404 Illustration -->
+      <div class="mb-8">
+        <div class="text-9xl font-bold text-primary-100 mb-4">404</div>
+        <div class="w-32 h-32 mx-auto bg-primary-100 rounded-full flex items-center justify-center">
+          <svg class="w-16 h-16 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Error Message -->
+      <h1 class="font-heading text-h1 text-neutral-900 mb-4">
+        Page Not Found
+      </h1>
+      <p class="text-lg text-neutral-600 mb-8">
+        Oops! The page you're looking for seems to have gone on a budget shopping spree 
+        and couldn't be found. Let's get you back on track!
+      </p>
+
+      <!-- Search Box -->
+      <div class="bg-white rounded-xl shadow-card p-6 mb-8">
+        <h2 class="font-heading font-semibold text-lg text-neutral-900 mb-4">
+          Looking for something specific?
+        </h2>
+        <form action="/search" method="get" class="flex gap-3">
+          <label for="search" class="sr-only">Search</label>
+          <input
+            type="search"
+            id="search"
+            name="q"
+            placeholder="Search for products, reviews..."
+            class="flex-1 px-4 py-3 rounded-lg border border-neutral-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+          <button type="submit" class="btn-primary">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Home Button -->
+      <div class="mb-12">
+        <a href="/" class="btn-primary inline-flex items-center">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          Go to Homepage
+        </a>
+      </div>
+
+      <!-- Popular Pages -->
+      <div class="bg-neutral-50 rounded-2xl p-8 mb-8">
+        <h2 class="font-heading font-semibold text-lg text-neutral-900 mb-6">
+          Popular Pages
+        </h2>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {popularPages.map((page) => (
+            <a
+              href={page.url}
+              class="bg-white rounded-lg p-4 text-left hover:shadow-card transition-shadow duration-200 group"
+            >
+              <h3 class="font-semibold text-neutral-900 group-hover:text-primary-600 transition-colors duration-200">
+                {page.name}
+              </h3>
+              <p class="text-sm text-neutral-500">{page.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Popular Categories -->
+      <div class="mb-8">
+        <h2 class="font-heading font-semibold text-lg text-neutral-900 mb-4">
+          Browse Categories
+        </h2>
+        <div class="flex flex-wrap justify-center gap-3">
+          {popularCategories.map((category) => (
+            <a
+              href={category.url}
+              class="px-4 py-2 bg-white border border-neutral-200 rounded-full text-sm text-neutral-700 hover:border-primary-500 hover:text-primary-600 transition-colors duration-200"
+            >
+              {category.name}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Help Text -->
+      <div class="text-neutral-500 text-sm">
+        <p>
+          If you believe this is an error, please{' '}
+          <a href="/contact" class="text-primary-600 hover:text-primary-700">
+            contact us
+          </a>
+          .
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

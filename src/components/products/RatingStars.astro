@@ -1,0 +1,110 @@
+---
+/**
+ * RatingStars Component for BudgetTechIndia
+ * Amazon-style star rating with numeric value and review count
+ */
+
+import { formatRating } from '../../utils/helpers';
+
+interface Props {
+  /** Rating value (0-5) */
+  rating: number;
+  /** Total number of reviews */
+  reviewCount?: number;
+  /** Size variant */
+  size?: 'sm' | 'md' | 'lg';
+  /** Whether to show numeric rating */
+  showNumeric?: boolean;
+  /** Whether to show review count */
+  showCount?: boolean;
+}
+
+const {
+  rating,
+  reviewCount,
+  size = 'md',
+  showNumeric = true,
+  showCount = true,
+} = Astro.props;
+
+// Size classes
+const sizeClasses = {
+  sm: 'w-3.5 h-3.5',
+  md: 'w-4 h-4',
+  lg: 'w-5 h-5',
+};
+
+const textSizeClasses = {
+  sm: 'text-xs',
+  md: 'text-sm',
+  lg: 'text-base',
+};
+
+// Generate star array
+const fullStars = Math.floor(rating);
+const hasHalfStar = rating % 1 >= 0.5;
+const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+---
+
+<div class="inline-flex items-center gap-1.5" role="img" aria-label={`Rating: ${formatRating(rating)} out of 5 stars`}>
+  <!-- Stars -->
+  <div class="flex items-center gap-0.5">
+    {/* Full stars */}
+    {Array(fullStars).fill(null).map(() => (
+      <svg
+        class={`${sizeClasses[size]} text-star-gold`}
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        aria-hidden="true"
+      >
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+      </svg>
+    ))}
+    
+    {/* Half star */}
+    {hasHalfStar && (
+      <svg
+        class={`${sizeClasses[size]} text-star-gold`}
+        viewBox="0 0 20 20"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id={`half-star-${rating}`}>
+            <stop offset="50%" stop-color="currentColor" />
+            <stop offset="50%" stop-color="#d2d5d9" />
+          </linearGradient>
+        </defs>
+        <path
+          fill={`url(#half-star-${rating})`}
+          d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+        />
+      </svg>
+    )}
+    
+    {/* Empty stars */}
+    {Array(emptyStars).fill(null).map(() => (
+      <svg
+        class={`${sizeClasses[size]} text-star-empty`}
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        aria-hidden="true"
+      >
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+      </svg>
+    ))}
+  </div>
+  
+  <!-- Numeric rating -->
+  {showNumeric && (
+    <span class={`${textSizeClasses[size]} font-medium text-text-primary`}>
+      {formatRating(rating)}
+    </span>
+  )}
+  
+  <!-- Review count -->
+  {showCount && reviewCount !== undefined && (
+    <span class={`${textSizeClasses[size]} text-text-secondary`}>
+      ({reviewCount.toLocaleString('en-IN')})
+    </span>
+  )}
+</div>

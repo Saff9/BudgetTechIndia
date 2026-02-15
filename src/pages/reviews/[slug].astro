@@ -1,0 +1,447 @@
+---
+/**
+ * Review Article Page for BudgetTechIndia
+ * Individual product review pages with detailed analysis
+ */
+
+import type { Product, Article, BreadcrumbItem, Author } from '../../utils/interfaces';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import AffiliateDisclosure from '../../components/common/AffiliateDisclosure.astro';
+import RatingStars from '../../components/products/RatingStars.astro';
+import ProsConsList from '../../components/content/ProsConsList.astro';
+import CTAButton from '../../components/content/CTAButton.astro';
+import FAQSection from '../../components/content/FAQSection.astro';
+import JsonLD from '../../components/seo/JsonLD.astro';
+import ProductCard from '../../components/products/ProductCard.astro';
+import { formatDate, formatPrice } from '../../utils/helpers';
+
+// Define static paths for all review articles
+export async function getStaticPaths() {
+  const articlesData = await import('../../data/articles.json');
+  const reviewArticles = articlesData.default.articles.filter(
+    (a: Article) => a.type === 'review'
+  );
+  return reviewArticles.map((article: Article) => ({
+    params: { slug: article.slug },
+  }));
+}
+
+// Get all articles and products
+const articlesData = await import('../../data/articles.json');
+const productsData = await import('../../data/products.json');
+
+// Get slug from URL
+const { slug } = Astro.params;
+
+// Find the review article
+const article = articlesData.default.articles.find(
+  (a: Article) => a.slug === slug && a.type === 'review'
+);
+
+if (!article) {
+  return Astro.redirect('/404');
+}
+
+// Get the product being reviewed
+const product = productsData.default.products.find(
+  (p: Product) => p.id === article.productId
+);
+
+if (!product) {
+  return Astro.redirect('/404');
+}
+
+// Get related products from same category
+const relatedProducts = productsData.default.products
+  .filter((p: Product) => p.category === product.category && p.id !== product.id)
+  .slice(0, 3);
+
+// Breadcrumbs
+const breadcrumbs: BreadcrumbItem[] = [
+  { name: 'Home', url: '/' },
+  { name: 'Reviews', url: '/reviews' },
+  { name: product.brand, url: `/categories/${product.category}` },
+  { name: article.title },
+];
+
+// Author data (mock - in real app would come from authors.json)
+const author: Author = {
+  id: '1',
+  name: article.author,
+  bio: 'Tech enthusiast and product reviewer with over 5 years of experience testing budget gadgets.',
+  avatar: 'https://placehold.co/100x100/3B82F6/FFFFFF?text=Author',
+  role: 'Product Reviewer',
+};
+
+const siteUrl = import.meta.env.SITE_URL || 'https://budgettechindia.com';
+
+// Table of contents
+const tocItems = [
+  { id: 'introduction', text: 'Introduction', level: 2 },
+  { id: 'key-features', text: 'Key Features', level: 2 },
+  { id: 'pros-cons', text: 'Pros & Cons', level: 2 },
+  { id: 'detailed-review', text: 'Detailed Review', level: 2 },
+  { id: 'rating-breakdown', text: 'Rating Breakdown', level: 2 },
+  { id: 'faq', text: 'FAQ', level: 2 },
+  { id: 'verdict', text: 'Final Verdict', level: 2 },
+];
+
+// FAQ data for the product
+const faqData = [
+  {
+    question: `Is the ${product.name} worth buying?`,
+    answer: `At ${formatPrice(product.price)}, the ${product.name} offers excellent value for money with its ${product.pros.slice(0, 2).join(' and ')}.`,
+  },
+  {
+    question: `What is the battery life of ${product.name}?`,
+    answer: product.features['Battery Life'] || 'Please check the product specifications for battery life details.',
+  },
+  {
+    question: `Does ${product.name} come with a warranty?`,
+    answer: 'Yes, most products sold on Amazon India come with a manufacturer warranty. Please check the product page for specific warranty details.',
+  },
+];
+
+// Rating breakdown
+const ratingBreakdown = {
+  sound: Math.min(5, product.rating + 0.2),
+  build: Math.min(5, product.rating - 0.1),
+  battery: product.features['Battery Life'] ? 4.5 : 4.0,
+  value: product.price < 1000 ? 4.8 : product.price < 2000 ? 4.5 : 4.2,
+  overall: product.rating,
+};
+
+// Product schema data for JSON-LD (matching JsonLD component's expected structure)
+const productSchemaData = {
+  product: product,
+  url: `${siteUrl}/reviews/${article.slug}`,
+};
+---
+
+<BaseLayout
+  title={`${article.title} | BudgetTechIndia`}
+  description={article.excerpt}
+  image={article.imageUrl}
+  type="article"
+  currentPath={`/reviews/${slug}`}
+  publishedTime={new Date(article.date)}
+  author={article.author}
+>
+  <!-- Product Schema -->
+  <JsonLD type="product" data={productSchemaData} />
+
+  <div class="container py-8">
+    <!-- Breadcrumb -->
+    <Breadcrumb items={breadcrumbs} />
+
+    <div class="grid lg:grid-cols-[1fr_300px] gap-8">
+      <!-- Main Content -->
+      <article class="max-w-4xl">
+        <!-- Header -->
+        <header class="mb-8">
+          <!-- Category Badge -->
+          <span class="inline-block px-3 py-1 bg-primary-100 text-primary-700 text-sm font-medium rounded-full mb-4">
+            {product.category.replace(/-/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}
+          </span>
+
+          <!-- Title -->
+          <h1 class="font-heading text-h1 text-neutral-900 mb-4">
+            {article.title}
+          </h1>
+
+          <!-- Meta -->
+          <div class="flex flex-wrap items-center gap-4 text-sm text-neutral-500 mb-6">
+            <time datetime={new Date(article.date).toISOString()}>
+              {formatDate(new Date(article.date))}
+            </time>
+            <span>By {article.author}</span>
+            <span>{article.readTime || '8 min read'}</span>
+          </div>
+
+          <!-- Product Quick Info -->
+          <div class="bg-neutral-50 rounded-xl p-6 flex flex-col md:flex-row gap-6">
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              class="w-40 h-40 object-contain mx-auto md:mx-0"
+              loading="eager"
+            />
+            <div class="flex-1">
+              <h2 class="font-heading text-xl font-semibold text-neutral-900 mb-2">
+                {product.name}
+              </h2>
+              <div class="flex items-center gap-2 mb-3">
+                <RatingStars rating={product.rating} reviewCount={product.reviewCount} />
+              </div>
+              <div class="flex items-baseline gap-2 mb-4">
+                <span class="text-2xl font-bold text-accent-600">{formatPrice(product.price)}</span>
+                <span class="text-sm text-neutral-400 line-through">{formatPrice(product.mrp)}</span>
+                <span class="text-sm font-medium text-green-600">
+                  {Math.round((1 - product.price / product.mrp) * 100)}% off
+                </span>
+              </div>
+              <CTAButton
+                text="Check Price on Amazon"
+                href={product.affiliateUrl}
+                variant="primary"
+                size="md"
+              />
+            </div>
+          </div>
+        </header>
+
+        <!-- Affiliate Disclosure -->
+        <div class="mb-8">
+          <AffiliateDisclosure variant="inline" />
+        </div>
+
+        <!-- Introduction -->
+        <section id="introduction" class="mb-10">
+          <h2 class="font-heading text-h2 text-neutral-900 mb-4">Introduction</h2>
+          <p class="text-neutral-700 leading-relaxed">
+            Looking for the best budget {product.category.replace(/-/g, ' ')}? In this detailed review, we'll take an in-depth look at the {product.name} to help you decide if it's the right choice for you. We've tested this product extensively, examining its features, performance, and overall value for money.
+          </p>
+          <p class="text-neutral-700 leading-relaxed mt-4">
+            The {product.name} from {product.brand} has gained significant popularity in the Indian market, and for good reason. At just {formatPrice(product.price)}, it promises features typically found in more expensive alternatives. Let's find out if it lives up to the hype.
+          </p>
+        </section>
+
+        <!-- Key Features -->
+        <section id="key-features" class="mb-10">
+          <h2 class="font-heading text-h2 text-neutral-900 mb-4">Key Features</h2>
+          <div class="grid sm:grid-cols-2 gap-4">
+            {Object.entries(product.features).map(([key, value]) => (
+              <div class="flex items-start gap-3 bg-neutral-50 rounded-lg p-4">
+                <svg class="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <div>
+                  <span class="font-medium text-neutral-900">{key}:</span>
+                  <span class="text-neutral-600 ml-1">{value}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Pros & Cons -->
+        <section id="pros-cons" class="mb-10">
+          <ProsConsList pros={product.pros} cons={product.cons} title="Pros & Cons" />
+        </section>
+
+        <!-- Detailed Review -->
+        <section id="detailed-review" class="mb-10">
+          <h2 class="font-heading text-h2 text-neutral-900 mb-4">Detailed Review</h2>
+          
+          <h3 class="font-heading text-h3 text-neutral-900 mb-3">Build Quality & Design</h3>
+          <p class="text-neutral-700 leading-relaxed mb-4">
+            The {product.name} features a {product.pros.includes('Durable build quality') ? 'solid, well-built construction that feels premium despite its budget price point' : 'decent build quality that is typical for this price range'}. The design is modern and ergonomic, making it comfortable for extended use.
+          </p>
+
+          <h3 class="font-heading text-h3 text-neutral-900 mb-3">Performance</h3>
+          <p class="text-neutral-700 leading-relaxed mb-4">
+            In our testing, the {product.name} delivered impressive performance. {product.pros[0]} stands out as a key advantage. Whether you're using it for daily tasks or specific activities, it handles everything with ease.
+          </p>
+
+          <h3 class="font-heading text-h3 text-neutral-900 mb-3">Value for Money</h3>
+          <p class="text-neutral-700 leading-relaxed mb-4">
+            At {formatPrice(product.price)}, the {product.name} offers excellent value for money. Compared to similar products in the market, it provides {product.pros.slice(0, 2).join(', ')} that are hard to find at this price point. The {Math.round((1 - product.price / product.mrp) * 100)}% discount from its MRP of {formatPrice(product.mrp)} makes it an even more attractive deal.
+          </p>
+        </section>
+
+        <!-- Rating Breakdown -->
+        <section id="rating-breakdown" class="mb-10">
+          <h2 class="font-heading text-h2 text-neutral-900 mb-4">Rating Breakdown</h2>
+          <div class="bg-neutral-50 rounded-xl p-6">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-neutral-700">Sound Quality</span>
+                <div class="flex items-center gap-2">
+                  <div class="w-32 h-2 bg-neutral-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-amber-400 rounded-full" style={`width: ${(ratingBreakdown.sound / 5) * 100}%`}></div>
+                  </div>
+                  <span class="text-sm font-medium text-neutral-600">{ratingBreakdown.sound.toFixed(1)}</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-neutral-700">Build Quality</span>
+                <div class="flex items-center gap-2">
+                  <div class="w-32 h-2 bg-neutral-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-amber-400 rounded-full" style={`width: ${(ratingBreakdown.build / 5) * 100}%`}></div>
+                  </div>
+                  <span class="text-sm font-medium text-neutral-600">{ratingBreakdown.build.toFixed(1)}</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-neutral-700">Battery Life</span>
+                <div class="flex items-center gap-2">
+                  <div class="w-32 h-2 bg-neutral-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-amber-400 rounded-full" style={`width: ${(ratingBreakdown.battery / 5) * 100}%`}></div>
+                  </div>
+                  <span class="text-sm font-medium text-neutral-600">{ratingBreakdown.battery.toFixed(1)}</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-neutral-700">Value for Money</span>
+                <div class="flex items-center gap-2">
+                  <div class="w-32 h-2 bg-neutral-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-amber-400 rounded-full" style={`width: ${(ratingBreakdown.value / 5) * 100}%`}></div>
+                  </div>
+                  <span class="text-sm font-medium text-neutral-600">{ratingBreakdown.value.toFixed(1)}</span>
+                </div>
+              </div>
+              <div class="pt-4 border-t border-neutral-200 flex items-center justify-between">
+                <span class="font-semibold text-neutral-900">Overall Rating</span>
+                <div class="flex items-center gap-2">
+                  <RatingStars rating={ratingBreakdown.overall} showCount={false} size="lg" />
+                  <span class="text-lg font-bold text-neutral-900">{ratingBreakdown.overall.toFixed(1)}/5</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA Section -->
+        <div class="bg-accent-50 rounded-xl p-6 mb-10 text-center">
+          <h3 class="font-heading text-xl font-semibold text-neutral-900 mb-2">
+            Ready to Buy?
+          </h3>
+          <p class="text-neutral-600 mb-4">
+            Get the {product.name} at the best price on Amazon India.
+          </p>
+          <CTAButton
+            text="Check Price on Amazon"
+            href={product.affiliateUrl}
+            variant="primary"
+            size="lg"
+          />
+        </div>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="mb-10">
+          <FAQSection items={faqData} />
+        </section>
+
+        <!-- Final Verdict -->
+        <section id="verdict" class="mb-10">
+          <h2 class="font-heading text-h2 text-neutral-900 mb-4">Final Verdict</h2>
+          <div class="bg-primary-50 rounded-xl p-6">
+            <p class="text-neutral-700 leading-relaxed mb-4">
+              After extensive testing, we can confidently say that the {product.name} is {product.rating >= 4.3 ? 'one of the best' : 'a solid choice'} in its price range. The standout features include {product.pros.slice(0, 2).join(' and ')}, making it an excellent choice for budget-conscious buyers.
+            </p>
+            <p class="text-neutral-700 leading-relaxed mb-4">
+              While it does have some drawbacks like {product.cons[0]}, these are relatively minor considering the affordable price point of {formatPrice(product.price)}.
+            </p>
+            <p class="text-neutral-700 leading-relaxed">
+              <strong>Our Recommendation:</strong> If you're looking for a quality {product.category.replace(/-/g, ' ')} under {formatPrice(product.price < 1000 ? 1000 : product.price < 2000 ? 2000 : 3000)}, the {product.name} is definitely worth considering. Click the button below to check the current price on Amazon.
+            </p>
+            <div class="mt-6">
+              <CTAButton
+                text="Buy Now on Amazon"
+                href={product.affiliateUrl}
+                variant="primary"
+                size="md"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- Author Box -->
+        <div class="bg-neutral-50 rounded-xl p-6 mb-10">
+          <div class="flex items-start gap-4">
+            <img
+              src={author.avatar}
+              alt={author.name}
+              class="w-16 h-16 rounded-full object-cover"
+              loading="lazy"
+            />
+            <div>
+              <p class="font-semibold text-neutral-900">{author.name}</p>
+              <p class="text-sm text-neutral-500 mb-2">{author.role}</p>
+              <p class="text-sm text-neutral-600">{author.bio}</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="lg:sticky lg:top-24 lg:self-start space-y-8">
+        <!-- Table of Contents -->
+        <nav class="bg-neutral-50 rounded-xl p-5" aria-labelledby="toc-heading">
+          <h2 id="toc-heading" class="font-heading font-semibold text-neutral-900 mb-4">
+            Table of Contents
+          </h2>
+          <ul class="space-y-2 text-sm">
+            {tocItems.map((item) => (
+              <li>
+                <a
+                  href={`#${item.id}`}
+                  class="text-neutral-600 hover:text-primary-600 transition-colors duration-200"
+                >
+                  {item.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <!-- Quick Buy -->
+        <div class="bg-accent-500 rounded-xl p-5 text-white">
+          <h3 class="font-heading font-semibold mb-2">{product.name}</h3>
+          <div class="text-2xl font-bold mb-3">{formatPrice(product.price)}</div>
+          <a
+            href={product.affiliateUrl}
+            target="_blank"
+            rel="nofollow sponsored"
+            class="block w-full bg-white text-accent-600 text-center py-2 rounded-lg font-semibold hover:bg-neutral-100 transition-colors"
+          >
+            Check Price
+          </a>
+        </div>
+
+        <!-- Related Products -->
+        {relatedProducts.length > 0 && (
+          <div class="bg-neutral-50 rounded-xl p-5">
+            <h3 class="font-heading font-semibold text-neutral-900 mb-4">
+              Similar Products
+            </h3>
+            <div class="space-y-4">
+              {relatedProducts.map((p: Product) => (
+                <a
+                  href={`/products/${p.slug}`}
+                  class="flex items-center gap-3 group"
+                >
+                  <img
+                    src={p.imageUrl}
+                    alt={p.name}
+                    class="w-16 h-16 object-contain rounded-lg bg-white"
+                    loading="lazy"
+                  />
+                  <div>
+                    <p class="text-sm font-medium text-neutral-900 group-hover:text-primary-600 transition-colors">
+                      {p.name}
+                    </p>
+                    <p class="text-sm text-accent-600 font-semibold">{formatPrice(p.price)}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </aside>
+    </div>
+
+    <!-- Related Products Section -->
+    {relatedProducts.length > 0 && (
+      <section class="mt-16 pt-8 border-t border-neutral-200">
+        <h2 class="font-heading text-h3 text-neutral-900 mb-6">Related Products</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {relatedProducts.map((p: Product) => (
+            <ProductCard product={p} />
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>

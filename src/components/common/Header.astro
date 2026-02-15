@@ -1,0 +1,393 @@
+---
+/**
+ * Header Component for BudgetTechIndia
+ * Premium Dark Theme - Enhanced with mega menu, glass effects, and animations
+ * Perfect responsive design for all screen sizes (320px - 1536px+)
+ */
+
+import Navigation from './Navigation.astro';
+
+interface Props {
+  /** Current page path for active navigation state */
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+// Categories for mega menu
+const categories = [
+  {
+    name: 'Earbuds',
+    href: '/categories/earbuds',
+    icon: 'headphones',
+    description: 'TWS, Wired & More',
+    subcategories: ['Under ₹500', 'Under ₹1000', 'Under ₹2000', 'Premium']
+  },
+  {
+    name: 'Smartwatches',
+    href: '/categories/smartwatch',
+    icon: 'watch',
+    description: 'Fitness & Smart Bands',
+    subcategories: ['Under ₹1000', 'Under ₹2000', 'Under ₹5000', 'Premium']
+  },
+  {
+    name: 'Power Banks',
+    href: '/categories/powerbank',
+    icon: 'battery',
+    description: 'Portable Chargers',
+    subcategories: ['10000mAh', '20000mAh', 'Fast Charging', 'Compact']
+  },
+  {
+    name: 'Accessories',
+    href: '/categories/accessories',
+    icon: 'cable',
+    description: 'Cables, Chargers & More',
+    subcategories: ['Cables', 'Chargers', 'Cases', 'Stands']
+  }
+];
+---
+
+<header
+  id="site-header"
+  class="sticky top-0 z-40 transition-all duration-300"
+>
+  <!-- Glass effect background -->
+  <div class="absolute inset-0 glass-dark"></div>
+  
+  <!-- Main Header Row -->
+  <div class="container relative">
+    <div class="flex items-center justify-between h-14 sm:h-16 md:h-18 gap-2 sm:gap-4">
+      <!-- Logo with hover effect -->
+      <a href="/" class="flex items-center gap-1.5 sm:gap-2 group flex-shrink-0" aria-label="BudgetTechIndia Home">
+        <!-- Logo Icon with glow effect -->
+        <div class="relative w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg flex items-center justify-center overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-[#C46A3A] to-[#a55a30] group-hover:scale-110 transition-transform duration-300"></div>
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-[#C46A3A] to-[#d4834f] animate-pulse-glow"></div>
+          <svg class="relative w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5 text-[#F4F1EA] z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <!-- Logo Text -->
+        <div class="flex flex-col">
+          <span class="font-bold text-base sm:text-lg md:text-lg leading-tight text-[#F4F1EA] group-hover:text-[#C46A3A] transition-colors duration-200 tracking-tight">
+            BudgetTech
+          </span>
+          <span class="text-[8px] sm:text-[9px] md:text-[10px] text-[#C46A3A] font-bold tracking-widest -mt-0.5 hidden xs:block">INDIA</span>
+        </div>
+      </a>
+
+      <!-- Enhanced Search Bar with autocomplete styling -->
+      <div class="flex-1 max-w-xl lg:max-w-2xl hidden md:block">
+        <form action="/search" method="GET" class="relative flex group">
+          <select 
+            name="category" 
+            class="hidden lg:block px-3 xl:px-4 py-2.5 text-sm bg-[#1A2E35]/80 text-[#F4F1EA] border border-r-0 border-[#2a4450] rounded-l-xl focus:outline-none focus:ring-2 focus:ring-[#C46A3A] focus:border-[#C46A3A] transition-all duration-200 cursor-pointer hover:bg-[#1A2E35]"
+          >
+            <option value="">All</option>
+            <option value="earbuds">Earbuds</option>
+            <option value="smartwatch">Smartwatches</option>
+            <option value="powerbank">Power Banks</option>
+            <option value="accessories">Accessories</option>
+          </select>
+          <div class="relative flex-1">
+            <input
+              type="text"
+              name="q"
+              placeholder="Search for products, reviews..."
+              class="w-full px-3 xl:px-4 py-2.5 text-sm text-[#F4F1EA] placeholder:text-[#6b7d83] bg-[#1A2E35]/80 border border-[#2a4450] focus:border-[#C46A3A] focus:outline-none focus:ring-2 focus:ring-[#C46A3A] transition-all duration-200 lg:border-l-0 group-hover:border-[#3a5a68]"
+              autocomplete="off"
+            />
+            <!-- Search suggestions dropdown (hidden by default) -->
+            <div class="search-dropdown hidden" id="search-suggestions">
+              <div class="p-2">
+                <p class="text-xs text-[#6b7d83] px-3 py-1">Popular Searches</p>
+                <a href="/reviews/best-earbuds-under-1000" class="search-result-item">
+                  <span class="text-[#F4F1EA]">Best Earbuds Under ₹1000</span>
+                </a>
+                <a href="/reviews/best-smartwatch-under-2000" class="search-result-item">
+                  <span class="text-[#F4F1EA]">Smartwatches Under ₹2000</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="px-4 xl:px-5 py-2.5 bg-gradient-to-r from-[#C46A3A] to-[#d4834f] hover:from-[#d4834f] hover:to-[#C46A3A] text-[#F4F1EA] rounded-r-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-button hover:shadow-button-hover"
+            aria-label="Search"
+          >
+            <svg class="w-4 h-4 xl:w-5 xl:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Right Actions with enhanced styling -->
+      <div class="flex items-center gap-1 sm:gap-2 md:gap-3">
+        <!-- Mobile Search Toggle -->
+        <button 
+          id="mobile-search-toggle"
+          class="md:hidden p-2 sm:p-2.5 rounded-lg text-[#F4F1EA] hover:text-[#C46A3A] hover:bg-[#1A2E35]/50 transition-all duration-200 touch-target"
+          aria-label="Toggle search"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+
+        <!-- Account Link with hover card effect -->
+        <a 
+          href="/about" 
+          class="hidden sm:flex flex-col items-start px-2 sm:px-3 py-1.5 rounded-lg text-[#F4F1EA] hover:text-[#C46A3A] hover:bg-[#1A2E35]/50 transition-all duration-200"
+        >
+          <span class="text-[10px] sm:text-xs text-[#a8b5ba] leading-none">Hello, User</span>
+          <span class="text-xs sm:text-sm font-semibold leading-tight flex items-center gap-1">
+            Account
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
+        </a>
+
+        <!-- Deals Link with badge -->
+        <a 
+          href="/reviews" 
+          class="hidden sm:flex flex-col items-start px-2 sm:px-3 py-1.5 rounded-lg text-[#F4F1EA] hover:text-[#C46A3A] hover:bg-[#1A2E35]/50 transition-all duration-200 relative"
+        >
+          <span class="text-[10px] sm:text-xs text-[#a8b5ba] leading-none">Top</span>
+          <span class="text-xs sm:text-sm font-semibold leading-tight">Deals</span>
+          <span class="absolute -top-1 -right-1 w-4 h-4 bg-[#00b207] text-white text-[10px] font-bold rounded-full flex items-center justify-center">3</span>
+        </a>
+
+        <!-- Wishlist -->
+        <button 
+          class="hidden md:flex p-2 sm:p-2.5 rounded-lg text-[#a8b5ba] hover:text-[#C46A3A] hover:bg-[#1A2E35]/50 transition-all duration-200 relative touch-target"
+          aria-label="Wishlist"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button 
+          id="mobile-menu-toggle"
+          class="lg:hidden p-2 sm:p-2.5 rounded-lg text-[#F4F1EA] hover:text-[#C46A3A] hover:bg-[#1A2E35]/50 transition-all duration-200 touch-target"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Search Bar (Hidden by default) -->
+  <div id="mobile-search" class="hidden md:hidden border-t border-[#2a4450]/50 px-3 sm:px-4 py-3">
+    <form action="/search" method="GET" class="relative flex">
+      <input
+        type="text"
+        name="q"
+        placeholder="Search products..."
+        class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-[#F4F1EA] placeholder:text-[#6b7d83] bg-[#1A2E35]/80 border border-[#2a4450] rounded-l-xl focus:border-[#C46A3A] focus:outline-none focus:ring-2 focus:ring-[#C46A3A] transition-all duration-200"
+      />
+      <button
+        type="submit"
+        class="px-4 sm:px-5 py-2.5 sm:py-3 bg-gradient-to-r from-[#C46A3A] to-[#d4834f] text-[#F4F1EA] rounded-r-xl transition-all duration-300"
+        aria-label="Search"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <!-- Enhanced Secondary Navigation Bar with Mega Menu -->
+  <div class="hidden lg:block border-t border-[#2a4450]/30">
+    <div class="container relative">
+      <div class="flex items-center gap-1 h-10 xl:h-11">
+        <!-- Categories with Mega Menu -->
+        <div class="relative group" id="categories-dropdown">
+          <button 
+            class="flex items-center gap-2 px-3 xl:px-4 py-2 text-sm font-semibold text-[#F4F1EA] hover:text-[#C46A3A] hover:bg-[#1A2E35]/50 rounded-lg transition-all duration-200"
+            aria-expanded="false"
+            aria-haspopup="true"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <span class="hidden xl:inline">Categories</span>
+            <span class="xl:hidden">All</span>
+            <svg class="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          
+          <!-- Mega Menu -->
+          <div class="mega-menu left-0 w-screen max-w-4xl group-hover:active">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 p-4 sm:p-6">
+              {categories.map((category) => (
+                <div class="mega-menu-column">
+                  <a href={category.href} class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 group/item">
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#C46A3A]/10 flex items-center justify-center group-hover/item:bg-[#C46A3A]/20 transition-colors flex-shrink-0">
+                      {category.icon === 'headphones' && (
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#C46A3A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                        </svg>
+                      )}
+                      {category.icon === 'watch' && (
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#C46A3A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      )}
+                      {category.icon === 'battery' && (
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#C46A3A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                      )}
+                      {category.icon === 'cable' && (
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#C46A3A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                      )}
+                    </div>
+                    <div class="min-w-0">
+                      <span class="mega-menu-heading text-xs sm:text-sm">{category.name}</span>
+                      <p class="text-[10px] sm:text-xs text-[#6b7d83] truncate">{category.description}</p>
+                    </div>
+                  </a>
+                  <div class="space-y-0.5 sm:space-y-1">
+                    {category.subcategories.map((sub) => (
+                      <a href={`${category.href}?filter=${sub.toLowerCase().replace(/\s+/g, '-')}`} class="mega-menu-link text-xs sm:text-sm">
+                        {sub}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <!-- Featured banner in mega menu -->
+            <div class="border-t border-[#2a4450]/30 p-3 sm:p-4">
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div class="flex items-center gap-3 sm:gap-4">
+                  <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br from-[#C46A3A] to-[#d4834f] flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-[#F4F1EA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-[#F4F1EA]">Today's Best Deals</p>
+                    <p class="text-xs text-[#a8b5ba]">Up to 70% off on selected items</p>
+                  </div>
+                </div>
+                <a href="/reviews?sort=deals" class="btn-premium text-xs sm:text-sm px-3 sm:px-4 py-2 whitespace-nowrap">
+                  View Deals
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Navigation Links -->
+        <Navigation currentPath={currentPath} />
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bottom border gradient -->
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C46A3A]/30 to-transparent"></div>
+</header>
+
+<style>
+  /* Mega menu hover behavior */
+  #categories-dropdown:hover .mega-menu,
+  #categories-dropdown:focus-within .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  /* Header scroll effect */
+  #site-header.scrolled {
+    background: rgba(15, 31, 36, 0.95);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Touch target size for mobile */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Extra small breakpoint */
+  @media (min-width: 360px) {
+    .xs\:block {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  // Mobile search toggle
+  const mobileSearchToggle = document.getElementById('mobile-search-toggle');
+  const mobileSearch = document.getElementById('mobile-search');
+  
+  mobileSearchToggle?.addEventListener('click', () => {
+    mobileSearch?.classList.toggle('hidden');
+    // Focus the input when shown
+    if (!mobileSearch?.classList.contains('hidden')) {
+      mobileSearch?.querySelector('input')?.focus();
+    }
+  });
+
+  // Mobile menu toggle
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  
+  mobileMenuToggle?.addEventListener('click', () => {
+    const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+    mobileMenuToggle.setAttribute('aria-expanded', (!isExpanded).toString());
+    document.dispatchEvent(new CustomEvent('toggle-mobile-menu'));
+  });
+  
+  // Header scroll effect
+  const header = document.getElementById('site-header');
+  let lastScroll = 0;
+  let ticking = false;
+  
+  function updateHeader() {
+    const currentScroll = window.scrollY;
+    
+    if (currentScroll > 50) {
+      header?.classList.add('scrolled');
+    } else {
+      header?.classList.remove('scrolled');
+    }
+    
+    lastScroll = currentScroll;
+    ticking = false;
+  }
+  
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  });
+  
+  // Close mobile search on escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !mobileSearch?.classList.contains('hidden')) {
+      mobileSearch?.classList.add('hidden');
+    }
+  });
+</script>

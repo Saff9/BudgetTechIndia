@@ -1,0 +1,126 @@
+---
+/**
+ * Category Page for BudgetTechIndia
+ * Dynamic page for individual category pages
+ */
+
+import CategoryLayout from '../../layouts/CategoryLayout.astro';
+import type { Category, Product, BreadcrumbItem } from '../../utils/interfaces';
+
+// Import sample data
+import categoriesData from '../../data/categories.json';
+import productsData from '../../data/products.json';
+import articlesData from '../../data/articles.json';
+
+// Generate static paths for all categories
+export function getStaticPaths() {
+  return categoriesData.categories.map((category) => ({
+    params: { slug: category.slug },
+  }));
+}
+
+// Get slug from URL
+const { slug } = Astro.params;
+
+// Find category
+const category = categoriesData.categories.find((c) => c.slug === slug);
+
+// 404 if category not found
+if (!category) {
+  return Astro.redirect('/404');
+}
+
+// Get products for this category
+const categoryProducts: Product[] = productsData.products.filter(
+  (p) => p.category === category.id
+);
+
+// Get related articles
+const relatedArticles = articlesData.articles.filter(
+  (a) => a.category === category.id
+).slice(0, 3);
+
+// Breadcrumbs
+const breadcrumbs: BreadcrumbItem[] = [
+  { name: 'Home', url: '/' },
+  { name: 'Categories', url: '/categories' },
+  { name: category.name },
+];
+
+// Pass data to layout
+const categoryData: Category = {
+  id: category.id,
+  name: category.name,
+  slug: category.slug,
+  description: category.description,
+  imageUrl: category.imageUrl,
+  icon: category.icon,
+  priceRange: category.priceRange,
+  productCount: categoryProducts.length,
+  featured: category.featured,
+};
+---
+
+<CategoryLayout
+  category={categoryData}
+  products={categoryProducts}
+  breadcrumbs={breadcrumbs}
+>
+  <!-- Related Articles Section -->
+  {relatedArticles.length > 0 && (
+    <section class="mt-16 pt-12 border-t border-neutral-200">
+      <h2 class="font-heading text-h2 text-neutral-900 mb-8">
+        Related Articles
+      </h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        {relatedArticles.map((article) => (
+          <article class="group bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300">
+            <a href={`/${article.type === 'review' ? 'reviews' : article.type === 'top5' ? 'top-5' : 'blog'}/${article.slug}`} class="block">
+              <div class="aspect-banner bg-neutral-200 overflow-hidden">
+                <img
+                  src={article.imageUrl}
+                  alt={article.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+              </div>
+              <div class="p-4">
+                <span class={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium mb-2 ${
+                  article.type === 'review' ? 'bg-blue-100 text-blue-700' :
+                  article.type === 'top5' ? 'bg-purple-100 text-purple-700' :
+                  'bg-green-100 text-green-700'
+                }`}>
+                  {article.type === 'review' ? 'Review' : article.type === 'top5' ? 'Top 5' : 'Blog'}
+                </span>
+                <h3 class="font-heading font-semibold text-neutral-900 mb-2 group-hover:text-primary-600 transition-colors duration-200 line-clamp-2">
+                  {article.title}
+                </h3>
+                <p class="text-sm text-neutral-600 line-clamp-2">
+                  {article.excerpt}
+                </p>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Category Tips Section -->
+  <section class="mt-16 bg-neutral-50 rounded-2xl p-8">
+    <h2 class="font-heading text-h3 text-neutral-900 mb-4">
+      Tips for Choosing {category.name}
+    </h2>
+    <div class="prose prose-neutral max-w-none">
+      <p>
+        When shopping for {category.name.toLowerCase()} under ₹2,000, consider these key factors:
+      </p>
+      <ul>
+        <li><strong>Value for Money:</strong> Compare features across price points to get the best bang for your buck.</li>
+        <li><strong>Brand Reputation:</strong> Stick to trusted brands with good after-sales support.</li>
+        <li><strong>User Reviews:</strong> Read real user experiences to understand actual performance.</li>
+        <li><strong>Warranty:</strong> Check warranty terms and service center availability in your area.</li>
+      </ul>
+    </div>
+  </section>
+</CategoryLayout>
