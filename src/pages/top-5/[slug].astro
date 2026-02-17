@@ -14,6 +14,9 @@ import ProsConsList from '../../components/content/ProsConsList.astro';
 import CTAButton from '../../components/content/CTAButton.astro';
 import FAQSection from '../../components/content/FAQSection.astro';
 import JsonLD from '../../components/seo/JsonLD.astro';
+import RelatedProducts from '../../components/products/RelatedProducts.astro';
+import { getRelatedProducts } from '../../utils/suggestionAlgorithm';
+import { getViewedProductIds, getClickedProductIds } from '../../utils/userBehavior';
 import { formatDate, formatPrice } from '../../utils/helpers';
 
 // Define static paths for all top5 articles
@@ -51,6 +54,14 @@ const products: Product[] = article.productIds
 if (products.length === 0) {
   return Astro.redirect('/404');
 }
+
+// Get related products using smart algorithm (based on first product in list)
+const userBehavior = {
+  viewed: getViewedProductIds(),
+  clicked: getClickedProductIds()
+};
+
+const relatedProducts = getRelatedProducts(products[0], productsData.default.products, userBehavior, 4);
 
 // Breadcrumbs
 const breadcrumbs: BreadcrumbItem[] = [
@@ -387,5 +398,15 @@ const articleSchemaData = {
         </div>
       </aside>
     </div>
+
+    <!-- Related Products Section -->
+    {relatedProducts.length > 0 && (
+      <RelatedProducts 
+        targetProduct={products[0]}
+        allProducts={productsData.default.products}
+        title="You Might Also Like"
+        limit={4}
+      />
+    )}
   </div>
 </BaseLayout>

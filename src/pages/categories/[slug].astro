@@ -6,6 +6,8 @@
 
 import CategoryLayout from '../../layouts/CategoryLayout.astro';
 import type { Category, Product, BreadcrumbItem } from '../../utils/interfaces';
+import type { SortType } from '../../utils/productRanking';
+import { sortProducts, SORT_OPTIONS } from '../../utils/productRanking';
 
 // Import sample data
 import categoriesData from '../../data/categories.json';
@@ -35,6 +37,17 @@ const categoryProducts: Product[] = productsData.products.filter(
   (p) => p.category === category.id
 );
 
+// Get sort parameter from query string
+const urlParams = new URLSearchParams(Astro.request.url.search);
+const currentSort = (urlParams.get('sort') || 'newest') as SortType;
+
+// Validate sort parameter
+const validSortTypes = SORT_OPTIONS.map(option => option.value);
+const sortType = validSortTypes.includes(currentSort) ? currentSort : 'newest';
+
+// Sort products
+const sortedProducts = sortProducts(categoryProducts, sortType);
+
 // Get related articles
 const relatedArticles = articlesData.articles.filter(
   (a) => a.category === category.id
@@ -63,8 +76,9 @@ const categoryData: Category = {
 
 <CategoryLayout
   category={categoryData}
-  products={categoryProducts}
+  products={sortedProducts}
   breadcrumbs={breadcrumbs}
+  currentSort={sortType}
 >
   <!-- Related Articles Section -->
   {relatedArticles.length > 0 && (
@@ -77,12 +91,16 @@ const categoryData: Category = {
           <article class="group bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300">
             <a href={`/${article.type === 'review' ? 'reviews' : article.type === 'top5' ? 'top-5' : 'blog'}/${article.slug}`} class="block">
               <div class="aspect-banner bg-neutral-200 overflow-hidden">
-                <img
-                  src={article.imageUrl}
-                  alt={article.title}
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                />
+                <picture>
+                  <source srcset={article.imageUrl.replace(/\\.(png|jpg|jpeg)$/, '.webp')} type="image/webp" />
+                  <source srcset={article.imageUrl} />
+                  <img
+                    src={article.imageUrl}
+                    alt={article.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </picture>
               </div>
               <div class="p-4">
                 <span class={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium mb-2 ${

@@ -1,0 +1,113 @@
+---
+import type { Product } from '../../utils/interfaces';
+import type { SortType } from '../../utils/productRanking';
+import { SORT_OPTIONS, sortProducts } from '../../utils/productRanking';
+import ProductCard from './ProductCard.astro';
+
+interface Props {
+  products: Product[];
+  sortType?: SortType;
+  title?: string;
+  showSort?: boolean;
+  itemsPerPage?: number;
+}
+
+const { 
+  products: initialProducts, 
+  sortType = 'newest', 
+  title, 
+  showSort = true, 
+  itemsPerPage 
+} = Astro.props;
+
+// Sort products
+const products = sortProducts(initialProducts, sortType);
+
+// Paginate if needed
+let displayedProducts = products;
+if (itemsPerPage && itemsPerPage > 0) {
+  displayedProducts = products.slice(0, itemsPerPage);
+}
+---
+
+<div class="product-grid-container">
+  {title && (
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
+  )}
+
+  {showSort && (
+    <div class="flex justify-between items-center mb-6">
+      <div class="text-sm text-gray-600 dark:text-gray-400">
+        Showing {displayedProducts.length} of {initialProducts.length} products
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <label for="sort" class="text-sm font-medium text-gray-700 dark:text-gray-300">Sort by:</label>
+        <select 
+          id="sort"
+          class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          data-sort-type={sortType}
+        >
+          {SORT_OPTIONS.map(option => (
+            <option value={option.value} selected={option.value === sortType}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  )}
+
+  {displayedProducts.length > 0 ? (
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {displayedProducts.map((product, index) => (
+        <ProductCard product={product} key={product.id} position={index} />
+      ))}
+    </div>
+  ) : (
+    <div class="text-center py-12">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
+        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"></path>
+        </svg>
+      </div>
+      <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">No products found</h3>
+      <p class="text-gray-500 dark:text-gray-400">Try adjusting your filters or search terms</p>
+    </div>
+  )}
+</div>
+
+<script>
+  // Client-side sorting
+  document.getElementById('sort')?.addEventListener('change', (e) => {
+    const select = e.target as HTMLSelectElement;
+    const newSortType = select.value;
+    
+    // Get current URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('sort', newSortType);
+    
+    // Update URL without page reload
+    window.history.replaceState({}, '', `${window.location.pathname}?${urlParams}`);
+    
+    // Reload the page to apply new sort
+    window.location.reload();
+  });
+</script>
+
+<style>
+  .product-grid-container {
+    animation: fadeIn 0.3s ease-in;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

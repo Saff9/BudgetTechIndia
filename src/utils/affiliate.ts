@@ -18,6 +18,160 @@ export interface AffiliateLink {
   inStock?: boolean;
 }
 
+/**
+ * Validate an affiliate link
+ * @param url - Affiliate URL to validate
+ * @param store - Target store type
+ * @returns Object with validation results
+ */
+export function validateAffiliateLink(url: string, store: StoreType): {
+  isValid: boolean;
+  error?: string;
+  productId?: string;
+  asin?: string;
+} {
+  try {
+    // Validate URL format
+    const urlObj = new URL(url);
+    
+    if (store === 'amazon') {
+      // Amazon URL validation
+      const isAmazon = urlObj.hostname.includes('amazon') || urlObj.hostname.includes('amzn');
+      if (!isAmazon) {
+        return {
+          isValid: false,
+          error: 'Not a valid Amazon URL',
+        };
+      }
+      
+      // Extract ASIN from URL
+      // Amazon URLs can have formats like:
+      // - https://www.amazon.in/dp/B07H5R1L1X
+      // - https://www.amazon.in/Product-Name/dp/B07H5R1L1X
+      // - https://amzn.in/d/B07H5R1L1X
+      
+      const dpMatch = urlObj.pathname.match(/\/dp\/([A-Z0-9]{10})/);
+      const asinMatch = urlObj.pathname.match(/\/[A-Z0-9]{10}/);
+      
+      const asin = dpMatch ? dpMatch[1] : (asinMatch ? asinMatch[0].replace('/', '') : null);
+      
+      if (!asin) {
+        return {
+          isValid: false,
+          error: 'Could not extract ASIN from Amazon URL',
+        };
+      }
+      
+      return {
+        isValid: true,
+        asin,
+      };
+      
+    } else if (store === 'flipkart') {
+      // Flipkart URL validation
+      const isFlipkart = urlObj.hostname.includes('flipkart');
+      if (!isFlipkart) {
+        return {
+          isValid: false,
+          error: 'Not a valid Flipkart URL',
+        };
+      }
+      
+      // Extract product ID from Flipkart URL
+      // Flipkart URLs can have formats like:
+      // - https://www.flipkart.com/product/p/abc123
+      // - https://www.flipkart.com/.../p/abc123?param=value
+      
+      const productMatch = urlObj.pathname.match(/\/p\/([\w-]+)/);
+      
+      if (!productMatch) {
+        return {
+          isValid: false,
+          error: 'Could not extract product ID from Flipkart URL',
+        };
+      }
+      
+      return {
+        isValid: true,
+        productId: productMatch[1],
+      };
+    }
+    
+    return {
+      isValid: false,
+      error: 'Unsupported store type',
+    };
+    
+  } catch (error) {
+    return {
+      isValid: false,
+      error: 'Invalid URL format',
+    };
+  }
+}
+
+/**
+ * Extract product details from affiliate link
+ * @param url - Affiliate URL to extract details from
+ * @param store - Target store type
+ * @returns Object with extracted product details
+ */
+export async function extractProductDetails(url: string, store: StoreType): Promise<{
+  success: boolean;
+  data?: {
+    title: string;
+    price: number;
+    mrp: number;
+    image: string;
+    rating: number;
+    reviewCount: number;
+    brand?: string;
+    category?: string;
+    features?: Record<string, string>;
+  };
+  error?: string;
+}> {
+  try {
+    // Validate URL first
+    const validation = validateAffiliateLink(url, store);
+    if (!validation.isValid) {
+      return {
+        success: false,
+        error: validation.error,
+      };
+    }
+    
+    // In a real application, this would make an API call to the store's product information API
+    // For now, we'll return mock data
+    return {
+      success: true,
+      data: {
+        title: 'Sample Product',
+        price: 999,
+        mrp: 1499,
+        image: '/images/placeholder-product.jpg',
+        rating: 4.2,
+        reviewCount: 12500,
+        brand: 'Sample Brand',
+        category: 'bluetooth-earbuds',
+        features: {
+          'Battery Life': '8 hours',
+          'Connectivity': 'Bluetooth 5.0',
+          'Driver Size': '10mm',
+          'Microphone': 'Yes',
+        },
+      },
+    };
+    
+  } catch (error) {
+    console.error('[Affiliate] Error extracting product details:', error);
+    return {
+      success: false,
+      error: 'Could not extract product details',
+    };
+  }
+}
+
 export interface ProductAffiliateData {
   title: string;
   price: number;

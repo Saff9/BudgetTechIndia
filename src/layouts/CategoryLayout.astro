@@ -5,6 +5,8 @@
  */
 
 import type { Category, Product, BreadcrumbItem } from '../utils/interfaces';
+import type { SortType } from '../utils/productRanking';
+import { sortProducts, SORT_OPTIONS } from '../utils/productRanking';
 import BaseLayout from './BaseLayout.astro';
 import Breadcrumb from '../components/common/Breadcrumb.astro';
 import AffiliateDisclosure from '../components/common/AffiliateDisclosure.astro';
@@ -18,23 +20,21 @@ interface Props {
   /** Breadcrumb items */
   breadcrumbs?: BreadcrumbItem[];
   /** Current sort option */
-  currentSort?: string;
+  currentSort?: SortType;
   /** Available sort options */
   sortOptions?: Array<{ value: string; label: string }>;
 }
 
 const {
   category,
-  products,
+  products: initialProducts,
   breadcrumbs,
-  currentSort = 'popular',
-  sortOptions = [
-    { value: 'popular', label: 'Most Popular' },
-    { value: 'price-low', label: 'Price: Low to High' },
-    { value: 'price-high', label: 'Price: High to Low' },
-    { value: 'rating', label: 'Highest Rated' },
-  ],
+  currentSort = 'newest',
+  sortOptions = SORT_OPTIONS,
 } = Astro.props;
+
+// Sort products
+const products = sortProducts(initialProducts, currentSort);
 
 // Default breadcrumbs
 const defaultBreadcrumbs: BreadcrumbItem[] = [
@@ -92,6 +92,7 @@ const items = breadcrumbs || defaultBreadcrumbs;
           name="sort"
           class="form-select text-sm border-neutral-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
           aria-label="Sort products"
+          data-current-sort={currentSort}
         >
           {sortOptions.map((option) => (
             <option value={option.value} selected={option.value === currentSort}>
@@ -118,7 +119,7 @@ const items = breadcrumbs || defaultBreadcrumbs;
 
     <!-- Product Grid -->
     {products.length > 0 ? (
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {products.map((product) => (
           <ProductCard product={product} />
         ))}
@@ -163,4 +164,22 @@ const items = breadcrumbs || defaultBreadcrumbs;
       </nav>
     )}
   </div>
+
+  <script>
+    // Client-side sorting
+    document.getElementById('sort-select')?.addEventListener('change', (e) => {
+      const select = e.target as HTMLSelectElement;
+      const newSortType = select.value;
+      
+      // Get current URL params
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.set('sort', newSortType);
+      
+      // Update URL without page reload
+      window.history.replaceState({}, '', `${window.location.pathname}?${urlParams}`);
+      
+      // Reload the page to apply new sort
+      window.location.reload();
+    });
+  </script>
 </BaseLayout>

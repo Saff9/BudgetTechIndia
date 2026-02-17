@@ -5,18 +5,8 @@
  */
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getActiveVariation } from '../utils/variation';
-import DarkHero from '../components/home/Hero.astro';
-import LightHero from '../components/light/Hero.astro';
-import DarkProductCard from '../components/products/ProductCard.astro';
-import LightProductCard from '../components/light/ProductCard.astro';
-
-const activeVariation = getActiveVariation();
-const isDarkTheme = activeVariation === 'dark';
-
-// Theme-specific components
-const Hero = isDarkTheme ? DarkHero : LightHero;
-const ProductCard = isDarkTheme ? DarkProductCard : LightProductCard;
+import Hero from '../components/home/Hero.astro';
+import ProductCard from '../components/products/ProductCard.astro';
 import JsonLD from '../components/seo/JsonLD.astro';
 import type { Category, Product, Article } from '../utils/interfaces';
 
@@ -125,7 +115,6 @@ const websiteSchema = {
   title="BudgetTechIndia - Best Budget Tech Products Under ₹2,000"
   description="Discover the best budget tech products under ₹2,000 in India. Honest reviews, top 5 lists, and buying guides for earbuds, smartwatches, power banks, and more."
   currentPath="/"
-  variation={activeVariation}
 >
   <!-- Hero Section -->
   <Hero />
@@ -258,7 +247,7 @@ const websiteSchema = {
         </a>
       </div>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {featuredProducts.map((product, index) => (
           <div class="scroll-animate" style={`animation-delay: ${index * 100}ms`}>
             <ProductCard product={product} />
@@ -361,12 +350,16 @@ const websiteSchema = {
           <article class="group card-premium overflow-hidden scroll-animate" style={`animation-delay: ${index * 100}ms`}>
             <a href={`/reviews/${article.slug}`} class="block">
               <div class="aspect-video bg-[#0F1F24] overflow-hidden">
-                <img
-                  src={article.imageUrl}
-                  alt={article.title}
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
+                <picture>
+                  <source srcset={article.imageUrl.replace(/\.(png|jpg|jpeg)$/, '.webp')} type="image/webp" />
+                  <source srcset={article.imageUrl} />
+                  <img
+                    src={article.imageUrl}
+                    alt={article.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </picture>
               </div>
               <div class="p-6">
                 <span class="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#C46A3A]/20 text-[#C46A3A] mb-3">

@@ -36,6 +36,8 @@ interface Props {
   preferredStore?: StoreType;
   /** Show multiple store options */
   showStoreOptions?: boolean;
+  /** Position in grid for tracking */
+  position?: number;
 }
 
 const {
@@ -48,6 +50,7 @@ const {
   showStockStatus = true,
   preferredStore = 'amazon',
   showStoreOptions = false,
+  position = 0,
 } = Astro.props;
 
 // Get affiliate link from centralized system
@@ -371,24 +374,39 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
 </style>
 
 <script>
-  // Affiliate link click tracking
+  // Import tracking functions
+  import { trackProductViewEvent, trackProductClickEvent } from '../../utils/analytics';
+
+  // Track product view when card becomes visible
   document.addEventListener('DOMContentLoaded', () => {
+    const productCard = document.querySelector('[data-product-id="{product.id}"]');
+    if (productCard) {
+      // Track view immediately on page load
+      trackProductViewEvent('{product.id}', '{product.name}', '{product.category}');
+    }
+    
+    // Affiliate link click tracking
     const affiliateLinks = document.querySelectorAll('[data-affiliate-link="true"]');
     
     affiliateLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
         const target = e.currentTarget as HTMLElement;
         const productCard = target.closest('[data-product-slug]');
-        const slug = productCard?.getAttribute('data-product-slug');
+        const productId = productCard?.getAttribute('data-product-id');
+        const productSlug = productCard?.getAttribute('data-product-slug');
+        const productName = productCard?.querySelector('h3 a')?.textContent || '';
         const store = target.getAttribute('data-store') || 'amazon';
         const url = target.getAttribute('href') || '';
         
-        if (slug) {
-          // Track click in localStorage
+        if (productId) {
+          // Track click with analytics
+          trackProductClickEvent(productId, productName, '{product.category}', {position});
+          
+          // Track click in localStorage (existing functionality)
           try {
             const clickEvent = {
               type: 'affiliate_click',
-              product: slug,
+              product: productSlug,
               store,
               url,
               timestamp: new Date().toISOString(),

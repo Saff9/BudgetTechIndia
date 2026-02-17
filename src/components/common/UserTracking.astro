@@ -1,0 +1,54 @@
+---
+import { initializeUserBehaviorTracking } from '../../utils/userBehavior';
+import { initializeAnalytics } from '../../utils/analytics';
+
+// Initialize tracking on page load
+initializeUserBehaviorTracking();
+initializeAnalytics();
+---
+
+<!-- User Behavior and Analytics Tracking Component -->
+<!-- This component initializes tracking for user behavior and analytics -->
+
+<script>
+  // Initialize tracking when DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    // Track page view
+    import('../../utils/analytics').then(({ trackPageView }) => {
+      trackPageView(document.title, window.location.href);
+    });
+    
+    // Track time on page
+    const startTime = Date.now();
+    const beforeUnload = () => {
+      const timeSeconds = Math.floor((Date.now() - startTime) / 1000);
+      import('../../utils/analytics').then(({ trackEngagementTime }) => {
+        trackEngagementTime(document.title, timeSeconds);
+      });
+    };
+    
+    window.addEventListener('beforeunload', beforeUnload);
+  });
+  
+  // Track scroll depth
+  let scrollDepthTracked = {
+    25: false,
+    50: false,
+    75: false,
+    100: false
+  };
+  
+  window.addEventListener('scroll', () => {
+    const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    
+    Object.keys(scrollDepthTracked).forEach(depth => {
+      const depthNum = parseInt(depth);
+      if (scrollPercentage >= depthNum && !scrollDepthTracked[depth]) {
+        scrollDepthTracked[depth] = true;
+        import('../../utils/analytics').then(({ trackEngagementTime }) => {
+          trackEngagementTime(`Scroll Depth: ${depth}%`, 0);
+        });
+      }
+    });
+  });
+</script>

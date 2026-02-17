@@ -6,6 +6,8 @@
 
 import LegalLayout from '../layouts/LegalLayout.astro';
 import type { BreadcrumbItem } from '../utils/interfaces';
+import SEO from '../components/seo/SEO.astro';
+import JsonLD from '../components/seo/JsonLD.astro';
 
 const breadcrumbs: BreadcrumbItem[] = [
   { name: 'Home', url: '/' },
@@ -22,6 +24,15 @@ const lastUpdated = new Date('2026-02-15');
   breadcrumbs={breadcrumbs}
   currentPath="/privacy-policy"
 >
+  <SEO title="Privacy Policy | BudgetTechIndia" description="BudgetTechIndia's privacy policy explains how we collect, use, and protect your personal information when you use our website." type="article" />
+  <JsonLD
+    type="website"
+    data={{
+      name: 'BudgetTechIndia',
+      url: import.meta.env.SITE_URL || 'https://budgettechindia.com',
+      description: "BudgetTechIndia's privacy policy explains how we collect, use, and protect your personal information when you use our website."
+    }}
+  />
   <h2 id="introduction">Introduction</h2>
   <p>
     Welcome to BudgetTechIndia ("we," "our," or "us"). We are committed to protecting your privacy and ensuring you have a positive experience on our website. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website budgettechindia.com.

@@ -4,7 +4,7 @@ import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx}'],
+  content: ['./src/**/*.astro', './src/**/*.ts', './src/**/*.tsx'],
   theme: {
     // Perfect responsive breakpoints for all devices
     screens: {

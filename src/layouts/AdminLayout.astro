@@ -1,0 +1,116 @@
+---
+/**
+ * AdminLayout for BudgetTechIndia
+ * Secure layout for admin panel with authentication
+ */
+
+import BaseLayout from './BaseLayout.astro';
+import { isAdminAuthenticated, getCurrentAdmin, signOutAdmin } from '../utils/adminAuth';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Admin Panel - BudgetTechIndia',
+  description = 'Admin panel for managing products and content',
+} = Astro.props;
+
+// Check if user is authenticated
+let user = null;
+let isAuthenticated = false;
+
+try {
+  isAuthenticated = await isAdminAuthenticated();
+  if (isAuthenticated) {
+    user = await getCurrentAdmin();
+  }
+} catch (error) {
+  console.error('[Admin] Authentication check failed:', error);
+  isAuthenticated = false;
+}
+
+// If not authenticated, redirect to login
+if (!isAuthenticated) {
+  return Astro.redirect('/admin/login');
+}
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  currentPath="/admin"
+>
+  <div class="container py-8">
+    <header class="mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-bold text-[#F4F1EA] mb-2">Admin Panel</h1>
+          <p class="text-[#a8b5ba]">Manage products, categories, and content</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="text-right">
+            <p class="text-sm font-medium text-[#F4F1EA]">{user?.displayName}</p>
+            <p class="text-xs text-[#a8b5ba]">{user?.email}</p>
+          </div>
+          <button
+            type="button"
+            class="px-4 py-2 text-sm font-medium text-[#F4F1EA] bg-[#C46A3A] rounded-lg hover:bg-[#d4834f] transition-colors duration-200"
+            onClick={async () => {
+              const result = await signOutAdmin();
+              if (result.success) {
+                window.location.href = '/admin/login';
+              }
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <!-- Sidebar -->
+      <div class="md:col-span-1">
+        <nav class="space-y-2">
+          <a
+            href="/admin"
+            class="block px-4 py-3 text-sm font-medium text-[#F4F1EA] bg-[#1A2E35] rounded-lg hover:bg-[#C46A3A]/20 transition-colors duration-200"
+          >
+            Dashboard
+          </a>
+          <a
+            href="/admin/products"
+            class="block px-4 py-3 text-sm font-medium text-[#F4F1EA] bg-[#1A2E35] rounded-lg hover:bg-[#C46A3A]/20 transition-colors duration-200"
+          >
+            Products
+          </a>
+          <a
+            href="/admin/categories"
+            class="block px-4 py-3 text-sm font-medium text-[#F4F1EA] bg-[#1A2E35] rounded-lg hover:bg-[#C46A3A]/20 transition-colors duration-200"
+          >
+            Categories
+          </a>
+          <a
+            href="/admin/content"
+            class="block px-4 py-3 text-sm font-medium text-[#F4F1EA] bg-[#1A2E35] rounded-lg hover:bg-[#C46A3A]/20 transition-colors duration-200"
+          >
+            Content
+          </a>
+          <a
+            href="/admin/settings"
+            class="block px-4 py-3 text-sm font-medium text-[#F4F1EA] bg-[#1A2E35] rounded-lg hover:bg-[#C46A3A]/20 transition-colors duration-200"
+          >
+            Settings
+          </a>
+        </nav>
+      </div>
+
+      <!-- Main content -->
+      <div class="md:col-span-3">
+        <slot />
+      </div>
+    </div>
+  </div>
+</BaseLayout>

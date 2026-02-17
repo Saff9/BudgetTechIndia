@@ -1,8 +1,8 @@
 # BudgetTechIndia
 
-> Best Budget Tech Products Under â¹2000 in India
+> Best Budget Tech Products Under ₹2000 in India
 
-BudgetTechIndia is a professional affiliate marketing website focused on helping Indian consumers discover the best budget tech products under â¹2000.
+BudgetTechIndia is a professional affiliate marketing website focused on helping Indian consumers discover the best budget tech products under ₹2000.
 
 ## Tech Stack
 
@@ -20,30 +20,39 @@ BudgetTechIndia is a professional affiliate marketing website focused on helping
 - **Content-First**: Native Markdown/MDX support for editorial content
 - **Responsive Design**: Mobile-first approach with Tailwind CSS
 - **Affiliate Ready**: Built-in affiliate link management and tracking
+- **Dual Storage System**: Support for both local JSON file storage and Firebase Firestore
+- **Storage Management**: Easy configuration and migration between storage systems
+- **Enhanced Admin Panel**: Improved product editor with advanced features and batch operations
 
 ## Project Structure
 
 ```
 budgettechindia/
-âââ public/
-â   âââ images/          # Static images
-â   â   âââ products/    # Product images
-â   â   âââ categories/  # Category thumbnails
-â   â   âââ blog/       # Blog post images
-â   â   âââ og/         # Open Graph images
-â   âââ fonts/          # Self-hosted fonts
-âââ src/
-â   âââ components/     # UI components
-â   âââ layouts/        # Page layouts
-â   âââ pages/         # Route pages
-â   âââ content/        # MDX content collections
-â   âââ data/          # JSON data files
-â   âââ styles/         # Global styles
-â   âââ utils/          # Utility functions
-âââ astro.config.mjs    # Astro configuration
-âââ tailwind.config.mjs # Tailwind configuration
-âââ tsconfig.json       # TypeScript configuration
-âââ package.json        # Dependencies and scripts
+├── public/
+│   ├── images/          # Static images
+│   │   ├── products/    # Product images
+│   │   ├── categories/  # Category thumbnails
+│   │   ├── blog/       # Blog post images
+│   │   └── og/         # Open Graph images
+│   └── fonts/          # Self-hosted fonts
+├── src/
+│   ├── components/     # UI components
+│   │   └── admin/      # Admin dashboard components (ProductForm, StorageSelector, DataMigration)
+│   ├── layouts/        # Page layouts
+│   ├── pages/         # Route pages
+│   │   └── admin/      # Admin dashboard routes (products, settings)
+│   ├── content/        # MDX content collections
+│   ├── data/          # JSON data files (products, categories, content, settings)
+│   ├── styles/         # Global styles
+│   └── utils/          # Utility functions
+│       └── storage/    # Dual storage system implementation
+│           ├── index.ts       # Storage system factory and types
+│           ├── firebaseStorage.ts  # Firebase Firestore implementation
+│           └── localStorage.ts    # Local JSON file storage implementation
+├── astro.config.mjs    # Astro configuration
+├── tailwind.config.mjs # Tailwind configuration
+├── tsconfig.json       # TypeScript configuration
+└── package.json        # Dependencies and scripts
 ```
 
 ## Getting Started
@@ -100,6 +109,51 @@ budgettechindia/
 | `SITE_URL` | Production site URL | Yes |
 | `AMAZON_AFFILIATE_TAG` | Amazon Associates India tag | Yes |
 | `ANALYTICS_ID` | Google Analytics ID | No |
+| `PUBLIC_STORAGE_TYPE` | Storage system type: 'local' (default) or 'firebase' | No |
+| `PUBLIC_FIREBASE_API_KEY` | Firebase API key (required for Firebase storage) | No |
+| `PUBLIC_FIREBASE_AUTH_DOMAIN` | Firebase auth domain (required for Firebase storage) | No |
+| `PUBLIC_FIREBASE_PROJECT_ID` | Firebase project ID (required for Firebase storage) | No |
+| `PUBLIC_FIREBASE_STORAGE_BUCKET` | Firebase storage bucket (required for Firebase storage) | No |
+| `PUBLIC_FIREBASE_MESSAGING_SENDER_ID` | Firebase messaging sender ID (required for Firebase storage) | No |
+| `PUBLIC_FIREBASE_APP_ID` | Firebase app ID (required for Firebase storage) | No |
+| `PUBLIC_FIREBASE_MEASUREMENT_ID` | Firebase measurement ID (required for Firebase storage) | No |
+
+## Storage System
+
+The application supports dual storage options:
+
+### 1. Local JSON File Storage (Default)
+
+- Simple and lightweight
+- No external dependencies
+- Files stored in `src/data/` directory
+- Products: `src/data/products.json`
+- Categories: `src/data/categories.json`
+- Content: `src/data/content.json`
+- Settings: `src/data/settings.json`
+- Perfect for small to medium datasets and development
+
+### 2. Firebase Firestore Storage
+
+- Cloud-based NoSQL database
+- Real-time synchronization
+- Automatic backup and redundancy
+- Scalable for large datasets
+- Requires Firebase project configuration
+
+### Configuration
+
+Set the storage type in your `.env` file:
+
+```env
+# Use local JSON files (default)
+PUBLIC_STORAGE_TYPE=local
+
+# Or use Firebase Firestore
+PUBLIC_STORAGE_TYPE=firebase
+```
+
+For Firebase storage, you need to configure all Firebase environment variables.
 
 ## Deployment
 
@@ -143,4 +197,4 @@ For detailed architecture and implementation details, see [ARCHITECTURE.md](ARCH
 
 ---
 
-Built with â¤ï¸ by BudgetTechIndia Team
+Built with ❤️ by BudgetTechIndia Team

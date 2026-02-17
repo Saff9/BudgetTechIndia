@@ -16,6 +16,7 @@ BudgetTechIndia is a professional affiliate marketing website focused on helping
 6. [Styling Approach](#6-styling-approach)
 7. [Build and Deployment Process](#7-build-and-deployment-process)
 8. [Performance Optimization Strategy](#8-performance-optimization-strategy)
+9. [Storage System Architecture](#9-storage-system-architecture)
 
 ---
 
@@ -1167,6 +1168,218 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
 ```
+
+---
+
+## 9. Storage System Architecture
+
+### Overview
+
+The application implements a dual storage system with support for both local JSON file storage and Firebase Firestore, providing flexibility for different deployment scenarios and scalability needs.
+
+### Architecture Pattern
+
+The storage system follows a **factory pattern** design, allowing the application to switch between storage implementations based on configuration.
+
+#### Storage Types
+
+1. **Local JSON File Storage (Default)**
+   - Simple, lightweight solution
+   - Files stored in `src/data/` directory
+   - Products: `src/data/products.json`
+   - Categories: `src/data/categories.json`
+   - Content: `src/data/content.json`
+   - Settings: `src/data/settings.json`
+   - No external dependencies
+   - Ideal for small to medium datasets and development
+
+2. **Firebase Firestore Storage**
+   - Cloud-based NoSQL database
+   - Real-time synchronization
+   - Automatic backup and redundancy
+   - Scalable for large datasets
+   - Requires Firebase project configuration
+
+### Storage System Implementation
+
+#### 1. Storage Interface (`src/utils/storage/index.ts`)
+
+Defines the standard storage interface that all implementations must conform to:
+
+```typescript
+export interface StorageSystem {
+  getAllProducts(): Promise<Product[]>;
+  getProductById(id: string): Promise<Product | null>;
+  getProductsByCategory(category: string): Promise<Product[]>;
+  addProduct(product: Omit<Product, 'id'>): Promise<string | null>;
+  updateProduct(id: string, product: Partial<Product>): Promise<boolean>;
+  deleteProduct(id: string): Promise<boolean>;
+  // ... other methods for categories, content, settings
+  exportData(): Promise<string>;
+  importData(data: string): Promise<boolean>;
+  getStorageInfo(): StorageInfo;
+}
+```
+
+#### 2. Factory Function
+
+Selects the appropriate storage system based on configuration:
+
+```typescript
+export async function getStorageSystem(type?: StorageType): Promise<StorageSystem> {
+  const storageType = type || (import.meta.env.PUBLIC_STORAGE_TYPE as StorageType) || 'local';
+  
+  switch (storageType) {
+    case 'firebase':
+      const { FirebaseStorage } = await import('./firebaseStorage');
+      return new FirebaseStorage();
+    case 'local':
+    default:
+      const { LocalStorage } = await import('./localStorage');
+      return new LocalStorage();
+  }
+}
+```
+
+#### 3. Firebase Storage Implementation (`src/utils/storage/firebaseStorage.ts`)
+
+Uses Firebase Firestore SDK to interact with the cloud database:
+
+```typescript
+export class FirebaseStorage implements StorageSystem {
+  async getAllProducts(): Promise<Product[]> {
+    const productsRef = collection(db, PRODUCTS_COLLECTION);
+    const q = query(productsRef, orderBy('name', 'asc'));
+    const snapshot = await getDocs(q);
+    
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as Product[];
+  }
+  
+  // ... other methods
+}
+```
+
+#### 4. Local Storage Implementation (`src/utils/storage/localStorage.ts`)
+
+Reads and writes data to local JSON files:
+
+```typescript
+export class LocalStorage implements StorageSystem {
+  async getAllProducts(): Promise<Product[]> {
+    const data = readJSONFile(PRODUCTS_FILE, { products: [] });
+    return data.products || [];
+  }
+  
+  async addProduct(product: Omit<Product, 'id'>): Promise<string | null> {
+    const products = await this.getAllProducts();
+    const newProduct: Product = {
+      ...product,
+      id: Date.now().toString(),
+      lastUpdated: new Date().toISOString(),
+    };
+
+    products.push(newProduct);
+    const success = writeJSONFile(PRODUCTS_FILE, { products });
+    return success ? newProduct.id : null;
+  }
+  
+  // ... other methods
+}
+```
+
+### Configuration
+
+Set the storage type in your `.env` file:
+
+```env
+# Use local JSON files (default)
+PUBLIC_STORAGE_TYPE=local
+
+# Or use Firebase Firestore
+PUBLIC_STORAGE_TYPE=firebase
+```
+
+### Storage Features
+
+#### Data Migration
+
+The system supports data migration between storage systems:
+
+```typescript
+// Export data from current storage
+const storage = await getStorageSystem();
+const data = await storage.exportData();
+
+// Import data into target storage
+const targetStorage = await getStorageSystem('firebase');
+const success = await targetStorage.importData(data);
+```
+
+#### Export/Import
+
+Users can export data to JSON files for backup and import data from JSON files:
+
+```typescript
+// Export
+const data = await storage.exportData();
+const blob = new Blob([data], { type: 'application/json' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = `budgettechindia-data-${new Date().toISOString().split('T')[0]}.json`;
+a.click();
+URL.revokeObjectURL(url);
+
+// Import
+const file = e.target.files?.[0];
+const reader = new FileReader();
+reader.onload = async (e) => {
+  const data = e.target?.result as string;
+  const success = await storage.importData(data);
+  if (success) {
+    alert('Data imported successfully!');
+    window.location.reload();
+  }
+};
+reader.readAsText(file);
+```
+
+### Admin Panel Integration
+
+The admin panel includes:
+
+1. **Storage Selector Component** (`src/components/admin/StorageSelector.astro`)
+   - Displays current storage system
+   - Shows storage configuration status
+   - Provides information about storage type
+
+2. **Data Migration Component** (`src/components/admin/DataMigration.astro`)
+   - Export data to JSON file
+   - Import data from JSON file
+   - Migrate data between storage systems
+   - Batch operations
+
+3. **Storage Settings Page** (`src/pages/admin/settings.astro`)
+   - Storage system configuration
+   - Data migration tools
+   - System information
+   - Environment variables display
+
+### Usage in Application
+
+Components and pages use the storage system by importing and calling the factory function:
+
+```typescript
+import { getStorageSystem } from '../../utils/storage';
+
+const storageSystem = await getStorageSystem();
+const products = await storageSystem.getAllProducts();
+```
+
+This ensures that all components are storage-agnostic and will work with any implementation that conforms to the `StorageSystem` interface.
 
 ---
 

@@ -1,0 +1,346 @@
+---
+/**
+ * Admin Edit Product Page for BudgetTechIndia
+ * Edit an existing product in the database with enhanced form
+ */
+
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import type { Product } from '../../../utils/interfaces';
+import productsData from '../../../data/products.json';
+import ProductForm from '../../../components/admin/ProductForm.astro';
+import { getStorageSystem } from '../../../utils/storage';
+
+// Dynamic route handler
+export function getStaticPaths() {
+  return productsData.products.map((product) => ({
+    params: { id: product.id },
+  }));
+}
+
+// Get product ID from params
+const { id } = Astro.params;
+
+// Find product from JSON file (fallback for static generation)
+const product = productsData.products.find((p) => p.id === id);
+
+if (!product) {
+  return Astro.redirect('/admin/products');
+}
+
+// Get storage system and categories
+const storageSystem = await getStorageSystem();
+const categories = await storageSystem.getAllCategories();
+---
+
+<AdminLayout title="Edit Product - Admin Panel">
+  <div class="flex items-center justify-between mb-8">
+    <h2 class="text-xl font-bold text-[#F4F1EA]">Edit Product</h2>
+    <a
+      href="/admin/products"
+      class="px-4 py-2 text-sm font-medium text-[#F4F1EA] bg-[#0F1F24] border border-[#2a4450] rounded-lg hover:bg-[#2a4450] transition-colors duration-200"
+    >
+      <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Back to Products
+    </a>
+  </div>
+
+  <!-- Product Form -->
+  <ProductForm product={product} categories={categories} isEditing={true} />
+      <!-- Basic Information -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="name" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Product Name <span class="text-[#df0000]">*</span>
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            value={product.name}
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter product name"
+          />
+        </div>
+
+        <div>
+          <label for="brand" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Brand <span class="text-[#df0000]">*</span>
+          </label>
+          <input
+            type="text"
+            id="brand"
+            name="brand"
+            required
+            value={product.brand}
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter brand name"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="category" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Category <span class="text-[#df0000]">*</span>
+          </label>
+          <select
+            id="category"
+            name="category"
+            required
+            value={product.category}
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+          >
+            <option value="">Select a category</option>
+            <option value="bluetooth-earbuds">Bluetooth Earbuds</option>
+            <option value="power-banks">Power Banks</option>
+            <option value="smartwatches">Smartwatches</option>
+            <option value="laptop-accessories">Laptop Accessories</option>
+            <option value="fast-chargers-cables">Fast Chargers & Cables</option>
+            <option value="budget-gadgets-under-999">Budget Gadgets Under ₹999</option>
+            <option value="work-from-home-essentials">Work From Home Essentials</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="price" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Price (₹) <span class="text-[#df0000]">*</span>
+          </label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            required
+            min="0"
+            step="0.01"
+            value={product.price}
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter price"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="mrp" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            MRP (₹)
+          </label>
+          <input
+            type="number"
+            id="mrp"
+            name="mrp"
+            min="0"
+            step="0.01"
+            value={product.mrp}
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter MRP"
+          />
+        </div>
+
+        <div>
+          <label for="rating" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Rating
+          </label>
+          <input
+            type="number"
+            id="rating"
+            name="rating"
+            min="0"
+            max="5"
+            step="0.1"
+            value={product.rating}
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter rating (0-5)"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="reviewCount" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Review Count
+          </label>
+          <input
+            type="number"
+            id="reviewCount"
+            name="reviewCount"
+            min="0"
+            value={product.reviewCount}
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter review count"
+          />
+        </div>
+
+        <div>
+          <label for="imageUrl" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Image URL <span class="text-[#df0000]">*</span>
+          </label>
+          <input
+            type="url"
+            id="imageUrl"
+            name="imageUrl"
+            required
+            value={product.imageUrl}
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter image URL"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="affiliateUrl" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Affiliate URL <span class="text-[#df0000]">*</span>
+          </label>
+          <input
+            type="url"
+            id="affiliateUrl"
+            name="affiliateUrl"
+            required
+            value={product.affiliateUrl}
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter affiliate URL"
+          />
+        </div>
+
+        <div>
+          <label for="slug" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Slug <span class="text-[#df0000]">*</span>
+          </label>
+          <input
+            type="text"
+            id="slug"
+            name="slug"
+            required
+            value={product.slug}
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter product slug"
+          />
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div>
+        <label class="block text-sm font-medium text-[#F4F1EA] mb-2">
+          Features
+        </label>
+        <div class="space-y-3">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <input
+              type="text"
+              placeholder="Feature 1"
+              value={Object.values(product.features)[0]}
+              class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            />
+            <input
+              type="text"
+              placeholder="Feature 2"
+              value={Object.values(product.features)[1]}
+              class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            />
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <input
+              type="text"
+              placeholder="Feature 3"
+              value={Object.values(product.features)[2]}
+              class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            />
+            <input
+              type="text"
+              placeholder="Feature 4"
+              value={Object.values(product.features)[3]}
+              class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Pros and Cons -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Pros
+          </label>
+          <div class="space-y-2">
+            <input
+              type="text"
+              placeholder="Pro 1"
+              value={product.pros[0]}
+              class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            />
+            <input
+              type="text"
+              placeholder="Pro 2"
+              value={product.pros[1]}
+              class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            />
+            <input
+              type="text"
+              placeholder="Pro 3"
+              value={product.pros[2]}
+              class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Cons
+          </label>
+          <div class="space-y-2">
+            <input
+              type="text"
+              placeholder="Con 1"
+              value={product.cons[0]}
+              class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            />
+            <input
+              type="text"
+              placeholder="Con 2"
+              value={product.cons[1]}
+              class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div>
+        <label class="flex items-center gap-2 text-sm font-medium text-[#F4F1EA]">
+          <input
+            type="checkbox"
+            id="isActive"
+            name="isActive"
+            checked={product.isActive}
+            class="w-4 h-4 text-[#C46A3A] bg-[#0F1F24] border-[#2a4450] rounded focus:ring-[#C46A3A]"
+          />
+          Active Product
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex items-center gap-4">
+        <button
+          type="submit"
+          class="px-6 py-3 text-sm font-medium text-[#F4F1EA] bg-[#C46A3A] rounded-lg hover:bg-[#d4834f] transition-colors duration-200"
+        >
+          <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Save Changes
+        </button>
+
+        <button
+          type="button"
+          class="px-6 py-3 text-sm font-medium text-[#F4F1EA] bg-[#0F1F24] border border-[#2a4450] rounded-lg hover:bg-[#2a4450] transition-colors duration-200"
+          onClick={() => window.location.href = '/admin/products'}
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</AdminLayout>

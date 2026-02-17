@@ -6,6 +6,8 @@
 
 import LegalLayout from '../layouts/LegalLayout.astro';
 import type { BreadcrumbItem } from '../utils/interfaces';
+import SEO from '../components/seo/SEO.astro';
+import JsonLD from '../components/seo/JsonLD.astro';
 
 const breadcrumbs: BreadcrumbItem[] = [
   { name: 'Home', url: '/' },
@@ -22,6 +24,20 @@ const lastUpdated = new Date('2026-02-15');
   breadcrumbs={breadcrumbs}
   currentPath="/terms-conditions"
 >
+  <SEO title="Terms & Conditions | BudgetTechIndia" description="Terms and conditions governing your use of BudgetTechIndia." type="article" />
+  <JsonLD
+    type="article"
+    data={{
+      article: {
+        title: "Terms & Conditions",
+        description: "Terms and conditions governing your use of BudgetTechIndia.",
+        pubDate: "2026-02-15"
+      },
+      url: "https://budgettechindia.com/terms-conditions",
+      imageUrl: "https://placehold.co/1200x630/0F1F24/F4F1EA?text=Terms+%26+Conditions",
+      authorName: "BudgetTechIndia"
+    }}
+  />
   <h2 id="acceptance-of-terms">Acceptance of Terms</h2>
   <p>
     By accessing and using BudgetTechIndia (the "Website"), you accept and agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use our Website.

@@ -1,0 +1,480 @@
+---
+/**
+ * Enhanced Product Form Component
+ * Rich product editor with comprehensive fields and image upload
+ * 
+ * @component
+ * @version 1.0.0
+ */
+
+import type { Product } from '../../utils/interfaces';
+
+interface Props {
+  product?: Product;
+  categories?: any[];
+  isEditing?: boolean;
+}
+
+const { product, categories = [], isEditing = false } = Astro.props;
+
+// Default values
+const defaultProduct: Partial<Product> = {
+  name: '',
+  brand: '',
+  category: '',
+  price: 0,
+  mrp: 0,
+  imageUrl: '',
+  affiliateUrl: '',
+  asin: '',
+  rating: 0,
+  reviewCount: 0,
+  features: {},
+  pros: [],
+  cons: [],
+  isActive: true,
+};
+
+const formProduct = product || defaultProduct;
+---
+
+<div class="bg-[#1A2E35] rounded-xl p-6 border border-[#2a4450]/50">
+  <form class="space-y-6">
+    <!-- Basic Information -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label for="name" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+          Product Name <span class="text-[#df0000]">*</span>
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          value={formProduct.name}
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+          placeholder="Enter product name"
+        />
+      </div>
+
+      <div>
+        <label for="brand" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+          Brand <span class="text-[#df0000]">*</span>
+        </label>
+        <input
+          type="text"
+          id="brand"
+          name="brand"
+          required
+          value={formProduct.brand}
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+          placeholder="Enter brand name"
+        />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label for="category" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+          Category <span class="text-[#df0000]">*</span>
+        </label>
+        <select
+          id="category"
+          name="category"
+          required
+          value={formProduct.category}
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+        >
+          <option value="">Select a category</option>
+          {categories.length > 0 ? (
+            categories.map((category) => (
+              <option key={category.id} value={category.id || category.slug || category.name.toLowerCase().replace(/\s+/g, '-')}>
+                {category.name}
+              </option>
+            ))
+          ) : (
+            <>
+              <option value="bluetooth-earbuds">Bluetooth Earbuds</option>
+              <option value="power-banks">Power Banks</option>
+              <option value="smartwatches">Smartwatches</option>
+              <option value="laptop-accessories">Laptop Accessories</option>
+              <option value="fast-chargers-cables">Fast Chargers & Cables</option>
+              <option value="budget-gadgets-under-999">Budget Gadgets Under ₹999</option>
+              <option value="work-from-home-essentials">Work From Home Essentials</option>
+            </>
+          )}
+        </select>
+      </div>
+
+      <div>
+        <label for="price" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+          Price (₹) <span class="text-[#df0000]">*</span>
+        </label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          required
+          min="0"
+          step="0.01"
+          value={formProduct.price}
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+          placeholder="Enter price"
+        />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label for="mrp" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+          MRP (₹)
+        </label>
+        <input
+          type="number"
+          id="mrp"
+          name="mrp"
+          min="0"
+          step="0.01"
+          value={formProduct.mrp}
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+          placeholder="Enter MRP"
+        />
+      </div>
+
+      <div>
+        <label for="rating" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+          Rating
+        </label>
+        <input
+          type="number"
+          id="rating"
+          name="rating"
+          min="0"
+          max="5"
+          step="0.1"
+          value={formProduct.rating}
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+          placeholder="Enter rating (0-5)"
+        />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label for="reviewCount" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+          Review Count
+        </label>
+        <input
+          type="number"
+          id="reviewCount"
+          name="reviewCount"
+          min="0"
+          value={formProduct.reviewCount}
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+          placeholder="Enter review count"
+        />
+      </div>
+
+      <div>
+        <label for="asin" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+          ASIN (Amazon Standard Identification Number)
+        </label>
+        <input
+          type="text"
+          id="asin"
+          name="asin"
+          value={formProduct.asin}
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+          placeholder="Enter ASIN"
+        />
+      </div>
+    </div>
+
+    <!-- Image Upload -->
+    <div>
+      <label class="block text-sm font-medium text-[#F4F1EA] mb-2">
+        Product Image <span class="text-[#df0000]">*</span>
+      </label>
+      <div class="space-y-3">
+        {formProduct.imageUrl && (
+          <div class="relative inline-block">
+            <img
+              src={formProduct.imageUrl}
+              alt="Product preview"
+              class="w-32 h-32 rounded-lg object-contain"
+            />
+            <button
+              type="button"
+              class="absolute -top-2 -right-2 p-1 bg-[#df0000] text-white rounded-full hover:bg-[#ff0000] transition-colors"
+              onClick={() => document.getElementById('imageUrl')?.setValue('')}
+            >
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        )}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <input
+            type="url"
+            id="imageUrl"
+            name="imageUrl"
+            required
+            value={formProduct.imageUrl}
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter image URL"
+          />
+          <label class="flex items-center justify-center px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] cursor-pointer hover:bg-[#2a4450] transition-colors">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            Upload Image
+            <input
+              type="file"
+              id="imageUpload"
+              name="imageUpload"
+              accept="image/*"
+              class="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onload = (e) => {
+                    document.getElementById('imageUrl')?.setValue(e.target?.result as string);
+                  };
+                  reader.readAsDataURL(file);
+                }
+              }}
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Affiliate Links -->
+    <div>
+      <h3 class="text-sm font-medium text-[#F4F1EA] mb-4">Affiliate Links</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="affiliateUrl" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Amazon Affiliate URL <span class="text-[#df0000]">*</span>
+          </label>
+          <input
+            type="url"
+            id="affiliateUrl"
+            name="affiliateUrl"
+            required
+            value={formProduct.affiliateUrl}
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter Amazon affiliate URL"
+          />
+        </div>
+        <div>
+          <label for="flipkartUrl" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Flipkart Affiliate URL
+          </label>
+          <input
+            type="url"
+            id="flipkartUrl"
+            name="flipkartUrl"
+            value=""
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter Flipkart affiliate URL"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div>
+      <label class="block text-sm font-medium text-[#F4F1EA] mb-2">
+        Features
+      </label>
+      <div class="space-y-3">
+        {Object.entries(formProduct.features || {}).map(([key, value], index) => (
+          <div key={index} class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <input
+              type="text"
+              placeholder="Feature name"
+              value={key}
+              class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            />
+            <input
+              type="text"
+              placeholder="Feature value"
+              value={value}
+              class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            />
+          </div>
+        ))}
+        <button
+          type="button"
+          class="px-4 py-2 text-sm text-[#F4F1EA] bg-[#0F1F24] border border-[#2a4450] rounded-lg hover:bg-[#2a4450] transition-colors"
+        >
+          <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+          Add Feature
+        </button>
+      </div>
+    </div>
+
+    <!-- Pros and Cons -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-sm font-medium text-[#F4F1EA] mb-2">
+          Pros
+        </label>
+        <div class="space-y-2">
+          {formProduct.pros?.map((pro, index) => (
+            <div key={index} class="flex items-center gap-2">
+              <input
+                type="text"
+                placeholder="Pro"
+                value={pro}
+                class="flex-1 px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+              />
+              <button
+                type="button"
+                class="p-2 text-[#df0000] hover:bg-[#df0000]/20 rounded-lg transition-colors"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            class="px-4 py-2 text-sm text-[#F4F1EA] bg-[#0F1F24] border border-[#2a4450] rounded-lg hover:bg-[#2a4450] transition-colors"
+          >
+            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Add Pro
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-[#F4F1EA] mb-2">
+          Cons
+        </label>
+        <div class="space-y-2">
+          {formProduct.cons?.map((con, index) => (
+            <div key={index} class="flex items-center gap-2">
+              <input
+                type="text"
+                placeholder="Con"
+                value={con}
+                class="flex-1 px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+              />
+              <button
+                type="button"
+                class="p-2 text-[#df0000] hover:bg-[#df0000]/20 rounded-lg transition-colors"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            class="px-4 py-2 text-sm text-[#F4F1EA] bg-[#0F1F24] border border-[#2a4450] rounded-lg hover:bg-[#2a4450] transition-colors"
+          >
+            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Add Con
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Optimization -->
+    <div>
+      <h3 class="text-sm font-medium text-[#F4F1EA] mb-4">SEO Optimization</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="slug" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Slug <span class="text-[#df0000]">*</span>
+          </label>
+          <input
+            type="text"
+            id="slug"
+            name="slug"
+            required
+            value={formProduct.slug}
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter product slug"
+          />
+        </div>
+        <div>
+          <label for="metaTitle" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+            Meta Title
+          </label>
+          <input
+            type="text"
+            id="metaTitle"
+            name="metaTitle"
+            value=""
+            class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+            placeholder="Enter meta title"
+          />
+        </div>
+      </div>
+      <div>
+        <label for="metaDescription" class="block text-sm font-medium text-[#F4F1EA] mb-2">
+          Meta Description
+        </label>
+        <textarea
+          id="metaDescription"
+          name="metaDescription"
+          rows="3"
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] placeholder-[#a8b5ba] focus:outline-none focus:border-[#C46A3A] focus:ring-1 focus:ring-[#C46A3A]"
+          placeholder="Enter meta description"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div>
+      <label class="flex items-center gap-2 text-sm font-medium text-[#F4F1EA]">
+        <input
+          type="checkbox"
+          id="isActive"
+          name="isActive"
+          checked={formProduct.isActive}
+          class="w-4 h-4 text-[#C46A3A] bg-[#0F1F24] border-[#2a4450] rounded focus:ring-[#C46A3A]"
+        />
+        Active Product
+      </label>
+    </div>
+
+    <!-- Submit Buttons -->
+    <div class="flex items-center gap-4">
+      <button
+        type="submit"
+        class="px-6 py-3 text-sm font-medium text-[#F4F1EA] bg-[#C46A3A] rounded-lg hover:bg-[#d4834f] transition-colors duration-200"
+      >
+        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          {isEditing ? (
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          ) : (
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          )}
+        </svg>
+        {isEditing ? 'Save Changes' : 'Add Product'}
+      </button>
+
+      <button
+        type="button"
+        class="px-6 py-3 text-sm font-medium text-[#F4F1EA] bg-[#0F1F24] border border-[#2a4450] rounded-lg hover:bg-[#2a4450] transition-colors duration-200"
+        onClick={() => window.location.href = '/admin/products'}
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

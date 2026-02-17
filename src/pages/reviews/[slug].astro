@@ -14,6 +14,9 @@ import CTAButton from '../../components/content/CTAButton.astro';
 import FAQSection from '../../components/content/FAQSection.astro';
 import JsonLD from '../../components/seo/JsonLD.astro';
 import ProductCard from '../../components/products/ProductCard.astro';
+import RelatedProducts from '../../components/products/RelatedProducts.astro';
+import { getRelatedProducts } from '../../utils/suggestionAlgorithm';
+import { getViewedProductIds, getClickedProductIds } from '../../utils/userBehavior';
 import { formatDate, formatPrice } from '../../utils/helpers';
 
 // Define static paths for all review articles
@@ -52,10 +55,13 @@ if (!product) {
   return Astro.redirect('/404');
 }
 
-// Get related products from same category
-const relatedProducts = productsData.default.products
-  .filter((p: Product) => p.category === product.category && p.id !== product.id)
-  .slice(0, 3);
+// Get related products using smart algorithm
+  const userBehavior = {
+    viewed: getViewedProductIds(),
+    clicked: getClickedProductIds()
+  };
+  
+  const relatedProducts = getRelatedProducts(product, productsData.default.products, userBehavior, 4);
 
 // Breadcrumbs
 const breadcrumbs: BreadcrumbItem[] = [
@@ -161,12 +167,16 @@ const productSchemaData = {
 
           <!-- Product Quick Info -->
           <div class="bg-neutral-50 rounded-xl p-6 flex flex-col md:flex-row gap-6">
-            <img
-              src={product.imageUrl}
-              alt={product.name}
-              class="w-40 h-40 object-contain mx-auto md:mx-0"
-              loading="eager"
-            />
+            <picture>
+              <source srcset={product.imageUrl.replace(/\\.(png|jpg|jpeg)$/, '.webp')} type="image/webp" />
+              <source srcset={product.imageUrl} />
+              <img
+                src={product.imageUrl}
+                alt={product.name}
+                class="w-40 h-40 object-contain mx-auto md:mx-0"
+                loading="lazy"
+              />
+            </picture>
             <div class="flex-1">
               <h2 class="font-heading text-xl font-semibold text-neutral-900 mb-2">
                 {product.name}
@@ -434,14 +444,12 @@ const productSchemaData = {
 
     <!-- Related Products Section -->
     {relatedProducts.length > 0 && (
-      <section class="mt-16 pt-8 border-t border-neutral-200">
-        <h2 class="font-heading text-h3 text-neutral-900 mb-6">Related Products</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {relatedProducts.map((p: Product) => (
-            <ProductCard product={p} />
-          ))}
-        </div>
-      </section>
+      <RelatedProducts 
+        targetProduct={product}
+        allProducts={productsData.default.products}
+        title="You Might Also Like"
+        limit={4}
+      />
     )}
   </div>
 </BaseLayout>

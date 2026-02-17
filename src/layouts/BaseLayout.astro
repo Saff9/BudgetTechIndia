@@ -8,26 +8,19 @@
 import type { SEOMeta } from '../utils/interfaces';
 import SEO from '../components/seo/SEO.astro';
 import JsonLD from '../components/seo/JsonLD.astro';
-import { getActiveVariation } from '../utils/variation';
-import DarkHeader from '../components/common/Header.astro';
-import LightHeader from '../components/light/Header.astro';
-import DarkFooter from '../components/common/Footer.astro';
-import LightFooter from '../components/light/Footer.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
 import CookieConsent from '../components/common/CookieConsent.astro';
 import BackToTop from '../components/common/BackToTop.astro';
 import '../styles/global.css';
-import '../styles/light.css';
 
 interface Props extends SEOMeta {
   /** Current page path */
   currentPath?: string;
-  /** Optional variation override */
-  variation?: 'dark' | 'light';
 }
 
 const {
   currentPath = '/',
-  variation: propVariation,
   title,
   description,
   canonical,
@@ -37,13 +30,6 @@ const {
   nofollow = false,
   ...seoProps
 } = Astro.props;
-
-const activeVariation = propVariation || getActiveVariation();
-const isDarkTheme = activeVariation === 'dark';
-
-// Import theme-specific components
-const Header = isDarkTheme ? DarkHeader : LightHeader;
-const Footer = isDarkTheme ? DarkFooter : LightFooter;
 
 const siteUrl = import.meta.env.SITE_URL || 'https://budgettechindia.com';
 const siteName = 'BudgetTechIndia';
@@ -127,21 +113,16 @@ const websiteSchema = {
     <JsonLD type="organization" data={organizationSchema} />
     <JsonLD type="website" data={websiteSchema} />
     
-    <!-- Theme color for mobile browsers - Dynamic based on theme -->
-    <meta name="theme-color" content={isDarkTheme ? "#0F1F24" : "#3B82F6"} />
-    <meta name="msapplication-TileColor" content={isDarkTheme ? "#0F1F24" : "#3B82F6"} />
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#0F1F24" />
+    <meta name="msapplication-TileColor" content="#0F1F24" />
   </head>
 
-  <body class={`flex flex-col min-h-screen antialiased ${isDarkTheme ? 'bg-[#0F1F24] text-[#F4F1EA]' : 'bg-white text-gray-900 light-theme'}`}
-        data-theme={activeVariation}>
+  <body class="flex flex-col min-h-screen antialiased bg-[#0F1F24] text-[#F4F1EA]" data-theme="dark">
     <!-- Skip to main content link for accessibility -->
     <a
       href="#main-content"
-      class={`sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg focus:transition-all ${
-        isDarkTheme 
-          ? 'focus:bg-[#C46A3A] focus:text-[#F4F1EA]' 
-          : 'focus:bg-blue-500 focus:text-white'
-      }`}
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg focus:transition-all focus:bg-[#C46A3A] focus:text-[#F4F1EA]"
     >
       Skip to main content
     </a>
@@ -150,7 +131,7 @@ const websiteSchema = {
     <Header currentPath={currentPath} />
 
     <!-- Main Content - Theme specific background -->
-    <main id="main-content" class={`flex-1 ${isDarkTheme ? 'bg-[#0F1F24]' : 'bg-white'}`}>
+    <main id="main-content" class="flex-1 bg-[#0F1F24]">
       <slot />
     </main>
 

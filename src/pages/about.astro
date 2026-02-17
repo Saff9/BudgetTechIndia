@@ -7,6 +7,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/common/Breadcrumb.astro';
 import type { BreadcrumbItem } from '../utils/interfaces';
+import SEO from '../components/seo/SEO.astro';
+import JsonLD from '../components/seo/JsonLD.astro';
 
 // Breadcrumbs
 const breadcrumbs: BreadcrumbItem[] = [
@@ -48,6 +50,20 @@ const teamMembers = [
   description="Learn about BudgetTechIndia - your trusted source for honest tech product reviews under ₹2,000. Discover our mission, team, and commitment to helping Indian consumers."
   currentPath="/about"
 >
+  <SEO title="About Us | BudgetTechIndia" description="Learn about BudgetTechIndia - your trusted source for honest tech product reviews under ₹2,000." type="article" />
+  <JsonLD
+    type="article"
+    data={{
+      article: {
+        title: "About Us",
+        description: "Learn about BudgetTechIndia - your trusted source for honest tech product reviews under ₹2,000.",
+        pubDate: "2026-02-15"
+      },
+      url: "https://budgettechindia.com/about",
+      imageUrl: "https://placehold.co/1200x630/0F1F24/F4F1EA?text=About+BudgetTechIndia",
+      authorName: "BudgetTechIndia"
+    }}
+  />
   <div class="container py-8">
     <!-- Breadcrumb -->
     <Breadcrumb items={breadcrumbs} />
