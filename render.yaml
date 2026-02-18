@@ -54,8 +54,7 @@ services:
       - key: NODE_VERSION
         value: 18.17.0
       - key: SITE_URL
-        value: https://budgettechindia.com
-
+        value: https://budgettechindia.onrender.com/
   # Optional: Redis for caching (if needed in future)
   # - type: redis
   #   name: budgettechindia-cache
@@ -69,7 +68,7 @@ envVarGroups:
       - key: SITE_NAME
         value: BudgetTechIndia
       - key: SITE_URL
-        value: https://budgettechindia.com
+        value: https://budgettechindia.onrender.com/
       - key: NODE_ENV
         value: production
 
