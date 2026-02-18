@@ -308,6 +308,14 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
       </svg>
       <span class="relative z-10">Check Price on {preferredStore === 'amazon' ? 'Amazon' : 'Flipkart'}</span>
     </a>
+      <!-- Share Button -->
+      <button
+        type="button"
+        class="share-btn ml-2 px-3 py-1 text-xs bg-[#0F1F24] border border-[#2a4450] rounded hover:border-[#C46A3A]/50 transition-colors"
+        data-action="share"
+      >
+        Share
+      </button>
     
     <!-- Enhanced trust indicator -->
     <div class="flex items-center justify-center gap-3 mt-3 text-[10px] text-[#6b7d83]">
@@ -419,6 +427,26 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
           } catch (err) {
             console.warn('[Affiliate] Could not track click:', err);
           }
+        }
+      });
+    });
+    // Share button handling
+    const shareButtons = document.querySelectorAll('[data-action="share"]');
+    shareButtons.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const productCard = btn.closest('[data-product-id]');
+        const productName = productCard?.querySelector('h3 a')?.textContent || '';
+        const url = productCard?.querySelector('[data-affiliate-link="true"]')?.href || '';
+        if (navigator.share) {
+          navigator.share({ title: productName, url }).catch(() => {});
+        } else if (navigator.clipboard) {
+          navigator.clipboard.writeText(url).then(() => {
+            alert('Product link copied to clipboard');
+          }).catch(() => {
+            alert('Unable to copy link');
+          });
+        } else {
+          alert('Share not supported');
         }
       });
     });
