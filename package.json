@@ -7,9 +7,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
+    "start": "astro dev --host 0.0.0.0",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro preview --host 0.0.0.0",
     "astro": "astro",
     "lint": "eslint src --ext .js,.ts,.tsx,.astro",
     "lint:fix": "eslint src --ext .js,.ts,.tsx,.astro --fix",

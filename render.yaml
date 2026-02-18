@@ -5,9 +5,9 @@ services:
   # Web Service - Static Site
   - type: web
     name: budgettechindia
-    runtime: static
+    env: node
     buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
+    startCommand: npm run preview
     pullRequestPreviewsEnabled: true
     headers:
       - path: /*
