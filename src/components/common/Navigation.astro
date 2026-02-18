@@ -15,11 +15,12 @@ interface Props {
 }
 
 const defaultNavItems: NavItem[] = [
-  { label: 'All Categories', href: '/categories' },
+  { label: 'Home', href: '/' },
   { label: 'Reviews', href: '/reviews' },
-  { label: 'Top 5 Lists', href: '/top-5' },
+  { label: 'Categories', href: '/categories' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Today\'s Deals', href: '/reviews?sort=deals' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 const { currentPath = '/', items = defaultNavItems } = Astro.props;
@@ -30,15 +31,15 @@ function isActive(href: string, current: string): boolean {
 }
 ---
 
-<!-- Desktop Navigation - Dark theme secondary nav -->
-<nav class="hidden lg:flex items-center gap-0.5 xl:gap-1 h-10" aria-label="Main navigation">
+<!-- Desktop Navigation - Dark theme secondary nav with enhanced animations -->
+<nav class="hidden lg:flex items-center gap-1 xl:gap-2 h-10" aria-label="Main navigation">
   {items.map((item) => (
     <a
       href={item.href}
-      class={`relative px-2.5 xl:px-3 py-1.5 text-xs xl:text-sm font-medium transition-all duration-200 rounded ${
+      class={`nav-link-animated nav-item-hover relative px-3 xl:px-4 py-2 text-sm xl:text-base font-medium transition-all duration-300 rounded-lg ${
         isActive(item.href, currentPath)
-          ? 'text-[#F4F1EA] bg-[#C46A3A]/20'
-          : 'text-[#a8b5ba] hover:text-[#F4F1EA] hover:bg-[#1A2E35]'
+          ? 'text-[#C46A3A] bg-[#C46A3A]/10 active'
+          : 'text-[#a8b5ba] hover:text-[#F4F1EA]'
       }`}
       aria-current={isActive(item.href, currentPath) ? 'page' : undefined}
       {...(item.external && { target: '_blank', rel: 'noopener noreferrer' })}
@@ -56,11 +57,11 @@ function isActive(href: string, current: string): boolean {
   aria-modal="true"
   aria-label="Mobile navigation"
 >
-  <!-- Backdrop -->
-  <div class="fixed inset-0 bg-[#0F1F24]/80 backdrop-blur-sm" id="mobile-menu-backdrop"></div>
+  <!-- Backdrop with fade animation -->
+  <div class="fixed inset-0 bg-[#0F1F24]/80 backdrop-blur-md opacity-0 transition-opacity duration-300" id="mobile-menu-backdrop"></div>
   
-  <!-- Drawer -->
-  <div class="fixed top-0 left-0 h-full w-[280px] sm:w-[320px] max-w-[85vw] bg-[#0F1F24] shadow-soft-xl transform transition-transform duration-300 ease-smooth -translate-x-full border-r border-[#2a4450]" id="mobile-menu-drawer">
+  <!-- Drawer with slide animation -->
+  <div class="fixed top-0 left-0 h-full w-[280px] sm:w-[320px] max-w-[85vw] bg-[#0F1F24] shadow-soft-xl transform -translate-x-full border-r border-[#2a4450] transition-transform duration-300 ease-out" id="mobile-menu-drawer">
     <!-- Drawer Header -->
     <div class="flex items-center justify-between p-3 sm:p-4 border-b border-[#2a4450]">
       <div class="flex items-center gap-2">
@@ -111,7 +112,7 @@ function isActive(href: string, current: string): boolean {
     <nav class="p-3 sm:p-4 overflow-y-auto" aria-label="Mobile navigation" style="max-height: calc(100vh - 280px);">
       <ul class="space-y-0.5 sm:space-y-1">
         {items.map((item, index) => (
-          <li style={`animation-delay: ${index * 50}ms`}>
+          <li class="mobile-nav-item" style={`animation-delay: ${index * 0.05}s`}>
             <a
               href={item.href}
               class={`flex items-center gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-medium transition-all duration-200 touch-target ${
@@ -227,13 +228,19 @@ function isActive(href: string, current: string): boolean {
   const closeButton = document.getElementById('mobile-menu-close');
 
   function openMenu() {
-    if (!mobileMenu || !menuDrawer) return;
+    if (!mobileMenu || !menuDrawer || !backdrop) return;
     mobileMenu.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     
-    // Trigger animation
+    // Trigger animations with requestAnimationFrame for smooth transition
     requestAnimationFrame(() => {
-      menuDrawer.classList.remove('-translate-x-full');
+      requestAnimationFrame(() => {
+        // Animate drawer slide in
+        menuDrawer.classList.remove('-translate-x-full');
+        // Animate backdrop fade in
+        backdrop.classList.remove('opacity-0');
+        backdrop.classList.add('opacity-100');
+      });
     });
     
     // Focus management for accessibility
@@ -241,8 +248,13 @@ function isActive(href: string, current: string): boolean {
   }
 
   function closeMenu() {
-    if (!mobileMenu || !menuDrawer) return;
+    if (!mobileMenu || !menuDrawer || !backdrop) return;
+    
+    // Animate drawer slide out
     menuDrawer.classList.add('-translate-x-full');
+    // Animate backdrop fade out
+    backdrop.classList.remove('opacity-100');
+    backdrop.classList.add('opacity-0');
     
     // Wait for animation to complete
     setTimeout(() => {

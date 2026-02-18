@@ -25,28 +25,28 @@ export const siteConfig = {
   // Social Media Links
   social: {
     twitter: {
-      handle: '@BudgetTechIndia',
-      url: 'https://twitter.com/BudgetTechIndia',
+      handle: '@owaisahmaddar20',
+      url: 'https://x.com/owaisahmaddar20?s=20',
     },
-    facebook: {
-      handle: 'BudgetTechIndia',
-      url: 'https://facebook.com/BudgetTechIndia',
+    youtube: {
+      handle: '@CaliZenOwais',
+      url: 'https://www.youtube.com/@CaliZenOwais',
     },
     instagram: {
       handle: '@budgettechindia',
       url: 'https://instagram.com/budgettechindia',
     },
-    youtube: {
+    linkedin: {
       handle: 'BudgetTechIndia',
-      url: 'https://youtube.com/@BudgetTechIndia',
+      url: 'https://linkedin.com/company/budgettechindia',
+    },
+    facebook: {
+      handle: 'BudgetTechIndia',
+      url: 'https://facebook.com/BudgetTechIndia',
     },
     telegram: {
       handle: 'BudgetTechIndia',
       url: 'https://t.me/BudgetTechIndia',
-    },
-    linkedin: {
-      handle: 'BudgetTechIndia',
-      url: 'https://linkedin.com/company/budgettechindia',
     },
   },
   

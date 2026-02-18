@@ -59,15 +59,149 @@ const testimonials = [
   },
 ];
 
-// Brand logos
-const brands = [
-  { name: 'boAt', width: 80 },
-  { name: 'Noise', width: 75 },
-  { name: 'Realme', width: 85 },
-  { name: 'Redmi', width: 75 },
-  { name: 'OnePlus', width: 90 },
-  { name: 'Ambrane', width: 85 },
-];
+  // Brand logos with real-looking SVG designs
+  const brands = [
+    {
+      name: 'Amazon',
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
+        <defs>
+          <linearGradient id="amazonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#FF9900"/>
+            <stop offset="100%" style="stop-color:#FF6600"/>
+          </linearGradient>
+        </defs>
+        <!-- Amazon arrow smile -->
+        <path d="M5 25 Q15 32 30 25" stroke="url(#amazonGrad)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Arrow head -->
+        <path d="M28 22 L32 26 L26 28" fill="url(#amazonGrad)"/>
+        <!-- Text -->
+        <text x="38" y="26" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#FF9900">amazon</text>
+      </svg>`
+    },
+    {
+      name: 'Flipkart',
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
+        <defs>
+          <linearGradient id="flipkartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#2874F0"/>
+            <stop offset="100%" style="stop-color:#1E5DC4"/>
+          </linearGradient>
+        </defs>
+        <!-- Shopping bag icon -->
+        <rect x="6" y="10" width="20" height="22" rx="3" fill="url(#flipkartGrad)"/>
+        <path d="M10 10 Q10 4 16 4 Q22 4 22 10" stroke="white" stroke-width="2" fill="none"/>
+        <!-- Small plus sign -->
+        <text x="16" y="24" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">+</text>
+        <!-- Text -->
+        <text x="32" y="26" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#2874F0">Flipkart</text>
+      </svg>`
+    },
+    {
+      name: 'boAt',
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
+        <defs>
+          <linearGradient id="boatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#FF4444"/>
+            <stop offset="100%" style="stop-color:#CC0000"/>
+          </linearGradient>
+        </defs>
+        <!-- Boat icon -->
+        <path d="M8 28 Q12 20 20 22 L18 28 Z" fill="url(#boatGrad)"/>
+        <path d="M14 18 L14 24 L22 24 Q20 18 14 18" fill="url(#boatGrad)"/>
+        <!-- Wave -->
+        <path d="M6 30 Q10 26 14 30 Q18 34 22 30" stroke="url(#boatGrad)" stroke-width="2" fill="none"/>
+        <!-- Text -->
+        <text x="28" y="27" font-family="Arial Black, sans-serif" font-size="16" font-weight="900" fill="#FF4444">boAt</text>
+      </svg>`
+    },
+    {
+      name: 'Noise',
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
+        <defs>
+          <linearGradient id="noiseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#FFD700"/>
+            <stop offset="100%" style="stop-color:#FFA500"/>
+          </linearGradient>
+        </defs>
+        <!-- Sound wave bars -->
+        <rect x="5" y="18" width="3" height="8" rx="1" fill="url(#noiseGrad)"/>
+        <rect x="10" y="14" width="3" height="16" rx="1" fill="url(#noiseGrad)"/>
+        <rect x="15" y="10" width="3" height="24" rx="1" fill="url(#noiseGrad)"/>
+        <rect x="20" y="14" width="3" height="16" rx="1" fill="url(#noiseGrad)"/>
+        <rect x="25" y="18" width="3" height="8" rx="1" fill="url(#noiseGrad)"/>
+        <!-- Text -->
+        <text x="35" y="27" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#FFD700">Noise</text>
+      </svg>`
+    },
+    {
+      name: 'realme',
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
+        <defs>
+          <linearGradient id="realmeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#00D4AA"/>
+            <stop offset="100%" style="stop-color:#00A085"/>
+          </linearGradient>
+        </defs>
+        <!-- Stylized R icon -->
+        <circle cx="15" cy="20" r="12" stroke="url(#realmeGrad)" stroke-width="2" fill="none"/>
+        <path d="M10 15 L10 28 M10 15 Q10 20 15 20 L20 28" stroke="url(#realmeGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Text -->
+        <text x="32" y="26" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#00D4AA">realme</text>
+      </svg>`
+    },
+    {
+      name: 'Redmi',
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
+        <defs>
+          <linearGradient id="redmiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#FF6700"/>
+            <stop offset="100%" style="stop-color:#E55A00"/>
+          </linearGradient>
+        </defs>
+        <!-- Xiaomi-style rounded square -->
+        <rect x="4" y="8" width="24" height="24" rx="4" fill="url(#redmiGrad)"/>
+        <text x="16" y="25" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">R</text>
+        <!-- Text -->
+        <text x="35" y="26" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#FF6700">Redmi</text>
+      </svg>`
+    },
+    {
+      name: 'OnePlus',
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
+        <defs>
+          <linearGradient id="oneplusGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#EB0029"/>
+            <stop offset="100%" style="stop-color:#C00020"/>
+          </linearGradient>
+        </defs>
+        <!-- OnePlus box logo -->
+        <rect x="4" y="6" width="28" height="28" rx="3" stroke="url(#oneplusGrad)" stroke-width="2" fill="none"/>
+        <!-- 1+ inside -->
+        <text x="10" y="26" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#EB0029">1</text>
+        <text x="18" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#EB0029">+</text>
+        <!-- Text -->
+        <text x="38" y="26" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#EB0029">OnePlus</text>
+      </svg>`
+    },
+    {
+      name: 'Ambrane',
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
+        <defs>
+          <linearGradient id="ambraneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#00A3E0"/>
+            <stop offset="100%" style="stop-color:#0077B5"/>
+          </linearGradient>
+        </defs>
+        <!-- Power/battery icon -->
+        <rect x="4" y="12" width="22" height="16" rx="2" stroke="url(#ambraneGrad)" stroke-width="2" fill="none"/>
+        <rect x="26" y="16" width="3" height="8" rx="1" fill="url(#ambraneGrad)"/>
+        <!-- Lightning bolt inside -->
+        <path d="M14 14 L11 22 L15 22 L13 28 L19 20 L15 20 L17 14 Z" fill="url(#ambraneGrad)"/>
+        <!-- Text -->
+        <text x="35" y="26" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#00A3E0">Ambrane</text>
+      </svg>`
+    },
+  ];
 
 // Featured deals with countdown
 const featuredDeals = [
@@ -306,16 +440,19 @@ const websiteSchema = {
     </div>
   </section>
 
-  <!-- Brand Logos Section -->
-  <section class="py-12 border-y border-[#2a4450]/30">
+  <!-- Brand Logos Section with Float Animation -->
+  <section class="py-12 bg-[#0a1619]/50">
     <div class="container">
-      <p class="text-center text-sm text-[#6b7d83] mb-8">
-        Trusted reviews for top brands
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-        {brands.map((brand) => (
-          <div class="brand-logo px-6 py-3">
-            <span class="text-xl font-bold text-[#a8b5ba]">{brand.name}</span>
+      <h2 class="text-center text-[#a8b5ba] mb-8">Trusted Brands We Review</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
+        {brands.map((brand, index) => (
+          <div 
+            class="brand-logo-float relative flex items-center justify-center p-6 bg-[#0F1F24] rounded-xl hover:bg-[#1A2E35] transition-all duration-300 border border-[#2a4450]/30 hover:border-[#C46A3A]/40 group"
+            style={`animation-delay: ${index * 0.5}s`}
+          >
+            <div class="w-24 h-10 transition-transform duration-300 group-hover:scale-110">
+              <Fragment set:html={brand.svg} />
+            </div>
           </div>
         ))}
       </div>
