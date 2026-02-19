@@ -12,6 +12,7 @@ import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import CookieConsent from '../components/common/CookieConsent.astro';
 import BackToTop from '../components/common/BackToTop.astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 import '../styles/global.css';
 
 interface Props extends SEOMeta {
@@ -146,5 +147,8 @@ const websiteSchema = {
     
     <!-- Back to Top Button -->
     <BackToTop />
+    
+    <!-- Vercel Speed Insights -->
+    <SpeedInsights />
   </body>
 </html>
