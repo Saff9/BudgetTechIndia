@@ -12,6 +12,7 @@ import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import CookieConsent from '../components/common/CookieConsent.astro';
 import BackToTop from '../components/common/BackToTop.astro';
+import Ads from '../components/common/Ads.astro';
 import '../styles/global.css';
 
 interface Props extends SEOMeta {
@@ -131,6 +132,21 @@ const websiteSchema = {
         initAd(['7SAD15699A62121C900', 'popunder'])
       })()
     </script>
+    
+    <!-- CPM Ads Script -->
+    <script async="async" data-cfasync="false" src="https://pl28765501.effectivegatecpm.com/0c544f97ca18152424b528f1feff4406/invoke.js"></script>
+    
+    <!-- Banner Ads Script -->
+    <script>
+      var atOptions = {
+        'key' : '68f6f7339d5cae7a2b5bf2a4aec60aa9',
+        'format' : 'iframe',
+        'height' : 60,
+        'width' : 468,
+        'params' : {}
+      };
+    </script>
+    <script src="https://www.highperformanceformat.com/68f6f7339d5cae7a2b5bf2a4aec60aa9/invoke.js"></script>
     </head>
 
   <body class="flex flex-col min-h-screen antialiased bg-[#0F1F24] text-[#F4F1EA]" data-theme="dark">
@@ -152,6 +168,9 @@ const websiteSchema = {
 
     <!-- Footer - Theme specific -->
     <Footer />
+    
+    <!-- Ads Section -->
+    <Ads />
     
     <!-- Cookie Consent Banner -->
     <CookieConsent />
