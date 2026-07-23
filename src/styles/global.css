@@ -8,82 +8,87 @@
    ======================================== */
 :root {
   /* Core Palette */
-  --color-midnight: #0F1F24;
-  --color-midnight-light: #1a3640;
-  --color-midnight-dark: #0a1619;
+  --color-midnight: #06080F;
+  --color-midnight-light: #0B0F19;
+  --color-midnight-dark: #030408;
   
-  /* Deep Slate - Secondary */
-  --color-slate: #1A2E35;
-  --color-slate-light: #243d46;
-  --color-slate-dark: #142228;
+  /* Slate Teal - Secondary */
+  --color-slate: #0F172A;
+  --color-slate-light: #1E293B;
+  --color-slate-dark: #0A0F1D;
   
   /* Warm Off-White - Text */
-  --color-cream: #F4F1EA;
-  --color-cream-dark: #e8e4db;
-  --color-cream-light: #faf8f3;
+  --color-cream: #F8FAFC;
+  --color-cream-dark: #E2E8F0;
+  --color-cream-light: #FFFFFF;
   
-  /* Burnt Copper - Accent/CTA */
-  --color-copper: #C46A3A;
-  --color-copper-light: #d4834f;
-  --color-copper-dark: #a55a30;
+  /* Electric Gold - Accent/CTA */
+  --color-copper: #FFB800;
+  --color-copper-light: #FFE500;
+  --color-copper-dark: #FF7A00;
   
-  /* Soft Sand - Highlight */
-  --color-sand: #E8D8C3;
-  --color-sand-dark: #d4c0a5;
-  --color-sand-light: #f2e8d9;
+  /* Hyper Cyan - Highlight */
+  --color-sand: #00F5A0;
+  --color-sand-dark: #00D084;
+  --color-sand-light: #3BFFB6;
+
+  /* Cyber Violet - Accent */
+  --color-violet: #8B5CF6;
+  --color-violet-glow: #6366F1;
 
   /* Muted Text */
-  --color-muted: #a8b5ba;
-  --color-muted-light: #b8c5ca;
-  --color-muted-dark: #8a9a9f;
+  --color-muted: #94A3B8;
+  --color-muted-light: #CBD5E1;
+  --color-muted-dark: #64748B;
 
   /* Text Colors */
-  --color-text-primary: #F4F1EA;
-  --color-text-secondary: #a8b5ba;
-  --color-text-muted: #6b7d83;
-  --color-text-inverse: #0F1F24;
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #CBD5E1;
+  --color-text-muted: #64748B;
+  --color-text-inverse: #06080F;
 
   /* Surface/Background Colors */
-  --color-surface-primary: #0F1F24;
-  --color-surface-secondary: #1A2E35;
-  --color-surface-tertiary: #243d46;
-  --color-surface-elevated: #1A2E35;
-  --color-surface-overlay: rgba(15, 31, 36, 0.95);
+  --color-surface-primary: #06080F;
+  --color-surface-secondary: #0B0F19;
+  --color-surface-tertiary: #111827;
+  --color-surface-elevated: rgba(17, 24, 39, 0.75);
+  --color-surface-overlay: rgba(6, 8, 15, 0.92);
 
   /* Border Colors */
-  --color-border: #2a4450;
-  --color-border-light: #3a5a68;
-  --color-border-dark: #1a3640;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-light: rgba(255, 255, 255, 0.15);
+  --color-border-dark: rgba(255, 255, 255, 0.04);
 
   /* Status Colors */
-  --color-success: #00b207;
-  --color-error: #df0000;
-  --color-warning: #ff9f00;
+  --color-success: #00F5A0;
+  --color-error: #FF0055;
+  --color-warning: #FFB800;
 
   /* Star Rating */
-  --color-star-gold: #ffa41c;
-  --color-star-empty: #3a5a68;
+  --color-star-gold: #FFD700;
+  --color-star-empty: #334155;
 
   /* Typography */
-  --font-sans: 'Inter', 'Segoe UI', 'Roboto', system-ui, sans-serif;
-  --font-heading: 'Inter', 'Segoe UI', sans-serif;
+  --font-sans: 'Outfit', 'Inter', system-ui, sans-serif;
+  --font-heading: 'Space Grotesk', 'Outfit', sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   /* Spacing */
   --spacing-container: 1.5rem;
   --spacing-section: 5rem;
 
-  /* Shadows - Dark Theme */
-  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
-  --shadow-soft-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-  --shadow-soft-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-card-hover: 0 8px 20px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.4);
-  --shadow-btn: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-btn-hover: 0 2px 4px rgba(0, 0, 0, 0.4);
-  --shadow-cta: 0 2px 5px rgba(196, 106, 58, 0.4);
-  --shadow-glow-copper: 0 0 20px rgba(196, 106, 58, 0.4);
-  --shadow-glow-sand: 0 0 20px rgba(232, 216, 195, 0.2);
+  /* Shadows - Ultra-Luxurious Dark Theme */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-soft-md: 0 8px 30px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-soft-lg: 0 15px 40px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 16px 36px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 184, 0, 0.18);
+  --shadow-btn: 0 2px 10px rgba(0, 0, 0, 0.5);
+  --shadow-btn-hover: 0 6px 20px rgba(255, 184, 0, 0.35);
+  --shadow-cta: 0 4px 20px rgba(255, 184, 0, 0.35), 0 0 15px rgba(255, 122, 0, 0.2);
+  --shadow-glow-copper: 0 0 30px rgba(255, 184, 0, 0.45);
+  --shadow-glow-sand: 0 0 30px rgba(0, 245, 160, 0.4);
+  --shadow-glow-violet: 0 0 30px rgba(139, 92, 246, 0.4);
 
   /* Border Radius */
   --radius-sm: 0.25rem;
@@ -94,14 +99,14 @@
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-slow: 400ms cubic-bezier(0.25, 1, 0.5, 1);
 
   /* Gradients */
-  --gradient-cta: linear-gradient(to bottom, #d4834f 0%, #C46A3A 100%);
-  --gradient-cta-hover: linear-gradient(to bottom, #C46A3A 0%, #a55a30 100%);
-  --gradient-primary: linear-gradient(to bottom, #1a3640 0%, #0F1F24 100%);
-  --gradient-hero: linear-gradient(180deg, #0F1F24 0%, #1A2E35 50%, #0F1F24 100%);
+  --gradient-cta: linear-gradient(135deg, #FFE500 0%, #FFB800 50%, #FF7A00 100%);
+  --gradient-cta-hover: linear-gradient(135deg, #FFB800 0%, #FF7A00 50%, #CC5E00 100%);
+  --gradient-primary: linear-gradient(135deg, #1E293B 0%, #0F172A 50%, #06080F 100%);
+  --gradient-hero: linear-gradient(180deg, #06080F 0%, #0B0F19 50%, #06080F 100%);
 }
 
 /* ========================================
@@ -117,15 +122,20 @@
   }
 
   body {
-    @apply bg-[#0F1F24] text-[#F4F1EA];
+    @apply bg-[#06080F] text-[#F8FAFC];
     min-height: 100vh;
     font-feature-settings: 'kern' 1, 'liga' 1;
+    background-image: 
+      radial-gradient(at 15% 15%, rgba(255, 184, 0, 0.05) 0px, transparent 55%),
+      radial-gradient(at 85% 20%, rgba(0, 245, 160, 0.04) 0px, transparent 50%),
+      radial-gradient(at 50% 75%, rgba(139, 92, 246, 0.04) 0px, transparent 60%);
+    background-attachment: fixed;
   }
 
   /* Clean Typography */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
-    @apply font-semibold text-[#F4F1EA] tracking-tight;
+    @apply font-semibold text-[#F8FAFC] tracking-tight;
   }
 
   h1 {
@@ -152,9 +162,9 @@
     @apply text-base md:text-lg;
   }
 
-  /* Links - Copper accent */
+  /* Links - Gold accent */
   a {
-    @apply text-[#C46A3A] hover:text-[#d4834f] transition-colors duration-200;
+    @apply text-[#FFB800] hover:text-[#FFE500] transition-colors duration-200;
   }
 
   img {
@@ -163,12 +173,12 @@
 
   /* Selection styling */
   ::selection {
-    @apply bg-[#C46A3A]/30 text-[#F4F1EA];
+    @apply bg-[#FFB800]/30 text-[#FFFFFF];
   }
 
   /* Focus styles for accessibility */
   :focus-visible {
-    @apply outline-none ring-2 ring-[#C46A3A] ring-offset-2 ring-offset-[#0F1F24];
+    @apply outline-none ring-2 ring-[#FFB800] ring-offset-2 ring-offset-[#06080F];
   }
 
   /* Smooth scroll offset for fixed header */
@@ -187,68 +197,81 @@
   }
 
   /* ========================================
-     Copper CTA Button (Primary)
+     Gradient Text Utilities
+     ======================================== */
+  .gradient-text-gold {
+    background: linear-gradient(135deg, #FFFFFF 0%, #FFD700 40%, #FF7A00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gradient-text-cyan {
+    background: linear-gradient(135deg, #FFFFFF 0%, #00E5FF 50%, #00F5A0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gradient-text-violet {
+    background: linear-gradient(135deg, #FFFFFF 0%, #A78BFA 50%, #EC4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ========================================
+     Electric Gold CTA Button (Primary)
      ======================================== */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 
-           font-semibold rounded-lg
-           shadow-btn hover:shadow-btn-hover
-           transform hover:-translate-y-0.5
+           font-bold rounded-xl text-[#06080F]
+           shadow-cta hover:shadow-cta-hover
+           transform hover:-translate-y-0.5 active:translate-y-0
            transition-all duration-200
-           focus:outline-none focus:ring-2 focus:ring-[#C46A3A] focus:ring-offset-2 focus:ring-offset-[#0F1F24];
+           focus:outline-none focus:ring-2 focus:ring-[#FFB800] focus:ring-offset-2 focus:ring-offset-[#06080F];
     background: var(--gradient-cta);
-    color: #F4F1EA;
   }
 
   .btn-primary:hover {
     background: var(--gradient-cta-hover);
   }
 
-  .btn-primary:active {
-    @apply translate-y-0 shadow-btn;
-  }
-
-  /* Midnight variant for secondary CTAs */
   .btn-primary-midnight {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 
-           font-semibold rounded-lg text-[#F4F1EA]
+           font-semibold rounded-xl text-[#F8FAFC]
+           bg-[#1E293B]/80 hover:bg-[#1E293B]
+           border border-white/10 hover:border-white/25
            shadow-btn hover:shadow-btn-hover
            transform hover:-translate-y-0.5
            transition-all duration-200
-           focus:outline-none focus:ring-2 focus:ring-[#1a3640] focus:ring-offset-2 focus:ring-offset-[#0F1F24];
-    background: var(--gradient-primary);
-  }
-
-  .btn-primary-midnight:hover {
-    background: linear-gradient(to bottom, #243d46 0%, #1a3640 100%);
+           focus:outline-none focus:ring-2 focus:ring-[#FFB800] focus:ring-offset-2 focus:ring-offset-[#06080F];
   }
 
   /* ========================================
-     Secondary Button (Slate)
+     Secondary Button (Slate Glass)
      ======================================== */
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 
-           bg-[#1A2E35] text-[#F4F1EA] font-semibold rounded-lg
-           border border-[#2a4450]
+           bg-[#111827]/80 text-[#F8FAFC] font-semibold rounded-xl
+           border border-white/10 hover:border-[#FFB800]/50
            shadow-btn hover:shadow-btn-hover
            transform hover:-translate-y-0.5
            transition-all duration-200
-           focus:outline-none focus:ring-2 focus:ring-[#C46A3A] focus:ring-offset-2 focus:ring-offset-[#0F1F24];
+           focus:outline-none focus:ring-2 focus:ring-[#FFB800] focus:ring-offset-2 focus:ring-offset-[#06080F];
   }
 
   .btn-secondary:hover {
-    @apply bg-[#243d46] border-[#3a5a68];
+    @apply bg-[#1E293B] text-white;
   }
 
   /* ========================================
-     Outline Button (Copper)
+     Outline Button (Electric Gold)
      ======================================== */
   .btn-outline {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 
-           border-2 border-[#C46A3A] text-[#C46A3A] font-semibold rounded-lg
-           hover:bg-[#C46A3A] hover:text-[#F4F1EA]
+           border-2 border-[#FFB800] text-[#FFB800] font-semibold rounded-xl
+           hover:bg-[#FFB800] hover:text-[#06080F]
+           shadow-sm hover:shadow-glow-copper
            transition-all duration-200
-           focus:outline-none focus:ring-2 focus:ring-[#C46A3A] focus:ring-offset-2 focus:ring-offset-[#0F1F24];
+           focus:outline-none focus:ring-2 focus:ring-[#FFB800] focus:ring-offset-2 focus:ring-offset-[#06080F];
   }
 
   /* ========================================
@@ -256,35 +279,34 @@
      ======================================== */
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 
-           text-[#a8b5ba] font-medium rounded-lg
-           hover:bg-[#1A2E35] hover:text-[#F4F1EA]
+           text-[#CBD5E1] font-medium rounded-xl
+           hover:bg-white/5 hover:text-[#F8FAFC]
            transition-all duration-200
-           focus:outline-none focus:ring-2 focus:ring-[#2a4450] focus:ring-offset-2 focus:ring-offset-[#0F1F24];
+           focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-[#06080F];
   }
 
   /* ========================================
      Button Size Variants
      ======================================== */
   .btn-sm {
-    @apply px-4 py-2 text-sm rounded-md;
+    @apply px-4 py-2 text-sm rounded-lg;
   }
 
   .btn-lg {
-    @apply px-8 py-4 text-lg rounded-xl;
+    @apply px-8 py-4 text-lg rounded-2xl;
   }
 
   /* ========================================
-     Buy Now Button (Copper)
+     Buy Now Button (Gold Gradient)
      ======================================== */
   .btn-buy-now {
     @apply inline-flex items-center justify-center gap-2 w-full px-6 py-3 
-           font-semibold rounded-lg text-sm
+           font-bold rounded-xl text-sm text-[#06080F]
            shadow-cta hover:shadow-cta-hover
-           transform hover:-translate-y-0.5
+           transform hover:-translate-y-0.5 active:translate-y-0
            transition-all duration-200
-           focus:outline-none focus:ring-2 focus:ring-[#C46A3A] focus:ring-offset-2 focus:ring-offset-[#0F1F24];
+           focus:outline-none focus:ring-2 focus:ring-[#FFB800] focus:ring-offset-2 focus:ring-offset-[#06080F];
     background: var(--gradient-cta);
-    color: #F4F1EA;
   }
 
   .btn-buy-now:hover {
@@ -292,31 +314,43 @@
   }
 
   /* ========================================
-     Product Card (Dark Theme)
+     Product Card (Glassmorphic Dark Theme)
      ======================================== */
   .product-card {
-    @apply bg-[#1A2E35] rounded-xl shadow-card hover:shadow-card-hover
+    @apply bg-[#0B0F19]/80 backdrop-blur-md rounded-2xl shadow-card hover:shadow-card-hover
            transition-all duration-300 overflow-hidden
-           border border-[#2a4450];
+           border border-white/10 hover:border-[#FFB800]/40;
   }
 
   .product-card:hover {
-    @apply transform -translate-y-1 border-[#3a5a68];
+    @apply transform -translate-y-1.5;
   }
 
   .product-card-image {
-    @apply aspect-square object-cover w-full bg-[#0F1F24];
+    @apply aspect-square object-cover w-full bg-[#06080F];
   }
 
   .product-card-content {
-    @apply p-4;
+    @apply p-5;
   }
 
   /* ========================================
      Price Display (Dark Theme)
      ======================================== */
   .price-tag {
-    @apply text-xl font-bold text-[#F4F1EA];
+    @apply text-xl font-extrabold text-[#F8FAFC];
+  }
+
+  .price-mrp {
+    @apply text-sm text-[#64748B] line-through ml-2;
+  }
+
+  .price-discount {
+    @apply text-sm font-bold ml-2 text-[#00F5A0];
+  }
+
+  .price-savings {
+    @apply text-xs font-semibold text-[#00F5A0];
   }
 
   .price-mrp {

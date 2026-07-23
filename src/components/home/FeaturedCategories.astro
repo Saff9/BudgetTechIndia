@@ -98,14 +98,14 @@ const gridCols = {
 };
 ---
 
-<section class="featured-categories py-12 md:py-16 bg-[#0F1F24]">
-  <div class="container mx-auto px-4">
+<section class="featured-categories py-14 md:py-20 bg-transparent relative">
+  <div class="container mx-auto px-4 relative z-10">
     <!-- Section Header -->
-    <div class="text-center mb-10">
-      <h2 class="text-2xl md:text-3xl font-bold text-[#F4F1EA] mb-3">
-        {title}
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-[#F8FAFC] mb-3 tracking-tight">
+        <span class="gradient-text-gold">{title}</span>
       </h2>
-      <p class="text-base text-[#a8b5ba] max-w-2xl mx-auto">
+      <p class="text-base text-[#CBD5E1] max-w-2xl mx-auto">
         {subtitle}
       </p>
     </div>
@@ -115,32 +115,32 @@ const gridCols = {
       {categories.map((category) => (
         <a
           href={`/categories/${category.slug}/`}
-          class="group relative bg-[#1A2E35] rounded-lg p-5 shadow-card hover:shadow-card-hover transition-all duration-300 border border-[#2a4450] hover:border-[#C46A3A]/50 overflow-hidden"
+          class="group relative bg-[#0B0F19]/80 backdrop-blur-xl rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-all duration-300 border border-white/10 hover:border-[#FFB800]/50 overflow-hidden transform hover:-translate-y-1.5"
         >
-          <!-- Icon -->
-          <div class="relative w-12 h-12 bg-[#C46A3A]/20 rounded-lg flex items-center justify-center text-[#C46A3A] mb-4 group-hover:bg-[#C46A3A] group-hover:text-[#F4F1EA] transition-colors duration-200">
+          <!-- Icon with Gold Glow -->
+          <div class="relative w-14 h-14 bg-[#FFB800]/10 border border-[#FFB800]/20 rounded-2xl flex items-center justify-center text-[#FFB800] mb-5 group-hover:bg-[#FFB800] group-hover:text-[#06080F] group-hover:scale-110 transition-all duration-300 shadow-md">
             <Fragment set:html={icons[category.icon] || icons.headphones} />
           </div>
           
           <!-- Content -->
-          <h3 class="text-base font-semibold text-[#F4F1EA] mb-1 group-hover:text-[#C46A3A] transition-colors duration-200">
+          <h3 class="text-lg font-bold text-[#F8FAFC] mb-1.5 group-hover:text-[#FFB800] transition-colors duration-200">
             {category.name}
           </h3>
-          <p class="text-sm text-[#a8b5ba] mb-2 line-clamp-1">
+          <p class="text-xs md:text-sm text-[#CBD5E1] mb-3 line-clamp-1">
             {category.description}
           </p>
           
           <!-- Product Count -->
           {category.count && (
-            <span class="text-xs text-[#6b7d83]">
+            <span class="inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[#00F5A0]">
               {category.count} products
             </span>
           )}
           
           <!-- Arrow indicator -->
-          <div class="absolute bottom-4 right-4 w-8 h-8 bg-[#0F1F24] rounded-full flex items-center justify-center text-[#6b7d83] group-hover:bg-[#C46A3A] group-hover:text-[#F4F1EA] transition-all duration-200 transform translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100">
+          <div class="absolute bottom-5 right-5 w-9 h-9 bg-[#06080F] rounded-full border border-white/10 flex items-center justify-center text-[#CBD5E1] group-hover:bg-[#FFB800] group-hover:text-[#06080F] group-hover:border-[#FFB800] transition-all duration-300 transform translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 shadow-lg">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
             </svg>
           </div>
         </a>
@@ -148,14 +148,14 @@ const gridCols = {
     </div>
     
     <!-- View All Link -->
-    <div class="text-center mt-8">
+    <div class="text-center mt-10">
       <a
         href="/categories/"
-        class="inline-flex items-center gap-2 text-[#C46A3A] hover:text-[#d4834f] font-medium transition-colors duration-200"
+        class="inline-flex items-center gap-2 text-[#FFB800] hover:text-[#FFE500] font-bold text-base transition-colors duration-200"
       >
         View All Categories
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
       </a>
     </div>

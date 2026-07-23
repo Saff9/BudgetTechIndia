@@ -127,7 +127,7 @@ export interface StorageSystem {
 /**
  * Storage type configuration
  */
-export type StorageType = 'firebase' | 'local';
+export type StorageType = 'firebase' | 'neondb' | 'local';
 
 /**
  * Get storage system instance based on environment configuration
@@ -135,9 +135,19 @@ export type StorageType = 'firebase' | 'local';
  * @returns Storage system instance
  */
 export async function getStorageSystem(type?: StorageType): Promise<StorageSystem> {
-  const storageType = type || (import.meta.env.PUBLIC_STORAGE_TYPE as StorageType) || 'local';
+  const storageType = type || (import.meta.env.PUBLIC_STORAGE_TYPE as StorageType) || 'neondb';
 
   switch (storageType) {
+    case 'neondb':
+      try {
+        const { NeonDbStorage } = await import('./neondbStorage');
+        return new NeonDbStorage();
+      } catch (error) {
+        console.error('[Storage] Failed to initialize NeonDB storage, falling back to local:', error);
+        const { LocalStorage } = await import('./localStorage');
+        return new LocalStorage();
+      }
+
     case 'firebase':
       try {
         const { FirebaseStorage } = await import('./firebaseStorage');

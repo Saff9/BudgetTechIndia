@@ -6,6 +6,8 @@
 
 import AdminLayout from '../../layouts/AdminLayout.astro';
 import type { Product, Category } from '../../utils/interfaces';
+import AmazonLinkGenerator from '../../components/admin/AmazonLinkGenerator.astro';
+import GrokAiGenerator from '../../components/admin/GrokAiGenerator.astro';
 import productsData from '../../data/products.json';
 import categoriesData from '../../data/categories.json';
 import { getStorageSystem } from '../../utils/storage';
@@ -21,6 +23,10 @@ const storageInfo = storageSystem.getStorageInfo();
 ---
 
 <AdminLayout title="Dashboard - Admin Panel">
+  <!-- Grok AI Review Generator -->
+  <GrokAiGenerator />
+  <!-- Amazon Link Generator Tool -->
+  <AmazonLinkGenerator />
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
     <!-- Storage Status -->
     <div class="bg-[#1A2E35] rounded-xl p-6 border border-[#2a4450]/50">

@@ -1,0 +1,187 @@
+---
+/**
+ * Grok AI Auto-Review & Product Generator Component for Admin Dashboard
+ */
+---
+
+<div class="bg-gradient-to-r from-[#12262D] to-[#0F1F24] border border-[#2563eb]/40 rounded-xl p-6 mb-8 text-[#F4F1EA] shadow-xl">
+  <div class="flex items-center space-x-3 mb-4">
+    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[#2563eb] to-[#7c3aed] flex items-center justify-center shadow-lg">
+      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    </div>
+    <div>
+      <h3 class="text-lg font-bold text-[#F4F1EA]">Grok AI Auto-Review & Affiliate Generator</h3>
+      <p class="text-xs text-[#a8b5ba]">Automatically writes human-like reviews, extracts ASIN, appends <span class="font-mono text-[#FF9900] bg-[#0F1F24] px-1.5 py-0.5 rounded font-bold">budgettechpro-21</span> tag & generates specs!</p>
+    </div>
+  </div>
+
+  <form id="grok-ai-form" class="space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="ai-product-name" class="block text-xs font-semibold uppercase text-[#a8b5ba] mb-1">Product Name *</label>
+        <input
+          type="text"
+          id="ai-product-name"
+          required
+          placeholder="e.g. boAt Rockerz 255 Pro+"
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] focus:outline-none focus:border-[#2563eb]"
+        />
+      </div>
+
+      <div>
+        <label for="ai-amazon-url" class="block text-xs font-semibold uppercase text-[#a8b5ba] mb-1">Amazon URL or ASIN *</label>
+        <input
+          type="text"
+          id="ai-amazon-url"
+          required
+          placeholder="e.g. https://www.amazon.in/dp/B08T6C1Y7C or B08T6C1Y7C"
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] focus:outline-none focus:border-[#2563eb]"
+        />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <label for="ai-category" class="block text-xs font-semibold uppercase text-[#a8b5ba] mb-1">Category</label>
+        <select
+          id="ai-category"
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] focus:outline-none focus:border-[#2563eb]"
+        >
+          <option value="bluetooth-earbuds">Bluetooth Earbuds</option>
+          <option value="smartwatches">Smartwatches</option>
+          <option value="power-banks">Power Banks</option>
+          <option value="fast-chargers-cables">Chargers & Cables</option>
+          <option value="laptop-accessories">Laptop Accessories</option>
+          <option value="work-from-home-essentials">WFH Essentials</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="ai-price" class="block text-xs font-semibold uppercase text-[#a8b5ba] mb-1">Price (₹)</label>
+        <input
+          type="number"
+          id="ai-price"
+          value="1299"
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] focus:outline-none focus:border-[#2563eb]"
+        />
+      </div>
+
+      <div>
+        <label for="ai-mrp" class="block text-xs font-semibold uppercase text-[#a8b5ba] mb-1">MRP (₹)</label>
+        <input
+          type="number"
+          id="ai-mrp"
+          value="2990"
+          class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] focus:outline-none focus:border-[#2563eb]"
+        />
+      </div>
+    </div>
+
+    <div>
+      <label for="grok-api-key" class="block text-xs font-semibold uppercase text-[#a8b5ba] mb-1">
+        Grok API Key <span class="text-[#a8b5ba] font-normal lowercase">(optional — uses built-in smart AI fallback if left empty)</span>
+      </label>
+      <input
+        type="password"
+        id="grok-api-key"
+        placeholder="xai-..."
+        class="w-full px-4 py-2 bg-[#0F1F24] border border-[#2a4450] rounded-lg text-sm text-[#F4F1EA] focus:outline-none focus:border-[#2563eb]"
+      />
+    </div>
+
+    <button
+      type="submit"
+      id="generate-ai-btn"
+      class="w-full py-3 bg-gradient-to-r from-[#2563eb] to-[#7c3aed] hover:from-[#1d4ed8] hover:to-[#6d28d9] text-white font-bold text-sm rounded-lg transition-all shadow-lg flex items-center justify-center space-x-2"
+    >
+      <svg class="w-5 h-5 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L5.6 15.12a2 2 0 00-1.782.909l-1.2 1.8a2 2 0 00.316 2.502l1.6 1.6a2 2 0 002.502.316l1.8-1.2a2 2 0 00.909-1.782l-.477-2.387a6 6 0 01.517-3.86l.158-.318a6 6 0 00.517-3.86l-.477-2.387a2 2 0 00-.547-1.022L11.5 2.5" />
+      </svg>
+      <span>⚡ Generate Review & Affiliate Link with Grok AI</span>
+    </button>
+  </form>
+
+  <!-- Output Box -->
+  <div id="ai-output-box" class="hidden mt-6 p-5 rounded-lg bg-[#0F1F24] border border-[#2563eb]/50">
+    <div class="flex justify-between items-center mb-3">
+      <span class="text-xs font-bold uppercase tracking-wider text-green-400 flex items-center">
+        <span class="w-2 h-2 rounded-full bg-green-400 animate-ping mr-2"></span> AI Review Generated Successfully!
+      </span>
+      <span id="ai-asin-tag" class="text-xs font-mono bg-[#FF9900]/20 text-[#FF9900] px-2 py-0.5 rounded border border-[#FF9900]/30 font-bold">Tag: budgettechpro-21</span>
+    </div>
+
+    <div class="space-y-3 text-xs">
+      <div>
+        <span class="text-[#a8b5ba] font-bold block mb-1">Generated Affiliate URL:</span>
+        <input id="ai-aff-link" readonly class="w-full px-3 py-2 bg-[#12262D] text-[#F4F1EA] font-mono rounded border border-[#2a4450] select-all" />
+      </div>
+
+      <div>
+        <span class="text-[#a8b5ba] font-bold block mb-1">Verdict:</span>
+        <p id="ai-verdict" class="text-[#F4F1EA] italic bg-[#12262D] p-2.5 rounded border border-[#2a4450]"></p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div>
+          <span class="text-green-400 font-bold block mb-1">Pros:</span>
+          <ul id="ai-pros" class="list-disc list-inside text-[#F4F1EA] space-y-1 bg-[#12262D] p-2.5 rounded border border-[#2a4450]"></ul>
+        </div>
+        <div>
+          <span class="text-red-400 font-bold block mb-1">Cons:</span>
+          <ul id="ai-cons" class="list-disc list-inside text-[#F4F1EA] space-y-1 bg-[#12262D] p-2.5 rounded border border-[#2a4450]"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { generateProductWithGrok } from '../../utils/grokGenerator';
+
+  const form = document.getElementById('grok-ai-form');
+  const btn = document.getElementById('generate-ai-btn');
+  const outputBox = document.getElementById('ai-output-box');
+  const affLinkInput = document.getElementById('ai-aff-link') as HTMLInputElement;
+  const verdictEl = document.getElementById('ai-verdict');
+  const prosEl = document.getElementById('ai-pros');
+  const consEl = document.getElementById('ai-cons');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = (document.getElementById('ai-product-name') as HTMLInputElement).value;
+    const url = (document.getElementById('ai-amazon-url') as HTMLInputElement).value;
+    const category = (document.getElementById('ai-category') as HTMLSelectElement).value;
+    const price = Number((document.getElementById('ai-price') as HTMLInputElement).value) || 999;
+    const mrp = Number((document.getElementById('ai-mrp') as HTMLInputElement).value) || 1999;
+    const apiKey = (document.getElementById('grok-api-key') as HTMLInputElement).value;
+
+    if (btn) btn.innerHTML = '<span>⏳ Generating AI Review...</span>';
+
+    const result = await generateProductWithGrok({
+      productName: name,
+      amazonUrlOrAsin: url,
+      category,
+      price,
+      mrp,
+      apiKey,
+    });
+
+    if (btn) btn.innerHTML = '<span>⚡ Generate Review & Affiliate Link with Grok AI</span>';
+
+    if (result.success && result.data && outputBox) {
+      if (affLinkInput) affLinkInput.value = result.data.affiliateUrl;
+      if (verdictEl) verdictEl.textContent = result.data.verdict;
+      if (prosEl) {
+        prosEl.innerHTML = result.data.pros.map(p => `<li>${p}</li>`).join('');
+      }
+      if (consEl) {
+        consEl.innerHTML = result.data.cons.map(c => `<li>${c}</li>`).join('');
+      }
+      outputBox.classList.remove('hidden');
+    } else {
+      alert(result.error || 'Failed to generate product review.');
+    }
+  });
+</script>

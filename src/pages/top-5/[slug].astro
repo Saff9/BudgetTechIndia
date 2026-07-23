@@ -86,6 +86,7 @@ const tocItems = [
   { id: 'introduction', text: 'Introduction', level: 2 },
   { id: 'comparison-table', text: 'Quick Comparison', level: 2 },
   ...products.map((p, i) => ({ id: `product-${i + 1}`, text: `#${i + 1}: ${p.name}`, level: 2 })),
+  { id: 'buying-guide', text: 'Buying Guide', level: 2 },
   { id: 'faq', text: 'FAQ', level: 2 },
   { id: 'verdict', text: 'Final Verdict', level: 2 },
 ];
@@ -289,6 +290,22 @@ const articleSchemaData = {
             </div>
           </section>
         ))}
+
+        <!-- Buying Guide Section -->
+        <section id="buying-guide" class="mb-10">
+          <h2 class="font-heading text-h2 text-neutral-900 mb-4">Buying Guide: How to Choose the Best {products[0]?.category.replace(/-/g, ' ')} Under ₹2000</h2>
+          <div class="prose prose-neutral max-w-none text-neutral-700">
+            <p>Choosing the right tech product on a budget requires careful consideration. Here are the key factors you should evaluate before making a purchase:</p>
+            <ul>
+              <li><strong>Value for Money:</strong> Don't just look at the price tag. Evaluate the features you are getting for the price. Sometimes spending ₹200 more can get you significantly better durability and performance.</li>
+              <li><strong>Brand Reliability & After-Sales Support:</strong> In the budget segment, opt for brands like boAt, Noise, or realme that have an established service network in India. This ensures you can claim warranty if things go wrong.</li>
+              <li><strong>Essential Features vs Gimmicks:</strong> Focus on core functionality. For earbuds, focus on battery life and sound quality rather than touch controls. For smartwatches, prioritize display quality and accurate sensors over a high number of sports modes.</li>
+              <li><strong>User Reviews:</strong> Look for long-term reviews. Many budget products perform well initially but degrade after a few months. Consistent positive reviews over time are a good indicator of quality.</li>
+              <li><strong>Build Quality:</strong> Check if the product uses decent quality plastics or has an IP rating (for wearables/earbuds) which adds to its longevity.</li>
+            </ul>
+            <p>By keeping these points in mind, you can find a product that not only fits your ₹2000 budget but also lasts long and provides a great experience.</p>
+          </div>
+        </section>
 
         <!-- FAQ Section -->
         <section id="faq" class="mb-10">

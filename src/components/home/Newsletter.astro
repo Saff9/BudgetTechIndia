@@ -28,16 +28,20 @@ const {
 } = Astro.props;
 ---
 
-<section class="newsletter py-16 bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
-  <div class="container mx-auto px-4">
+<section class="newsletter py-16 bg-[#0B0F19]/90 backdrop-blur-xl border-y border-white/10 relative overflow-hidden">
+  <!-- Background Glow Orbs -->
+  <div class="absolute -top-24 -left-24 w-96 h-96 bg-[#FFB800]/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-[#00F5A0]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="container mx-auto px-4 relative z-10">
     <div class="max-w-4xl mx-auto">
       <div class="grid md:grid-cols-2 gap-8 items-center">
         <!-- Content -->
         <div>
-          <h2 class="text-3xl md:text-4xl font-bold mb-4">
-            {title}
+          <h2 class="text-3xl md:text-4xl font-extrabold text-[#F8FAFC] mb-4 tracking-tight">
+            <span class="gradient-text-gold">{title}</span>
           </h2>
-          <p class="text-lg text-blue-100 mb-6">
+          <p class="text-base text-[#CBD5E1] mb-6 leading-relaxed">
             {subtitle}
           </p>
           
@@ -45,12 +49,12 @@ const {
             <ul class="space-y-3">
               {benefits.map((benefit) => (
                 <li class="flex items-center gap-3">
-                  <span class="flex-shrink-0 w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  <span class="flex-shrink-0 w-6 h-6 bg-[#00F5A0]/15 border border-[#00F5A0]/30 rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[#00F5A0]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
                     </svg>
                   </span>
-                  <span class="text-blue-100">{benefit}</span>
+                  <span class="text-sm font-medium text-[#F8FAFC]">{benefit}</span>
                 </li>
               ))}
             </ul>
@@ -58,14 +62,14 @@ const {
         </div>
         
         <!-- Form -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8">
+        <div class="bg-[#06080F]/90 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8 shadow-card">
           <form 
             action="https://formspree.io/f/your-form-id" 
             method="POST"
             class="space-y-4"
           >
             <div>
-              <label for="newsletter-name" class="block text-sm font-medium text-blue-100 mb-2">
+              <label for="newsletter-name" class="block text-xs font-semibold text-[#CBD5E1] uppercase tracking-wider mb-2">
                 Your Name
               </label>
               <input
@@ -74,12 +78,12 @@ const {
                 name="name"
                 placeholder="Enter your name"
                 required
-                class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
+                class="w-full px-4 py-3 rounded-xl bg-[#0B0F19] border border-white/10 text-[#F8FAFC] placeholder:text-[#64748B] focus:outline-none focus:ring-2 focus:ring-[#FFB800] focus:border-[#FFB800] transition-all"
               />
             </div>
             
             <div>
-              <label for="newsletter-email" class="block text-sm font-medium text-blue-100 mb-2">
+              <label for="newsletter-email" class="block text-xs font-semibold text-[#CBD5E1] uppercase tracking-wider mb-2">
                 Email Address
               </label>
               <input
@@ -88,62 +92,62 @@ const {
                 name="email"
                 placeholder="Enter your email"
                 required
-                class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
+                class="w-full px-4 py-3 rounded-xl bg-[#0B0F19] border border-white/10 text-[#F8FAFC] placeholder:text-[#64748B] focus:outline-none focus:ring-2 focus:ring-[#FFB800] focus:border-[#FFB800] transition-all"
               />
             </div>
             
             <div>
-              <label for="newsletter-interest" class="block text-sm font-medium text-blue-100 mb-2">
+              <label for="newsletter-interest" class="block text-xs font-semibold text-[#CBD5E1] uppercase tracking-wider mb-2">
                 Interested In (Optional)
               </label>
               <select
                 id="newsletter-interest"
                 name="interest"
-                class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
+                class="w-full px-4 py-3 rounded-xl bg-[#0B0F19] border border-white/10 text-[#F8FAFC] focus:outline-none focus:ring-2 focus:ring-[#FFB800] focus:border-[#FFB800] transition-all"
               >
-                <option value="" class="text-gray-800">Select category</option>
-                <option value="earbuds" class="text-gray-800">Earbuds</option>
-                <option value="smartwatches" class="text-gray-800">Smartwatches</option>
-                <option value="power-banks" class="text-gray-800">Power Banks</option>
-                <option value="speakers" class="text-gray-800">Speakers</option>
-                <option value="all" class="text-gray-800">All Categories</option>
+                <option value="" class="bg-[#0B0F19] text-[#F8FAFC]">Select category</option>
+                <option value="earbuds" class="bg-[#0B0F19] text-[#F8FAFC]">Earbuds</option>
+                <option value="smartwatches" class="bg-[#0B0F19] text-[#F8FAFC]">Smartwatches</option>
+                <option value="power-banks" class="bg-[#0B0F19] text-[#F8FAFC]">Power Banks</option>
+                <option value="speakers" class="bg-[#0B0F19] text-[#F8FAFC]">Speakers</option>
+                <option value="all" class="bg-[#0B0F19] text-[#F8FAFC]">All Categories</option>
               </select>
             </div>
             
             <button
               type="submit"
-              class="w-full bg-white text-blue-600 font-semibold py-3 px-6 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center gap-2"
+              class="w-full bg-gradient-to-r from-[#FFE500] via-[#FFB800] to-[#FF7A00] text-[#06080F] font-bold py-3.5 px-6 rounded-xl hover:opacity-95 transition-all shadow-cta flex items-center justify-center gap-2"
             >
               <span>Subscribe Now</span>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </button>
             
-            <p class="text-xs text-blue-200 text-center">
-              By subscribing, you agree to our <a href="/privacy-policy/" class="underline hover:text-white">Privacy Policy</a>
+            <p class="text-xs text-[#64748B] text-center">
+              By subscribing, you agree to our <a href="/privacy-policy/" class="text-[#FFB800] underline hover:text-[#FFE500]">Privacy Policy</a>
             </p>
           </form>
         </div>
       </div>
       
       <!-- Trust Indicators -->
-      <div class="mt-12 pt-8 border-t border-white/20">
-        <div class="flex flex-wrap justify-center gap-8 text-sm text-blue-100">
+      <div class="mt-12 pt-8 border-t border-white/10">
+        <div class="flex flex-wrap justify-center gap-8 text-sm text-[#CBD5E1]">
           <div class="flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#00F5A0]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
             <span>100% Secure</span>
           </div>
           <div class="flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#FFB800]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
             <span>10,000+ Subscribers</span>
           </div>
           <div class="flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#8B5CF6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" />
             </svg>
             <span>Weekly Updates</span>
@@ -157,7 +161,7 @@ const {
 <style>
   /* Custom select styling for dark background */
   select option {
-    background-color: #1e40af;
-    color: white;
+    background-color: #0B0F19;
+    color: #F8FAFC;
   }
 </style>

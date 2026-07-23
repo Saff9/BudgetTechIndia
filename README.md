@@ -1,200 +1,178 @@
 # BudgetTechIndia
 
-> Best Budget Tech Products Under ₹2000 in India
-
-BudgetTechIndia is a professional affiliate marketing website focused on helping Indian consumers discover the best budget tech products under ₹2000.
-
-## Tech Stack
-
-- **Framework**: [Astro 4.x](https://astro.build/) - Static Site Generator with Islands Architecture
-- **UI Components**: [React 18.x](https://react.dev/) - For interactive islands
-- **Styling**: [Tailwind CSS 3.x](https://tailwindcss.com/) - Utility-first CSS framework
-- **Content**: Markdown + MDX for articles, JSON for product data
-- **Build Tool**: Vite (included with Astro)
-- **Deployment**: Vercel (primary) / Render (secondary)
-
-## Features
-
-- **Fast Performance**: Zero JavaScript by default, selective hydration for interactive components
-- **SEO Optimized**: Built-in sitemap generation, meta tags, and structured data support
-- **Content-First**: Native Markdown/MDX support for editorial content
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
-- **Affiliate Ready**: Built-in affiliate link management and tracking
-- **Dual Storage System**: Support for both local JSON file storage and Firebase Firestore
-- **Storage Management**: Easy configuration and migration between storage systems
-- **Enhanced Admin Panel**: Improved product editor with advanced features and batch operations
-
-## Project Structure
-
-```
-budgettechindia/
-├── public/
-│   ├── images/          # Static images
-│   │   ├── products/    # Product images
-│   │   ├── categories/  # Category thumbnails
-│   │   ├── blog/       # Blog post images
-│   │   └── og/         # Open Graph images
-│   └── fonts/          # Self-hosted fonts
-├── src/
-│   ├── components/     # UI components
-│   │   └── admin/      # Admin dashboard components (ProductForm, StorageSelector, DataMigration)
-│   ├── layouts/        # Page layouts
-│   ├── pages/         # Route pages
-│   │   └── admin/      # Admin dashboard routes (products, settings)
-│   ├── content/        # MDX content collections
-│   ├── data/          # JSON data files (products, categories, content, settings)
-│   ├── styles/         # Global styles
-│   └── utils/          # Utility functions
-│       └── storage/    # Dual storage system implementation
-│           ├── index.ts       # Storage system factory and types
-│           ├── firebaseStorage.ts  # Firebase Firestore implementation
-│           └── localStorage.ts    # Local JSON file storage implementation
-├── astro.config.mjs    # Astro configuration
-├── tailwind.config.mjs # Tailwind configuration
-├── tsconfig.json       # TypeScript configuration
-└── package.json        # Dependencies and scripts
-```
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18.0.0 or higher
-- npm or pnpm
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/budgettechindia/website.git
-   cd website
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   # or
-   pnpm install
-   ```
-
-3. Create environment file:
-   ```bash
-   cp .env.example .env
-   ```
-
-4. Start development server:
-   ```bash
-   npm run dev
-   ```
-
-5. Open [http://localhost:4321](http://localhost:4321) in your browser
-
-## Available Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
-| `npm run typecheck` | Run TypeScript type checking |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Fix ESLint issues |
-| `npm run format` | Format code with Prettier |
-| `npm run validate` | Run typecheck and lint |
-
-## Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `SITE_URL` | Production site URL | Yes |
-| `AMAZON_AFFILIATE_TAG` | Amazon Associates India tag | Yes |
-| `ANALYTICS_ID` | Google Analytics ID | No |
-| `PUBLIC_STORAGE_TYPE` | Storage system type: 'local' (default) or 'firebase' | No |
-| `PUBLIC_FIREBASE_API_KEY` | Firebase API key (required for Firebase storage) | No |
-| `PUBLIC_FIREBASE_AUTH_DOMAIN` | Firebase auth domain (required for Firebase storage) | No |
-| `PUBLIC_FIREBASE_PROJECT_ID` | Firebase project ID (required for Firebase storage) | No |
-| `PUBLIC_FIREBASE_STORAGE_BUCKET` | Firebase storage bucket (required for Firebase storage) | No |
-| `PUBLIC_FIREBASE_MESSAGING_SENDER_ID` | Firebase messaging sender ID (required for Firebase storage) | No |
-| `PUBLIC_FIREBASE_APP_ID` | Firebase app ID (required for Firebase storage) | No |
-| `PUBLIC_FIREBASE_MEASUREMENT_ID` | Firebase measurement ID (required for Firebase storage) | No |
-
-## Storage System
-
-The application supports dual storage options:
-
-### 1. Local JSON File Storage (Default)
-
-- Simple and lightweight
-- No external dependencies
-- Files stored in `src/data/` directory
-- Products: `src/data/products.json`
-- Categories: `src/data/categories.json`
-- Content: `src/data/content.json`
-- Settings: `src/data/settings.json`
-- Perfect for small to medium datasets and development
-
-### 2. Firebase Firestore Storage
-
-- Cloud-based NoSQL database
-- Real-time synchronization
-- Automatic backup and redundancy
-- Scalable for large datasets
-- Requires Firebase project configuration
-
-### Configuration
-
-Set the storage type in your `.env` file:
-
-```env
-# Use local JSON files (default)
-PUBLIC_STORAGE_TYPE=local
-
-# Or use Firebase Firestore
-PUBLIC_STORAGE_TYPE=firebase
-```
-
-For Firebase storage, you need to configure all Firebase environment variables.
-
-## Deployment
-
-### Vercel (Recommended)
-
-1. Connect repository to Vercel
-2. Configure environment variables
-3. Deploy automatically on push to main
-
-### Render
-
-1. Connect repository to Render
-2. Configure as Static Site
-3. Set build command: `npm run build`
-4. Set publish directory: `dist`
-
-## Performance Targets
-
-| Metric | Target |
-|--------|--------|
-| LCP | < 2.5s |
-| FID | < 100ms |
-| CLS | < 0.1 |
-| Bundle Size | < 100KB JS |
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests and linting
-5. Submit a pull request
-
-## License
-
-MIT License - see [LICENSE](LICENSE) for details.
-
-## Documentation
-
-For detailed architecture and implementation details, see [ARCHITECTURE.md](ARCHITECTURE.md).
+> Best Budget Tech Products Under ₹2000 in India — Powered by Astro 4.x & Neon DB (Serverless PostgreSQL)
 
 ---
 
-Built with ❤️ by BudgetTechIndia Team
+## ⚡ Bot Webhook Quick Post Command (cURL)
+
+To post/add product affiliate links automatically from your bot or script with **Neon DB** and **7-day automated auto-purge expiration**:
+
+```bash
+curl -X POST https://budgettechindia.com/api/webhook/post \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: YOUR_WEBHOOK_PASSWORD" \
+  -d '{
+    "name": "Noise ColorFit Pulse 2 Max",
+    "category": "smartwatches",
+    "price": 1199,
+    "mrp": 4999,
+    "affiliateUrl": "https://www.amazon.in/dp/B0B5L21SGR?tag=budgettechpro-21",
+    "brand": "Noise",
+    "description": "1.85 Inch Display, Bluetooth Calling",
+    "expiryDays": 7
+  }'
+```
+
+---
+
+## 🔐 Environment Variables & Security Setup
+
+All sensitive credentials and database connection strings are stored strictly in `.env` (never hardcoded in source code).
+
+Create a `.env` file in the root directory:
+
+```env
+# Storage Configuration ('neondb' or 'local')
+PUBLIC_STORAGE_TYPE=neondb
+
+# Neon DB Serverless PostgreSQL Connection String
+NEON_DATABASE_URL=postgresql://neondb_owner:npg_4pPgnhc5DiJf@ep-odd-butterfly-a1pv3sqx-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+
+# Webhook API Authentication Password (for Bot/Automated Posting)
+WEBHOOK_PASSWORD=YOUR_SECURE_WEBHOOK_PASSWORD
+
+# Admin Dashboard Credentials
+PUBLIC_ADMIN_EMAIL=admin@budgettechindia.com
+PUBLIC_ADMIN_PASSWORD=YOUR_SECURE_ADMIN_PASSWORD
+
+# Site & Amazon Affiliate Config
+SITE_URL=https://budgettechindia.com
+AMAZON_AFFILIATE_TAG=budgettechpro-21
+PUBLIC_AMAZON_AFFILIATE_TAG=budgettechpro-21
+```
+
+---
+
+## 🔄 7-Day Automated Content Rotation & Auto-Purge
+
+- **Retention System**: Every product inserted via Neon DB is tagged with `created_at` and `expires_at` (default: 7 days).
+- **Zero-Maintenance Auto-Purge**: On every product query or webhook invocation, the system automatically executes:
+  ```sql
+  DELETE FROM products 
+  WHERE created_at < (NOW() - INTERVAL '7 days') 
+     OR expires_at < NOW();
+  ```
+- **Why**: Ensures unpaid or stale affiliate links continuously rotate off the site so you only maintain monetized, active deals.
+
+---
+
+## 🤖 Supported Amazon Link Formats for Bots
+
+The automated affiliate engine (`amazonAutoAffiliate.ts`) accepts any of the following link formats:
+
+1. **Short Links**: `https://link.amazon/B01NI5GXB` or `https://amzn.to/3xxx`
+2. **Full Amazon Affiliate Links**: `https://www.amazon.in/Laws-Human-Nature-Robert-Greene-ebook/dp/B07C87SQ53?...`
+3. **Raw ASINs**: `B07C87SQ53`
+
+> **Note**: If `affiliateUrl` is provided without an Associate Tag, the system automatically appends your `tag=budgettechpro-21`.
+
+---
+
+## 📡 Webhook API Endpoints
+
+| Endpoint | Method | Security | Description |
+|---|---|---|---|
+| `/api/webhook/post` | `POST` | Password Required | Adds or updates product deal with 7-day auto-expiry retention |
+| `/api/webhook/list` | `GET` / `POST` | Password Required | Retrieves all unexpired active products (auto-purges 7-day old items) |
+| `/api/webhook/delete` | `POST` / `DELETE` | Password Required | Deletes product by `id`/`slug` or forces a database purge (`"action": "purge"`) |
+
+### Webhook Authentication Header Formats
+Pass your `WEBHOOK_PASSWORD` using any of these header methods:
+- `X-API-KEY: YOUR_WEBHOOK_PASSWORD`
+- `Authorization: Bearer YOUR_WEBHOOK_PASSWORD`
+- JSON Body: `"password": "YOUR_WEBHOOK_PASSWORD"`
+
+---
+
+## 💻 Bot Code Integration Examples
+
+### **Python Bot Example**
+```python
+import requests
+
+WEBHOOK_URL = "https://budgettechindia.com/api/webhook/post"
+PASSWORD = "YOUR_WEBHOOK_PASSWORD"
+
+payload = {
+    "password": PASSWORD,
+    "name": "The Laws of Human Nature - Robert Greene",
+    "category": "books",
+    "price": 699,
+    "mrp": 999,
+    "affiliateUrl": "https://link.amazon/B01NI5GXB",
+    "brand": "Penguin",
+    "description": "Masterwork on psychology and human dynamics",
+    "expiryDays": 7
+}
+
+response = requests.post(WEBHOOK_URL, json=payload)
+print(response.json())
+```
+
+### **Node.js / JavaScript Bot Example**
+```javascript
+const response = await fetch("https://budgettechindia.com/api/webhook/post", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "X-API-KEY": "YOUR_WEBHOOK_PASSWORD"
+  },
+  body: JSON.stringify({
+    name: "boAt Airdopes 141 TWS",
+    category: "earbuds",
+    price: 999,
+    mrp: 2990,
+    affiliateUrl: "https://www.amazon.in/dp/B097C56421",
+    brand: "boAt",
+    description: "42H Playtime, Low Latency, ENx Tech",
+    expiryDays: 7
+  })
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+---
+
+## 🛠️ Local Development & Production Build
+
+### **Installation**
+```bash
+# 1. Clone & install
+git clone https://github.com/budgettechindia/website.git
+cd website
+npm install
+
+# 2. Configure environment
+cp .env.example .env
+
+# 3. Development server
+npm run dev
+
+# 4. Production build
+npm run build
+```
+
+---
+
+## 🚀 Production Deployment (Vercel / Render / Netlify)
+
+1. Deploy the repository to your host (Vercel, Render, Netlify).
+2. Set Environment Variables in your hosting dashboard:
+   - `PUBLIC_STORAGE_TYPE`: `neondb`
+   - `NEON_DATABASE_URL`: `postgresql://neondb_owner:npg_4pPgnhc5DiJf@...`
+   - `WEBHOOK_PASSWORD`: `YOUR_SECURE_WEBHOOK_PASSWORD`
+   - `AMAZON_AFFILIATE_TAG`: `budgettechpro-21`
+3. Trigger build & deploy!

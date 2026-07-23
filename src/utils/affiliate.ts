@@ -333,7 +333,10 @@ export function getProductPrice(slug: string): {
  * @returns Complete Amazon affiliate URL
  */
 export function generateAmazonUrl(asin: string, affiliateTag?: string): string {
-  const tag = affiliateTag || affiliateData.defaultAffiliateTag;
+  const envTag = typeof import.meta !== 'undefined' && import.meta.env
+    ? (import.meta.env.PUBLIC_AMAZON_AFFILIATE_TAG || import.meta.env.AMAZON_AFFILIATE_TAG)
+    : undefined;
+  const tag = affiliateTag || envTag || affiliateData.defaultAffiliateTag || 'budgettechpro-21';
   return `https://www.amazon.in/dp/${asin}?tag=${tag}`;
 }
 

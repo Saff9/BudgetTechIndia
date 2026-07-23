@@ -170,7 +170,7 @@ export const siteConfig = {
   
   // Affiliate Settings
   affiliate: {
-    amazonAssociateId: 'budgettechindia-21',
+    amazonAssociateId: import.meta.env.PUBLIC_AMAZON_AFFILIATE_TAG || import.meta.env.AMAZON_AFFILIATE_TAG || 'budgettechpro-21',
     flipkartAffiliateId: 'budgettechindia',
     disclaimer: 'We may earn a commission when you buy through links on our site.',
   },

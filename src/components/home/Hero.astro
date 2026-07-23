@@ -49,50 +49,47 @@ const trustBadges = [
 ];
 ---
 
-<section class="hero relative overflow-hidden py-12 md:py-16 lg:py-24">
+<section class="hero relative overflow-hidden py-14 md:py-20 lg:py-28">
   <!-- Animated background gradient -->
   <div class="absolute inset-0 bg-gradient-hero" aria-hidden="true"></div>
   
   <!-- Animated mesh pattern -->
-  <div class="absolute inset-0 bg-mesh-gradient opacity-30" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-mesh-gradient opacity-40" aria-hidden="true"></div>
   
   <!-- Floating decorative elements -->
-  <div class="absolute top-20 right-10 w-72 h-72 bg-[#C46A3A]/20 rounded-full blur-3xl animate-float" aria-hidden="true"></div>
-  <div class="absolute bottom-20 left-10 w-96 h-96 bg-[#E8D8C3]/10 rounded-full blur-3xl animate-float-slow" aria-hidden="true"></div>
-  <div class="absolute top-1/2 left-1/4 w-48 h-48 bg-[#C46A3A]/10 rounded-full blur-2xl animate-float" style="animation-delay: 1s;" aria-hidden="true"></div>
+  <div class="absolute top-20 right-10 w-96 h-96 bg-[#FFB800]/15 rounded-full blur-3xl animate-float" aria-hidden="true"></div>
+  <div class="absolute bottom-20 left-10 w-[450px] h-[450px] bg-[#00F5A0]/10 rounded-full blur-3xl animate-float-slow" aria-hidden="true"></div>
+  <div class="absolute top-1/2 left-1/4 w-64 h-64 bg-[#8B5CF6]/15 rounded-full blur-3xl animate-float" style="animation-delay: 1s;" aria-hidden="true"></div>
   
   <!-- Decorative grid pattern -->
-  <div class="absolute inset-0 decorative-grid opacity-30" aria-hidden="true"></div>
-  
-  <!-- Radial glow effect -->
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[500px] gradient-radial-glow" aria-hidden="true"></div>
+  <div class="absolute inset-0 decorative-grid opacity-20" aria-hidden="true"></div>
   
   <div class="container mx-auto px-4 relative z-10">
     <div class="max-w-4xl mx-auto text-center">
       <!-- Animated badge -->
-      <div class="inline-flex items-center gap-2 glass-premium rounded-full px-5 py-2.5 mb-8 animate-fade-in-down shadow-glow-copper">
+      <div class="inline-flex items-center gap-2 bg-[#0B0F19]/80 backdrop-blur-xl border border-white/10 rounded-full px-5 py-2.5 mb-8 animate-fade-in-down shadow-glow-copper">
         <span class="relative flex h-2.5 w-2.5">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C46A3A] opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#C46A3A] shadow-glow-copper"></span>
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FFB800] opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FFB800] shadow-glow-copper"></span>
         </span>
-        <span class="text-sm font-semibold text-[#F4F1EA]">Updated for {new Date().getFullYear()}</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#C46A3A]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <span class="text-xs font-mono font-bold tracking-wider text-[#F8FAFC] uppercase">ENGINEERING BENCHMARKS • TAG: <span class="text-[#FFB800]">budgettechpro-21</span></span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#FFB800]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
         </svg>
       </div>
       
       <!-- Main Headline with gradient text option -->
-      <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight tracking-tight animate-fade-in-up">
-        <span class="text-[#F4F1EA]">{title}</span>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-6 leading-tight tracking-tight animate-fade-in-up">
+        <span class="gradient-text-gold">{title}</span>
       </h1>
       
       <!-- Animated subtitle -->
-      <p class="text-xl md:text-2xl mb-6 font-semibold animate-fade-in-up stagger-1">
-        <span class="gradient-text-animated">{subtitle}</span>
+      <p class="text-xl md:text-2xl mb-6 font-bold text-[#00F5A0] animate-fade-in-up stagger-1">
+        {subtitle}
       </p>
       
       <!-- Description -->
-      <p class="text-base md:text-lg text-[#a8b5ba] mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in-up stagger-2">
+      <p class="text-base md:text-lg text-[#CBD5E1] mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in-up stagger-2">
         {description}
       </p>
       
@@ -115,10 +112,10 @@ const trustBadges = [
       <!-- Enhanced Search Bar -->
       {showSearch && (
         <div class="max-w-2xl mx-auto animate-fade-in-up stagger-4 mb-12">
-          <form action="/search" method="GET" class="relative flex shadow-premium rounded-xl overflow-hidden border border-[#2a4450]/50 glass-premium hover:border-[#C46A3A]/30 transition-all duration-300">
+          <form action="/search" method="GET" class="relative flex shadow-2xl rounded-2xl overflow-hidden border border-white/10 bg-[#0B0F19]/90 backdrop-blur-xl hover:border-[#FFB800]/40 transition-all duration-300">
             <select 
               name="category" 
-              class="hidden md:block px-5 py-4 text-sm bg-transparent text-[#F4F1EA] border-r border-[#2a4450] focus:outline-none focus:bg-[#1A2E35]/50 transition-colors cursor-pointer"
+              class="hidden md:block px-5 py-4 text-sm bg-transparent text-[#F8FAFC] border-r border-white/10 focus:outline-none focus:bg-[#111827] transition-colors cursor-pointer"
             >
               <option value="">All Categories</option>
               <option value="earbuds">Earbuds</option>
@@ -130,28 +127,28 @@ const trustBadges = [
               type="text"
               name="q"
               placeholder="Search for products, reviews, guides..."
-              class="flex-1 px-5 py-4 text-sm text-[#F4F1EA] bg-transparent focus:outline-none transition-all duration-200 placeholder:text-[#6b7d83]"
+              class="flex-1 px-5 py-4 text-sm text-[#F8FAFC] bg-transparent focus:outline-none transition-all duration-200 placeholder:text-[#64748B]"
             />
             <button
               type="submit"
-              class="px-6 py-4 bg-gradient-to-r from-[#C46A3A] to-[#d4834f] hover:from-[#d4834f] hover:to-[#C46A3A] text-[#F4F1EA] transition-all duration-300 flex items-center justify-center gap-2 group"
+              class="px-6 py-4 bg-gradient-to-r from-[#FFE500] via-[#FFB800] to-[#FF7A00] text-[#06080F] font-bold transition-all duration-300 flex items-center justify-center gap-2 group shadow-cta hover:opacity-95"
               aria-label="Search"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              <span class="hidden sm:inline font-medium">Search</span>
+              <span class="hidden sm:inline font-bold">Search</span>
             </button>
           </form>
           
           <!-- Quick search suggestions -->
           <div class="flex flex-wrap justify-center gap-2 mt-4">
-            <span class="text-xs text-[#6b7d83]">Popular:</span>
-            <a href="/reviews/best-earbuds-under-1000" class="text-xs text-[#a8b5ba] hover:text-[#C46A3A] transition-colors">Earbuds under ₹1000</a>
-            <span class="text-[#2a4450]">•</span>
-            <a href="/reviews/best-smartwatch-under-2000" class="text-xs text-[#a8b5ba] hover:text-[#C46A3A] transition-colors">Smartwatches</a>
-            <span class="text-[#2a4450]">•</span>
-            <a href="/top-5/best-power-banks-under-1500" class="text-xs text-[#a8b5ba] hover:text-[#C46A3A] transition-colors">Power Banks</a>
+            <span class="text-xs text-[#64748B]">Popular:</span>
+            <a href="/reviews/best-earbuds-under-1000" class="text-xs text-[#CBD5E1] hover:text-[#FFB800] transition-colors">Earbuds under ₹1000</a>
+            <span class="text-white/20">•</span>
+            <a href="/reviews/best-smartwatch-under-2000" class="text-xs text-[#CBD5E1] hover:text-[#FFB800] transition-colors">Smartwatches</a>
+            <span class="text-white/20">•</span>
+            <a href="/top-5/best-power-banks-under-1500" class="text-xs text-[#CBD5E1] hover:text-[#FFB800] transition-colors">Power Banks</a>
           </div>
         </div>
       )}
@@ -160,8 +157,8 @@ const trustBadges = [
       {showTrustBadges && (
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto animate-fade-in-up stagger-5">
           {trustBadges.map((badge, index) => (
-            <div class="trust-badge-item group" style={`animation-delay: ${index * 100}ms`}>
-              <div class="trust-badge-icon group-hover:scale-110 transition-transform duration-300">
+            <div class="p-4 bg-[#0B0F19]/70 backdrop-blur-md border border-white/10 rounded-2xl cursor-pointer hover:-translate-y-1 hover:border-[#FFB800]/40 transition-all duration-300 flex flex-col items-center justify-center gap-2 shadow-card" style={`animation-delay: ${index * 100}ms`}>
+              <div class="w-10 h-10 rounded-xl bg-[#FFB800]/10 flex items-center justify-center text-[#FFB800] group-hover:scale-110 transition-all duration-300">
                 {badge.icon === 'shield-check' && (
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -183,8 +180,8 @@ const trustBadges = [
                   </svg>
                 )}
               </div>
-              <span class="text-sm font-semibold text-[#F4F1EA]">{badge.title}</span>
-              <span class="text-xs text-[#a8b5ba]">{badge.description}</span>
+              <span class="text-sm font-bold text-[#F8FAFC]">{badge.title}</span>
+              <span class="text-xs text-[#CBD5E1]">{badge.description}</span>
             </div>
           ))}
         </div>
@@ -193,13 +190,13 @@ const trustBadges = [
   </div>
   
   <!-- Bottom wave decoration -->
-  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C46A3A]/30 to-transparent" aria-hidden="true"></div>
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FFB800]/40 to-transparent" aria-hidden="true"></div>
 </section>
 
 <style>
   .hero {
     position: relative;
-    background: linear-gradient(180deg, #0F1F24 0%, #1A2E35 50%, #0F1F24 100%);
+    background: linear-gradient(180deg, #06080F 0%, #0B0F19 50%, #06080F 100%);
   }
   
   /* Enhanced animations */
@@ -219,17 +216,5 @@ const trustBadges = [
     50% {
       transform: translateY(-30px) rotate(3deg);
     }
-  }
-  
-  /* Scroll-triggered animations */
-  .scroll-animate {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-  
-  .scroll-animate.visible {
-    opacity: 1;
-    transform: translateY(0);
   }
 </style>

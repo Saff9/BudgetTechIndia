@@ -232,42 +232,53 @@ function isActive(href: string, current: string): boolean {
     mobileMenu.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     
-    // Trigger animations with requestAnimationFrame for smooth transition
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        // Animate drawer slide in
         menuDrawer.classList.remove('-translate-x-full');
-        // Animate backdrop fade in
         backdrop.classList.remove('opacity-0');
         backdrop.classList.add('opacity-100');
       });
     });
     
-    // Focus management for accessibility
     closeButton?.focus();
   }
 
   function closeMenu() {
     if (!mobileMenu || !menuDrawer || !backdrop) return;
     
-    // Animate drawer slide out
     menuDrawer.classList.add('-translate-x-full');
-    // Animate backdrop fade out
     backdrop.classList.remove('opacity-100');
     backdrop.classList.add('opacity-0');
     
-    // Wait for animation to complete
+    document.body.style.overflow = '';
+    
     setTimeout(() => {
       mobileMenu.classList.add('hidden');
-      document.body.style.overflow = '';
-    }, 300);
+    }, 250);
+  }
+
+  function toggleMenu() {
+    if (!mobileMenu) return;
+    if (mobileMenu.classList.contains('hidden')) {
+      openMenu();
+    } else {
+      closeMenu();
+    }
   }
 
   closeButton?.addEventListener('click', closeMenu);
   backdrop?.addEventListener('click', closeMenu);
 
   // Listen for toggle event from Header
-  document.addEventListener('toggle-mobile-menu', openMenu);
+  document.addEventListener('toggle-mobile-menu', toggleMenu);
+
+  // Auto restore scroll on window resize to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024) {
+      closeMenu();
+      document.body.style.overflow = '';
+    }
+  });
 
   // Close on escape key
   document.addEventListener('keydown', (e) => {

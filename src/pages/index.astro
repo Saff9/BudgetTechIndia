@@ -62,143 +62,76 @@ const testimonials = [
   // Brand logos with real-looking SVG designs
   const brands = [
     {
-      name: 'Amazon',
-      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
-        <defs>
-          <linearGradient id="amazonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#FF9900"/>
-            <stop offset="100%" style="stop-color:#FF6600"/>
-          </linearGradient>
-        </defs>
-        <!-- Amazon arrow smile -->
-        <path d="M5 25 Q15 32 30 25" stroke="url(#amazonGrad)" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <!-- Arrow head -->
-        <path d="M28 22 L32 26 L26 28" fill="url(#amazonGrad)"/>
-        <!-- Text -->
-        <text x="38" y="26" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#FF9900">amazon</text>
-      </svg>`
-    },
-    {
-      name: 'Flipkart',
-      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
-        <defs>
-          <linearGradient id="flipkartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#2874F0"/>
-            <stop offset="100%" style="stop-color:#1E5DC4"/>
-          </linearGradient>
-        </defs>
-        <!-- Shopping bag icon -->
-        <rect x="6" y="10" width="20" height="22" rx="3" fill="url(#flipkartGrad)"/>
-        <path d="M10 10 Q10 4 16 4 Q22 4 22 10" stroke="white" stroke-width="2" fill="none"/>
-        <!-- Small plus sign -->
-        <text x="16" y="24" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">+</text>
-        <!-- Text -->
-        <text x="32" y="26" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#2874F0">Flipkart</text>
-      </svg>`
-    },
-    {
       name: 'boAt',
-      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
-        <defs>
-          <linearGradient id="boatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#FF4444"/>
-            <stop offset="100%" style="stop-color:#CC0000"/>
-          </linearGradient>
-        </defs>
-        <!-- Boat icon -->
-        <path d="M8 28 Q12 20 20 22 L18 28 Z" fill="url(#boatGrad)"/>
-        <path d="M14 18 L14 24 L22 24 Q20 18 14 18" fill="url(#boatGrad)"/>
-        <!-- Wave -->
-        <path d="M6 30 Q10 26 14 30 Q18 34 22 30" stroke="url(#boatGrad)" stroke-width="2" fill="none"/>
-        <!-- Text -->
-        <text x="28" y="27" font-family="Arial Black, sans-serif" font-size="16" font-weight="900" fill="#FF4444">boAt</text>
-      </svg>`
-    },
-    {
-      name: 'Noise',
-      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
-        <defs>
-          <linearGradient id="noiseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#FFD700"/>
-            <stop offset="100%" style="stop-color:#FFA500"/>
-          </linearGradient>
-        </defs>
-        <!-- Sound wave bars -->
-        <rect x="5" y="18" width="3" height="8" rx="1" fill="url(#noiseGrad)"/>
-        <rect x="10" y="14" width="3" height="16" rx="1" fill="url(#noiseGrad)"/>
-        <rect x="15" y="10" width="3" height="24" rx="1" fill="url(#noiseGrad)"/>
-        <rect x="20" y="14" width="3" height="16" rx="1" fill="url(#noiseGrad)"/>
-        <rect x="25" y="18" width="3" height="8" rx="1" fill="url(#noiseGrad)"/>
-        <!-- Text -->
-        <text x="35" y="27" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#FFD700">Noise</text>
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full text-current hover:text-[#E31E24] transition-colors duration-300">
+        <!-- boAt stylized text -->
+        <text x="60" y="28" font-family="Arial Black, Impact, sans-serif" font-size="24" font-style="italic" font-weight="900" text-anchor="middle" fill="currentColor">boAt</text>
       </svg>`
     },
     {
       name: 'realme',
-      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
-        <defs>
-          <linearGradient id="realmeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#00D4AA"/>
-            <stop offset="100%" style="stop-color:#00A085"/>
-          </linearGradient>
-        </defs>
-        <!-- Stylized R icon -->
-        <circle cx="15" cy="20" r="12" stroke="url(#realmeGrad)" stroke-width="2" fill="none"/>
-        <path d="M10 15 L10 28 M10 15 Q10 20 15 20 L20 28" stroke="url(#realmeGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <!-- Text -->
-        <text x="32" y="26" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#00D4AA">realme</text>
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full text-[#FFC915]">
+        <!-- realme logo -->
+        <text x="60" y="27" font-family="Arial, sans-serif" font-size="22" font-weight="900" letter-spacing="-0.5" text-anchor="middle" fill="currentColor">realme</text>
       </svg>`
     },
     {
-      name: 'Redmi',
-      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
-        <defs>
-          <linearGradient id="redmiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#FF6700"/>
-            <stop offset="100%" style="stop-color:#E55A00"/>
-          </linearGradient>
-        </defs>
-        <!-- Xiaomi-style rounded square -->
-        <rect x="4" y="8" width="24" height="24" rx="4" fill="url(#redmiGrad)"/>
-        <text x="16" y="25" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle">R</text>
-        <!-- Text -->
-        <text x="35" y="26" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#FF6700">Redmi</text>
+      name: 'Noise',
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full text-current hover:text-[#212121] dark:hover:text-white transition-colors duration-300">
+        <!-- Noise logo -->
+        <text x="60" y="27" font-family="Arial, sans-serif" font-size="22" font-weight="900" font-style="italic" letter-spacing="1" text-anchor="middle" fill="currentColor">NOISE</text>
       </svg>`
     },
     {
       name: 'OnePlus',
-      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
-        <defs>
-          <linearGradient id="oneplusGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#EB0029"/>
-            <stop offset="100%" style="stop-color:#C00020"/>
-          </linearGradient>
-        </defs>
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full text-[#F5010C]">
         <!-- OnePlus box logo -->
-        <rect x="4" y="6" width="28" height="28" rx="3" stroke="url(#oneplusGrad)" stroke-width="2" fill="none"/>
-        <!-- 1+ inside -->
-        <text x="10" y="26" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#EB0029">1</text>
-        <text x="18" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#EB0029">+</text>
-        <!-- Text -->
-        <text x="38" y="26" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#EB0029">OnePlus</text>
+        <rect x="15" y="8" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text x="21" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="currentColor">1</text>
+        <text x="29" y="23" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="currentColor">+</text>
+        <text x="44" y="25" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="currentColor">ONEPLUS</text>
+      </svg>`
+    },
+    {
+      name: 'Xiaomi',
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full text-[#FF6900]">
+        <!-- Xiaomi/Redmi logo -->
+        <rect x="18" y="8" width="24" height="24" rx="6" fill="currentColor"/>
+        <path d="M23 16v8h2v-5h2v5h2v-6.5c0-1-.8-1.5-1.5-1.5h-4.5z M31 16v8h2v-8h-2z" fill="#fff"/>
+        <text x="48" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="800" fill="currentColor">xiaomi</text>
+      </svg>`
+    },
+    {
+      name: 'Boult',
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full text-current hover:text-[#E31E24] transition-colors duration-300">
+        <!-- Boult Audio logo -->
+        <path d="M18 12l-6 10h5l-2 8 8-12h-5l4-6z" fill="currentColor"/>
+        <text x="65" y="25" font-family="Arial Black, sans-serif" font-size="18" font-weight="900" text-anchor="middle" fill="currentColor">BOULT</text>
+      </svg>`
+    },
+    {
+      name: 'Fire-Boltt',
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full text-current hover:text-[#F37021] transition-colors duration-300">
+        <!-- Fire-Boltt logo -->
+        <path d="M22 8c-3 4-4.5 7-1.5 10-2-1.5-3-4-1.5-6-4.5 4-6 9-2 13.5 1-3 2-4.5 5-4.5-1.5 2-1.5 4.5 0 6 4-4.5 4.5-9 1.5-12 2 1.5 4 1.5 5 0-3-4.5-6.5-7-6.5-7z" fill="currentColor"/>
+        <text x="70" y="25" font-family="Impact, sans-serif" font-size="16" letter-spacing="0.5" text-anchor="middle" fill="currentColor">FIRE-BOLTT</text>
       </svg>`
     },
     {
       name: 'Ambrane',
-      svg: `<svg viewBox="0 0 120 40" class="w-full h-full">
-        <defs>
-          <linearGradient id="ambraneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#00A3E0"/>
-            <stop offset="100%" style="stop-color:#0077B5"/>
-          </linearGradient>
-        </defs>
-        <!-- Power/battery icon -->
-        <rect x="4" y="12" width="22" height="16" rx="2" stroke="url(#ambraneGrad)" stroke-width="2" fill="none"/>
-        <rect x="26" y="16" width="3" height="8" rx="1" fill="url(#ambraneGrad)"/>
-        <!-- Lightning bolt inside -->
-        <path d="M14 14 L11 22 L15 22 L13 28 L19 20 L15 20 L17 14 Z" fill="url(#ambraneGrad)"/>
-        <!-- Text -->
-        <text x="35" y="26" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#00A3E0">Ambrane</text>
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full text-current hover:text-[#00529B] transition-colors duration-300">
+        <!-- Ambrane logo -->
+        <circle cx="20" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <circle cx="20" cy="20" r="3.5" fill="currentColor"/>
+        <text x="65" y="25" font-family="Arial, sans-serif" font-size="15" font-weight="800" letter-spacing="1" text-anchor="middle" fill="currentColor">ambrane</text>
+      </svg>`
+    },
+    {
+      name: 'Anker',
+      svg: `<svg viewBox="0 0 120 40" class="w-full h-full text-[#00A9E0]">
+        <!-- Anker logo -->
+        <path d="M22 26L14 14h3l6 9.5L29 14h3L24 26h-2z" fill="currentColor"/>
+        <text x="70" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="800" letter-spacing="1" text-anchor="middle" fill="currentColor">ANKER</text>
       </svg>`
     },
   ];
@@ -223,13 +156,13 @@ const featuredDeals = [
 
 // Category icons mapping
 const categoryIcons: Record<string, string> = {
-  'bluetooth-earbuds': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg>`,
-  'power-banks': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`,
-  'fast-chargers-cables': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`,
-  'smartwatches': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`,
-  'laptop-accessories': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>`,
-  'budget-gadgets-under-999': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>`,
-  'work-from-home-essentials': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>`,
+  'bluetooth-earbuds': `<svg class="w-8 h-8 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 20a8 8 0 100-16 8 8 0 000 16zM9 12a3 3 0 116 0 3 3 0 01-6 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12v6m6-6v6M6.5 9.5L5 8m12.5 1.5L19 8" /></svg>`,
+  'power-banks': `<svg class="w-8 h-8 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 4v16a2 2 0 01-2 2H10a2 2 0 01-2-2V4a2 2 0 012-2h4a2 2 0 012 2zM12 8v.01M12 12v4" /></svg>`,
+  'fast-chargers-cables': `<svg class="w-8 h-8 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`,
+  'smartwatches': `<svg class="w-8 h-8 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 3h-6a2 2 0 00-2 2v2m10 0V5a2 2 0 00-2-2m-8 16v2a2 2 0 002 2h6a2 2 0 002-2v-2" /></svg>`,
+  'laptop-accessories': `<svg class="w-8 h-8 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>`,
+  'budget-gadgets-under-999': `<svg class="w-8 h-8 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`,
+  'work-from-home-essentials': `<svg class="w-8 h-8 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>`,
 };
 
 // Website schema for SEO
@@ -253,6 +186,31 @@ const websiteSchema = {
   <!-- Hero Section -->
   <Hero />
 
+  <!-- Senior Engineer Live Telemetry & Quick Filter Bar -->
+  <section class="py-4 border-y border-[#2a4450]/80 bg-[#0A1619]/90 backdrop-blur-md sticky top-14 z-30 shadow-2xl">
+    <div class="container flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#a8b5ba]">
+      <!-- Live Status indicator -->
+      <div class="flex items-center space-x-3">
+        <span class="flex h-2.5 w-2.5 relative">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+        </span>
+        <span class="font-bold text-[#F4F1EA] tracking-wider uppercase">SYSTEM: ONLINE</span>
+        <span class="text-[#2a4450] hidden sm:inline">|</span>
+        <span class="hidden sm:inline">STORE TAG: <strong class="text-[#F59E0B] bg-[#1A2E35] px-2 py-0.5 rounded border border-[#F59E0B]/40 font-mono">budgettechpro-21</strong></span>
+      </div>
+
+      <!-- Quick Price Filters -->
+      <div class="flex items-center space-x-2 overflow-x-auto py-1 no-scrollbar">
+        <span class="text-[#a8b5ba] font-bold uppercase tracking-wider text-[11px] mr-1 hidden sm:inline">FILTER:</span>
+        <a href="/categories/budget-gadgets-under-999" class="px-3 py-1.5 rounded-lg bg-[#1A2E35] hover:bg-[#F59E0B] text-[#F4F1EA] transition-all border border-[#2a4450] hover:border-[#F59E0B] text-xs font-semibold whitespace-nowrap">Under ₹500</a>
+        <a href="/categories/bluetooth-earbuds" class="px-3 py-1.5 rounded-lg bg-[#1A2E35] hover:bg-[#F59E0B] text-[#F4F1EA] transition-all border border-[#2a4450] hover:border-[#F59E0B] text-xs font-semibold whitespace-nowrap">Under ₹1000</a>
+        <a href="/categories/power-banks" class="px-3 py-1.5 rounded-lg bg-[#1A2E35] hover:bg-[#F59E0B] text-[#F4F1EA] transition-all border border-[#2a4450] hover:border-[#F59E0B] text-xs font-semibold whitespace-nowrap">Under ₹1500</a>
+        <a href="/categories/smartwatches" class="px-3 py-1.5 rounded-lg bg-[#1A2E35] hover:bg-[#F59E0B] text-[#F4F1EA] transition-all border border-[#2a4450] hover:border-[#F59E0B] text-xs font-semibold whitespace-nowrap">Under ₹2000</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Featured Deals with Countdown -->
   <section class="py-12 relative overflow-hidden">
     <div class="container">
@@ -263,7 +221,7 @@ const websiteSchema = {
           </h2>
           <p class="text-[#a8b5ba]">Limited time offers - Don't miss out!</p>
         </div>
-        <a href="/reviews?sort=deals" class="hidden md:flex items-center gap-2 text-[#C46A3A] hover:text-[#d4834f] transition-colors">
+        <a href="/reviews?sort=deals" class="hidden md:flex items-center gap-2 text-[#F59E0B] hover:text-[#d4834f] transition-colors">
           View All Deals
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -275,12 +233,12 @@ const websiteSchema = {
         {featuredDeals.map((deal) => (
           <a
             href={deal.href}
-            class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#1A2E35] to-[#0F1F24] border border-[#2a4450]/50 hover:border-[#C46A3A]/50 transition-all duration-300 hover:shadow-glow-copper"
+            class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#1A2E35] to-[#0F1F24] border border-[#2a4450]/50 hover:border-[#F59E0B]/50 transition-all duration-300 hover:shadow-glow-copper"
           >
-            <div class="absolute inset-0 bg-gradient-to-r from-[#C46A3A]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#F59E0B]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div class="relative p-6 flex items-center justify-between">
               <div>
-                <span class="inline-block px-3 py-1 bg-[#C46A3A] text-white text-sm font-bold rounded-lg mb-3 animate-countdown-pulse">
+                <span class="inline-block px-3 py-1 bg-[#F59E0B] text-white text-sm font-bold rounded-lg mb-3 animate-countdown-pulse">
                   {deal.discount}
                 </span>
                 <h3 class="text-xl font-bold text-[#F4F1EA] mb-2">{deal.title}</h3>
@@ -302,8 +260,8 @@ const websiteSchema = {
                   </div>
                 </div>
               </div>
-              <div class="w-20 h-20 bg-[#C46A3A]/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <svg class="w-10 h-10 text-[#C46A3A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-20 h-20 bg-[#F59E0B]/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-10 h-10 text-[#F59E0B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                 </svg>
               </div>
@@ -319,7 +277,7 @@ const websiteSchema = {
     <div class="absolute inset-0 decorative-dots opacity-20"></div>
     <div class="container relative">
       <div class="text-center mb-12">
-        <span class="inline-block px-4 py-1.5 bg-[#C46A3A]/10 text-[#C46A3A] text-sm font-semibold rounded-full mb-4">
+        <span class="inline-block px-4 py-1.5 bg-[#F59E0B]/10 text-[#F59E0B] text-sm font-semibold rounded-full mb-4">
           Browse Categories
         </span>
         <h2 class="text-3xl md:text-4xl font-bold text-[#F4F1EA] mb-4">
@@ -334,19 +292,19 @@ const websiteSchema = {
         {categories.map((category, index) => (
           <a
             href={`/categories/${category.slug}`}
-            class="group card-premium p-6 text-center scroll-animate"
+            class="group card-premium card-shine p-6 text-center scroll-animate"
             style={`animation-delay: ${index * 100}ms`}
           >
-            <div class="w-16 h-16 mx-auto mb-4 bg-[#C46A3A]/10 text-[#C46A3A] rounded-xl flex items-center justify-center group-hover:bg-[#C46A3A] group-hover:text-[#F4F1EA] transition-all duration-300 group-hover:scale-110">
+            <div class="w-16 h-16 mx-auto mb-4 bg-[#F59E0B]/10 text-[#F59E0B] rounded-xl flex items-center justify-center group-hover:bg-[#F59E0B] group-hover:text-[#F4F1EA] transition-all duration-300 group-hover:scale-110">
               <Fragment set:html={categoryIcons[category.id] || `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>`} />
             </div>
-            <h3 class="font-semibold text-[#F4F1EA] mb-2 group-hover:text-[#C46A3A] transition-colors duration-200">
+            <h3 class="font-semibold text-[#F4F1EA] mb-2 group-hover:text-[#F59E0B] transition-colors duration-200">
               {category.name}
             </h3>
             <p class="text-sm text-[#a8b5ba] line-clamp-2 mb-3">
               {category.description}
             </p>
-            <span class="inline-flex items-center gap-1 text-xs text-[#C46A3A] font-medium">
+            <span class="inline-flex items-center gap-1 text-xs text-[#F59E0B] font-medium">
               {category.productCount} products
               <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -363,7 +321,7 @@ const websiteSchema = {
     <div class="container">
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-12">
         <div>
-          <span class="inline-block px-4 py-1.5 bg-[#C46A3A]/10 text-[#C46A3A] text-sm font-semibold rounded-full mb-4">
+          <span class="inline-block px-4 py-1.5 bg-[#F59E0B]/10 text-[#F59E0B] text-sm font-semibold rounded-full mb-4">
             Top Picks
           </span>
           <h2 class="text-3xl md:text-4xl font-bold text-[#F4F1EA] mb-2">
@@ -381,9 +339,9 @@ const websiteSchema = {
         </a>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
         {featuredProducts.map((product, index) => (
-          <div class="scroll-animate" style={`animation-delay: ${index * 100}ms`}>
+          <div class="scroll-animate w-full" style={`animation-delay: ${index * 100}ms`}>
             <ProductCard product={product} />
           </div>
         ))}
@@ -396,7 +354,7 @@ const websiteSchema = {
     <div class="absolute inset-0 gradient-radial-glow"></div>
     <div class="container relative">
       <div class="text-center mb-12">
-        <span class="inline-block px-4 py-1.5 bg-[#C46A3A]/10 text-[#C46A3A] text-sm font-semibold rounded-full mb-4">
+        <span class="inline-block px-4 py-1.5 bg-[#F59E0B]/10 text-[#F59E0B] text-sm font-semibold rounded-full mb-4">
           Testimonials
         </span>
         <h2 class="text-3xl md:text-4xl font-bold text-[#F4F1EA] mb-4">
@@ -421,7 +379,7 @@ const websiteSchema = {
               "{testimonial.text}"
             </p>
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#C46A3A] to-[#d4834f] flex items-center justify-center text-[#F4F1EA] font-bold text-sm">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#F59E0B] to-[#d4834f] flex items-center justify-center text-[#F4F1EA] font-bold text-sm">
                 {testimonial.avatar}
               </div>
               <div>
@@ -431,7 +389,7 @@ const websiteSchema = {
             </div>
             <div class="mt-4 pt-4 border-t border-[#2a4450]/30">
               <p class="text-xs text-[#6b7d83]">
-                Purchased: <span class="text-[#C46A3A]">{testimonial.product}</span>
+                Purchased: <span class="text-[#F59E0B]">{testimonial.product}</span>
               </p>
             </div>
           </div>
@@ -447,7 +405,7 @@ const websiteSchema = {
       <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
         {brands.map((brand, index) => (
           <div 
-            class="brand-logo-float relative flex items-center justify-center p-6 bg-[#0F1F24] rounded-xl hover:bg-[#1A2E35] transition-all duration-300 border border-[#2a4450]/30 hover:border-[#C46A3A]/40 group"
+            class="brand-logo-float relative flex items-center justify-center p-6 bg-[#0F1F24] rounded-xl hover:bg-[#1A2E35] transition-all duration-300 border border-[#2a4450]/30 hover:border-[#F59E0B]/40 group"
             style={`animation-delay: ${index * 0.5}s`}
           >
             <div class="w-24 h-10 transition-transform duration-300 group-hover:scale-110">
@@ -464,7 +422,7 @@ const websiteSchema = {
     <div class="container">
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-12">
         <div>
-          <span class="inline-block px-4 py-1.5 bg-[#C46A3A]/10 text-[#C46A3A] text-sm font-semibold rounded-full mb-4">
+          <span class="inline-block px-4 py-1.5 bg-[#F59E0B]/10 text-[#F59E0B] text-sm font-semibold rounded-full mb-4">
             Latest
           </span>
           <h2 class="text-3xl md:text-4xl font-bold text-[#F4F1EA] mb-2">
@@ -484,7 +442,7 @@ const websiteSchema = {
 
       <div class="grid md:grid-cols-3 gap-6">
         {latestReviews.map((article, index) => (
-          <article class="group card-premium overflow-hidden scroll-animate" style={`animation-delay: ${index * 100}ms`}>
+          <article class="group card-premium card-shine overflow-hidden scroll-animate" style={`animation-delay: ${index * 100}ms`}>
             <a href={`/reviews/${article.slug}`} class="block">
               <div class="aspect-video bg-[#0F1F24] overflow-hidden">
                 <picture>
@@ -499,10 +457,10 @@ const websiteSchema = {
                 </picture>
               </div>
               <div class="p-6">
-                <span class="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#C46A3A]/20 text-[#C46A3A] mb-3">
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#F59E0B]/20 text-[#F59E0B] mb-3">
                   Review
                 </span>
-                <h3 class="font-semibold text-lg text-[#F4F1EA] mb-2 group-hover:text-[#C46A3A] transition-colors duration-200 line-clamp-2">
+                <h3 class="font-semibold text-lg text-[#F4F1EA] mb-2 group-hover:text-[#F59E0B] transition-colors duration-200 line-clamp-2">
                   {article.title}
                 </h3>
                 <p class="text-sm text-[#a8b5ba] line-clamp-2 mb-4">
@@ -525,7 +483,7 @@ const websiteSchema = {
     <div class="container">
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-12">
         <div>
-          <span class="inline-block px-4 py-1.5 bg-[#C46A3A]/10 text-[#C46A3A] text-sm font-semibold rounded-full mb-4">
+          <span class="inline-block px-4 py-1.5 bg-[#F59E0B]/10 text-[#F59E0B] text-sm font-semibold rounded-full mb-4">
             Curated Lists
           </span>
           <h2 class="text-3xl md:text-4xl font-bold text-[#F4F1EA] mb-2">
@@ -545,12 +503,12 @@ const websiteSchema = {
 
       <div class="grid md:grid-cols-3 gap-6">
         {top5Lists.map((article, index) => (
-          <article class="group card-premium overflow-hidden border-l-4 border-l-[#C46A3A] scroll-animate" style={`animation-delay: ${index * 100}ms`}>
+          <article class="group card-premium card-shine overflow-hidden border-l-4 border-l-[#F59E0B] scroll-animate" style={`animation-delay: ${index * 100}ms`}>
             <a href={`/top-5/${article.slug}`} class="block p-6">
-              <span class="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#C46A3A]/20 text-[#C46A3A] mb-3">
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#F59E0B]/20 text-[#F59E0B] mb-3">
                 Top 5
               </span>
-              <h3 class="font-semibold text-lg text-[#F4F1EA] mb-2 group-hover:text-[#C46A3A] transition-colors duration-200 line-clamp-2">
+              <h3 class="font-semibold text-lg text-[#F4F1EA] mb-2 group-hover:text-[#F59E0B] transition-colors duration-200 line-clamp-2">
                 {article.title}
               </h3>
               <p class="text-sm text-[#a8b5ba] line-clamp-2 mb-4">
@@ -573,7 +531,7 @@ const websiteSchema = {
     <div class="absolute inset-0 decorative-grid opacity-20"></div>
     <div class="container relative">
       <div class="text-center mb-12">
-        <span class="inline-block px-4 py-1.5 bg-[#C46A3A]/10 text-[#C46A3A] text-sm font-semibold rounded-full mb-4">
+        <span class="inline-block px-4 py-1.5 bg-[#F59E0B]/10 text-[#F59E0B] text-sm font-semibold rounded-full mb-4">
           Why Choose Us
         </span>
         <h2 class="text-3xl md:text-4xl font-bold text-[#F4F1EA] mb-4">

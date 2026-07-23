@@ -124,6 +124,18 @@ function generateSchema(type: SchemaType, data: SchemaData): object {
           bestRating: 5,
           worstRating: 1,
         } : undefined,
+        review: product.rating > 0 ? {
+          '@type': 'Review',
+          reviewRating: {
+            '@type': 'Rating',
+            ratingValue: product.rating,
+            bestRating: 5,
+          },
+          author: {
+            '@type': 'Organization',
+            name: 'BudgetTechIndia',
+          }
+        } : undefined,
       };
     }
 

@@ -92,24 +92,31 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
 ---
 
 <article
-  class={`product-card-enhanced group relative bg-[#1A2E35] rounded-xl overflow-hidden border border-[#2a4450]/50 ${layout === 'list' ? 'flex gap-4' : ''} transition-all duration-400 ease-out hover:shadow-card-premium-hover hover:border-[#C46A3A]/30`}
+  class={`product-card-enhanced group relative rounded-2xl bg-[#0B0F19]/80 backdrop-blur-xl border border-white/10 hover:border-[#FFB800]/50 shadow-card hover:shadow-card-hover overflow-hidden transition-all duration-300 ${layout === 'list' ? 'flex gap-4' : ''}`}
   data-product-id={product.id}
   data-product-slug={product.slug}
   data-affiliate-tracked="true"
 >
   <!-- Image Container with Overlay Actions -->
-  <div class={`relative overflow-hidden bg-[#0F1F24] ${layout === 'list' ? 'w-48 h-48 flex-shrink-0' : 'aspect-square'}`}>
+  <div class={`relative overflow-hidden bg-[#06080F] ${layout === 'list' ? 'w-48 h-48 flex-shrink-0' : 'aspect-square'}`}>
     <!-- Rank Badge -->
     {rank && rank <= 5 && (
-      <div class="absolute top-3 left-3 z-20 px-3 py-1.5 bg-gradient-to-r from-[#C46A3A] to-[#d4834f] text-[#F4F1EA] text-xs font-bold rounded-lg shadow-glow-copper">
+      <div class="absolute top-3 left-3 z-20 px-3 py-1.5 bg-gradient-to-r from-[#FFE500] via-[#FFB800] to-[#FF7A00] text-[#06080F] text-xs font-black rounded-xl shadow-cta">
         #{rank} Best Seller
       </div>
     )}
     
-    <!-- Deal Badge -->
-    {discountPercentage && discountPercentage >= 20 && (
-      <div class="absolute top-3 right-3 z-20 px-2.5 py-1 bg-gradient-to-r from-[#00b207] to-[#008a05] text-white text-xs font-bold rounded-lg shadow-glow-success">
-        {discountPercentage}% OFF
+    <!-- Deal Badge / Price Reduction Callout -->
+    {discountPercentage && discountPercentage >= 10 && (
+      <div class="absolute top-3 right-3 z-20 px-2.5 py-1 bg-gradient-to-r from-[#FF0055] to-[#DB0048] text-white text-xs font-black rounded-xl shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+        ↓ {discountPercentage}% OFF
+      </div>
+    )}
+    
+    <!-- Feature Badge Overlay -->
+    {product.features && Object.values(product.features)[0] && (
+      <div class="absolute bottom-3 left-3 z-20 px-2.5 py-1 bg-[#06080F]/80 backdrop-blur-md text-[#F8FAFC] text-[11px] font-semibold rounded-lg border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
+        ✨ {Object.values(product.features)[0]}
       </div>
     )}
     
@@ -118,14 +125,14 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
       href={affiliateLink}
       target="_blank"
       rel="nofollow sponsored"
-      class="block w-full h-full img-zoom"
+      class="block w-full h-full img-zoom-slow"
       data-affiliate-link="true"
       data-store={preferredStore}
     >
       <img
         src={product.imageUrl}
         alt={product.name}
-        class="w-full h-full object-contain p-4 transition-transform duration-500 ease-out group-hover:scale-110"
+        class="w-full h-full object-contain p-5 transition-transform duration-500 ease-out group-hover:scale-110"
         loading="lazy"
         decoding="async"
         onerror="this.src='/images/placeholder-product.jpg'"
@@ -133,7 +140,7 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
     </a>
     
     <!-- Hover Overlay -->
-    <div class="absolute inset-0 bg-gradient-to-t from-[#0F1F24]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#06080F]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     
     <!-- Quick Action Buttons -->
     {showQuickActions && (
@@ -141,7 +148,7 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
         <!-- Quick View Button -->
         <button
           type="button"
-          class="quick-action-btn quick-view-btn w-12 h-12 bg-[#1A2E35]/90 backdrop-blur-sm border border-[#2a4450] hover:bg-[#C46A3A] hover:border-[#C46A3A] transform translate-y-4 group-hover:translate-y-0"
+          class="quick-action-btn quick-view-btn w-12 h-12 rounded-2xl bg-[#0B0F19]/90 backdrop-blur-md border border-white/20 text-[#F8FAFC] hover:bg-[#FFB800] hover:text-[#06080F] hover:border-[#FFB800] transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center shadow-lg"
           aria-label="Quick view"
           data-action="quick-view"
         >
@@ -156,7 +163,7 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
     <!-- Wishlist Button (Top Right) -->
     <button
       type="button"
-      class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-[#1A2E35]/80 backdrop-blur-sm border border-[#2a4450]/50 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300 hover:bg-[#C46A3A] hover:border-[#C46A3A] hover:text-[#F4F1EA] text-[#a8b5ba]"
+      class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-[#0B0F19]/90 backdrop-blur-md border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300 hover:bg-[#FFB800] hover:border-[#FFB800] hover:text-[#06080F] text-[#CBD5E1]"
       aria-label="Add to wishlist"
       data-action="wishlist"
       data-product-id={product.id}
@@ -167,14 +174,14 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
     </button>
     
     <!-- Compare Checkbox (Top Left below rank) -->
-    <label class={`absolute z-10 flex items-center gap-1.5 px-2 py-1 rounded-lg bg-[#1A2E35]/80 backdrop-blur-sm border border-[#2a4450]/50 cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 hover:border-[#C46A3A]/50 ${rank ? 'top-12' : 'top-3'} left-3`}>
+    <label class={`absolute z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#0B0F19]/90 backdrop-blur-md border border-white/10 cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 hover:border-[#FFB800]/50 ${rank ? 'top-12' : 'top-3'} left-3`}>
       <input
         type="checkbox"
-        class="w-3.5 h-3.5 rounded border-[#2a4450] bg-transparent text-[#C46A3A] focus:ring-[#C46A3A] focus:ring-offset-0 cursor-pointer"
+        class="w-3.5 h-3.5 rounded border-white/20 bg-transparent text-[#FFB800] focus:ring-[#FFB800] focus:ring-offset-0 cursor-pointer"
         data-action="compare"
         data-product-id={product.id}
       />
-      <span class="text-xs text-[#a8b5ba]">Compare</span>
+      <span class="text-xs text-[#CBD5E1]">Compare</span>
     </label>
   </div>
 
@@ -196,7 +203,7 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
         href={affiliateLink}
         target="_blank"
         rel="nofollow sponsored"
-        class="hover:text-[#C46A3A] transition-colors duration-200"
+        class="hover:text-[#F59E0B] transition-colors duration-200"
         data-affiliate-link="true"
       >
         {product.name}
@@ -268,7 +275,7 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
           href={getAffiliateLink(product.slug, 'amazon')}
           target="_blank"
           rel="nofollow sponsored"
-          class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium bg-[#0F1F24] border border-[#2a4450] rounded-lg hover:border-[#C46A3A]/50 transition-colors"
+          class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium bg-[#0F1F24] border border-[#2a4450] rounded-lg hover:border-[#F59E0B]/50 transition-colors"
           data-affiliate-link="true"
           data-store="amazon"
         >
@@ -281,7 +288,7 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
           href={getAffiliateLink(product.slug, 'flipkart')}
           target="_blank"
           rel="nofollow sponsored"
-          class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium bg-[#0F1F24] border border-[#2a4450] rounded-lg hover:border-[#C46A3A]/50 transition-colors"
+          class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium bg-[#0F1F24] border border-[#2a4450] rounded-lg hover:border-[#F59E0B]/50 transition-colors"
           data-affiliate-link="true"
           data-store="flipkart"
         >
@@ -311,7 +318,7 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
       <!-- Share Button -->
       <button
         type="button"
-        class="share-btn ml-2 px-3 py-1 text-xs bg-[#0F1F24] border border-[#2a4450] rounded hover:border-[#C46A3A]/50 transition-colors"
+        class="share-btn ml-2 px-3 py-1 text-xs bg-[#0F1F24] border border-[#2a4450] rounded hover:border-[#F59E0B]/50 transition-colors"
         data-action="share"
       >
         Share
@@ -349,10 +356,13 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
 <style>
   .product-card-enhanced {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
   
   .product-card-enhanced:hover {
-    transform: translateY(-8px);
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    border-color: rgba(196, 106, 58, 0.5);
   }
   
   /* Smooth image zoom */
