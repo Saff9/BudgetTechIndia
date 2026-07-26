@@ -135,7 +135,8 @@ const displayMrp = priceInfo?.mrp ?? product.mrp;
         class="w-full h-full object-contain p-5 transition-transform duration-500 ease-out group-hover:scale-110"
         loading="lazy"
         decoding="async"
-        onerror="this.src='/images/placeholder-product.jpg'"
+        referrerpolicy="no-referrer"
+        onerror="this.onerror=null; this.src='/images/placeholder-product.svg';"
       />
     </a>
     

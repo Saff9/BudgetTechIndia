@@ -112,17 +112,17 @@ const websiteSchema = {
     
     <!-- 7searchppc Popunder Ad Script -->
     <div id="7SAD15699A62121C900" data-7pub="7SAD15699A62121C900"></div>
-    <script src="https://code.adclickppc.com/7s-popunder.js" onload="if(typeof initAd === 'function'){ initAd(['7SAD15699A62121C900', 'popunder']); }"></script>
+    <script async src="https://code.adclickppc.com/7s-popunder.js" onload="if(typeof initAd === 'function'){ initAd(['7SAD15699A62121C900', 'popunder']); }" onerror="this.onerror=null;"></script>
     <script>
       window.addEventListener('load', function() {
         if (typeof (window as any).initAd === 'function') {
-          (window as any).initAd(['7SAD15699A62121C900', 'popunder']);
+          try { (window as any).initAd(['7SAD15699A62121C900', 'popunder']); } catch(e){}
         }
       });
     </script>
     
     <!-- CPM Ads Script -->
-    <script async="async" data-cfasync="false" src="https://pl28765501.effectivegatecpm.com/0c544f97ca18152424b528f1feff4406/invoke.js"></script>
+    <script async data-cfasync="false" src="https://pl28765501.effectivegatecpm.com/0c544f97ca18152424b528f1feff4406/invoke.js" onerror="this.onerror=null;"></script>
     
     <!-- Banner Ads Script -->
     <script>
@@ -134,7 +134,7 @@ const websiteSchema = {
         'params' : {}
       };
     </script>
-    <script src="https://www.highperformanceformat.com/68f6f7339d5cae7a2b5bf2a4aec60aa9/invoke.js"></script>
+    <script async src="https://www.highperformanceformat.com/68f6f7339d5cae7a2b5bf2a4aec60aa9/invoke.js" onerror="this.onerror=null;"></script>
     </head>
 
   <body class="flex flex-col min-h-screen antialiased bg-[#06080F] text-[#F8FAFC] relative overflow-x-hidden" data-theme="dark">
