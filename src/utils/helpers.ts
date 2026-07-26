@@ -418,7 +418,7 @@ export function formatRating(rating: number): string {
  * @returns Full URL with site origin
  */
 export function getFullUrl(path: string): string {
-  const siteUrl = import.meta.env.SITE_URL || 'https://budgettechindia.com';
+  const siteUrl = import.meta.env.SITE_URL || 'https://budget-tech-india.vercel.app';
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   return `${siteUrl}${normalizedPath}`;
 }

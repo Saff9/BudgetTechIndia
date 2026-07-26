@@ -12,7 +12,7 @@ export const siteConfig = {
   description: 'Your trusted source for budget-friendly tech product reviews, comparisons, and buying guides in India. Find the best gadgets under ₹500, ₹1000, ₹2000, and more.',
   
   // URLs
-  siteUrl: 'https://budgettechindia.com',
+  siteUrl: 'https://budget-tech-india.vercel.app',
   siteName: 'BudgetTechIndia',
   
   // Contact Information

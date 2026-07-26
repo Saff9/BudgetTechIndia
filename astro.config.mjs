@@ -6,7 +6,7 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://budgettechindia.com',
+  site: 'https://budget-tech-india.vercel.app',
   output: 'static',
   build: {
     inlineStylesheets: 'auto',

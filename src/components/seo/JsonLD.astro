@@ -51,7 +51,7 @@ interface Props {
 }
 
 const { type, data } = Astro.props;
-const siteUrl = import.meta.env.SITE_URL || 'https://budgettechindia.com';
+const siteUrl = import.meta.env.SITE_URL || 'https://budget-tech-india.vercel.app';
 
 function generateSchema(type: SchemaType, data: SchemaData): object {
   switch (type) {

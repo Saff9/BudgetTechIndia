@@ -9,7 +9,7 @@
 To post/add product affiliate links automatically from your bot or script with **Neon DB** and **7-day automated auto-purge expiration**:
 
 ```bash
-curl -X POST https://budgettechindia.com/api/webhook/post \
+curl -X POST https://budget-tech-india.vercel.app/api/webhook/post \
   -H "Content-Type: application/json" \
   -H "X-API-KEY: YOUR_WEBHOOK_PASSWORD" \
   -d '{
@@ -47,7 +47,7 @@ PUBLIC_ADMIN_EMAIL=admin@budgettechindia.com
 PUBLIC_ADMIN_PASSWORD=YOUR_SECURE_ADMIN_PASSWORD
 
 # Site & Amazon Affiliate Config
-SITE_URL=https://budgettechindia.com
+SITE_URL=https://budget-tech-india.vercel.app
 AMAZON_AFFILIATE_TAG=budgettechpro-21
 PUBLIC_AMAZON_AFFILIATE_TAG=budgettechpro-21
 ```
@@ -101,7 +101,7 @@ Pass your `WEBHOOK_PASSWORD` using any of these header methods:
 ```python
 import requests
 
-WEBHOOK_URL = "https://budgettechindia.com/api/webhook/post"
+WEBHOOK_URL = "https://budget-tech-india.vercel.app/api/webhook/post"
 PASSWORD = "YOUR_WEBHOOK_PASSWORD"
 
 payload = {
@@ -122,7 +122,7 @@ print(response.json())
 
 ### **Node.js / JavaScript Bot Example**
 ```javascript
-const response = await fetch("https://budgettechindia.com/api/webhook/post", {
+const response = await fetch("https://budget-tech-india.vercel.app/api/webhook/post", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
