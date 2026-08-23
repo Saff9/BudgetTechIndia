@@ -1,6 +1,6 @@
 # BudgetTechIndia
 
-> Best Budget Tech Products Under ₹2000 in India — Powered by Astro 4.x & Neon DB (Serverless PostgreSQL)
+> Best Budget Tech Products Under ₹2000 in India — Full React & Next.js 14 App Router with Neon DB (Serverless PostgreSQL)
 
 ---
 

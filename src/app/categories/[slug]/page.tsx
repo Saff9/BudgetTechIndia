@@ -1,60 +1,94 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { ProductCard } from '@/components/products/ProductCard';
+import { CategoryProductList } from '@/components/categories/CategoryProductList';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getAllNeonProducts } from '@/utils/neondb';
 import productsData from '@/data/products.json';
-import { Headphones, BatteryCharging, Watch, Zap, Laptop, Sparkles, Filter } from 'lucide-react';
+import { Headphones, BatteryCharging, Watch, Zap, Laptop, Sparkles, HelpCircle, CheckCircle2 } from 'lucide-react';
 
-const CATEGORY_MAP: Record<string, { name: string; title: string; desc: string; icon: any }> = {
+const CATEGORY_MAP: Record<string, { name: string; title: string; desc: string; icon: any; buyingTips: string[] }> = {
   'bluetooth-earbuds': {
     name: 'Bluetooth Earbuds',
     title: 'Best Bluetooth Earbuds & TWS Under ₹2,000 in India (2026)',
     desc: 'Compare the highest rated true wireless earbuds (TWS) and neckbands with low latency, active noise cancellation, and 40+ hours battery life.',
     icon: Headphones,
+    buyingTips: [
+      'Look for minimum 10mm to 13mm dynamic drivers for balanced bass in budget TWS.',
+      'Ensure Bluetooth 5.2 or 5.3 is supported for stable low latency connections (<50ms).',
+      'Dual mic or quad mic with ENC (Environmental Noise Cancellation) is essential for clear calls on commutes.',
+    ],
   },
   'power-banks': {
     name: 'Power Banks',
     title: 'Best 10000mAh & 20000mAh Power Banks Under ₹1,500 in India',
     desc: 'Tested high-capacity fast charging power banks with 22.5W Power Delivery and integrated cables from Ambrane, Mi, and URBN.',
     icon: BatteryCharging,
+    buyingTips: [
+      'Choose minimum 20W or 22.5W Power Delivery (PD 3.0) for fast charging iPhones and Androids.',
+      'Check for 12-layer multi-protection circuits against short-circuit and overcharging.',
+      'Integrated Type-C cords eliminate the need to carry loose charging wires while commuting.',
+    ],
   },
   'smartwatches': {
     name: 'Smartwatches',
     title: 'Best Bluetooth Calling Smartwatches Under ₹2,000 in India',
     desc: 'Feature-packed smartwatches with vibrant AMOLED/HD displays, clear Bluetooth calling, and comprehensive health monitoring sensors.',
     icon: Watch,
+    buyingTips: [
+      'Prioritize displays with 550+ nits brightness for outdoor legibility in Indian sunlight.',
+      'Single-chip BT calling solutions consume up to 40% less battery than dual-chip setups.',
+      'Verify IP68 water resistance rating for workout sweat and rain resistance.',
+    ],
   },
   'fast-chargers-cables': {
     name: 'Fast Chargers & Cables',
     title: 'Best Fast Chargers, GaN Adapters & Type-C Cables Under ₹1,000',
     desc: 'Durable braided fast charging cables and multi-port GaN power adapters for iPhone, Android, and laptops.',
     icon: Zap,
+    buyingTips: [
+      'GaN (Gallium Nitride) technology keeps multi-port chargers 50% cooler and significantly more compact.',
+      'Ensure cables have reinforced nylon braiding and 10,000+ bend lifespan ratings.',
+    ],
   },
   'laptop-accessories': {
     name: 'Laptop Accessories',
     title: 'Best Budget Laptop Accessories Under ₹1,000 in India',
     desc: 'Ergonomic aluminum laptop stands, wireless mice, keyboards, and USB hubs to upgrade your work-from-home setup.',
     icon: Laptop,
+    buyingTips: [
+      'Aluminum laptop stands provide passive heat dissipation to prevent laptop thermal throttling.',
+      'Optical wireless mice with 1000+ DPI provide smooth everyday navigation without mousepad friction.',
+    ],
   },
   'budget-gadgets-under-999': {
     name: 'Gadgets Under ₹999',
     title: 'Top Extreme-Value Tech Gadgets Under ₹999 in India',
     desc: 'Super affordable tech gifts, cables, earphones, and desk accessories under ₹999 that punch well above their weight.',
     icon: Sparkles,
+    buyingTips: [
+      'Look for established Indian warranty service centers from brands like boAt, Portronics, and Ambrane.',
+      'Always verify customer return windows on Amazon India before ordering.',
+    ],
   },
   'work-from-home-essentials': {
     name: 'Work From Home Essentials',
     title: 'Best Work From Home & Desk Setup Tech Under ₹2,000',
     desc: 'Essential productivity gadgets including desk mats, cable organizers, mice, and laptop stands for remote workers.',
     icon: Laptop,
+    buyingTips: [
+      'Ergonomic alignment reduces neck strain during 8+ hour remote workdays.',
+      'Multi-device charging hubs reduce desktop clutter and tangled wires.',
+    ],
   },
   'books': {
     name: 'Books & Self-Mastery',
     title: 'Best Tech, Psychology & Strategy Books in India',
     desc: 'Curated psychological masterworks, tech guides, and strategy books on Amazon India.',
     icon: Sparkles,
+    buyingTips: [
+      'Timeless strategic masterworks provide enduring mental models for career and life.',
+    ],
   },
 };
 
@@ -81,17 +115,14 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export const revalidate = 60; // ISR revalidation
+export const revalidate = 60; // ISR
 
 export default async function CategoryDetailPage({ params }: { params: { slug: string } }) {
   const cat = CATEGORY_MAP[params.slug];
-  if (!cat) {
-    notFound();
-  }
+  if (!cat) notFound();
 
   const Icon = cat.icon;
 
-  // Fetch all products
   let allProducts: any[] = [];
   try {
     const neonProds = await getAllNeonProducts();
@@ -104,7 +135,6 @@ export default async function CategoryDetailPage({ params }: { params: { slug: s
     allProducts = (productsData as any).products || [];
   }
 
-  // Filter for this category or related category matches
   const categoryProducts = allProducts.filter((p) => {
     if (p.category === params.slug) return true;
     if (params.slug === 'laptop-accessories' && p.category === 'accessories') return true;
@@ -128,7 +158,7 @@ export default async function CategoryDetailPage({ params }: { params: { slug: s
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Category Hero Banner */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-[#0B0F19] to-[#06080F] border border-white/5 relative overflow-hidden mb-12 shadow-2xl">
+        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-[#0B0F19] to-[#06080F] border border-white/5 relative overflow-hidden mb-10 shadow-2xl">
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#FFB800]/10 rounded-full blur-[100px] pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl">
@@ -138,47 +168,34 @@ export default async function CategoryDetailPage({ params }: { params: { slug: s
             <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">
               {cat.title}
             </h1>
-            <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-400 leading-relaxed mb-6">
               {cat.desc}
             </p>
+
+            {/* Quick Buying Advice Matrix */}
+            {cat.buyingTips && (
+              <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+                <div className="text-xs uppercase font-extrabold text-[#00F5A0] tracking-wider flex items-center gap-1.5 mb-2">
+                  <HelpCircle className="w-3.5 h-3.5" /> What to Look For Before Buying:
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
+                  {cat.buyingTips.map((tip, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#FFB800] shrink-0 mt-0.5" />
+                      <span>{tip}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Products Results Header */}
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
-          <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-[#00F5A0]" />
-            <span className="text-sm font-bold text-white">
-              Showing {categoryProducts.length} Verified Deals
-            </span>
-          </div>
-          <span className="text-xs text-slate-400">
-            Real-time Amazon deal pricing
-          </span>
-        </div>
-
-        {/* Product Cards Grid */}
-        {categoryProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categoryProducts.map((prod) => (
-              <ProductCard key={prod.id} product={prod} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-16 bg-[#0B0F19] rounded-2xl border border-white/5">
-            <p className="text-slate-400 text-sm mb-4">
-              No active deals found in this category right now.
-            </p>
-            <a
-              href={`https://www.amazon.in/s?k=${encodeURIComponent(cat.name)}&tag=budgettechpro-21`}
-              target="_blank"
-              rel="nofollow sponsored"
-              className="px-5 py-2.5 rounded-xl bg-[#FFB800] text-black font-bold text-xs inline-flex items-center gap-2 shadow-lg"
-            >
-              Browse Amazon Deals in {cat.name}
-            </a>
-          </div>
-        )}
+        {/* Interactive Filter & Product List */}
+        <CategoryProductList 
+          initialProducts={categoryProducts} 
+          categoryName={cat.name} 
+        />
 
       </div>
     </div>

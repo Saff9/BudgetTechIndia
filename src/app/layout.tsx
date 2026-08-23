@@ -4,6 +4,8 @@ import './globals.css';
 import { Header } from '@/components/common/Header';
 import { Footer } from '@/components/common/Footer';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { CompareProvider } from '@/components/compare/CompareContext';
+import { CompareDrawer } from '@/components/compare/CompareDrawer';
 
 export const viewport: Viewport = {
   themeColor: '#06080F',
@@ -123,9 +125,12 @@ export default function RootLayout({
         <JsonLd type="website" data={{}} />
         <JsonLd type="organization" data={{}} />
 
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <CompareProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <CompareDrawer />
+        </CompareProvider>
       </body>
     </html>
   );
