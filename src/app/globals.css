@@ -3,15 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --color-midnight: #06080F;
-  --color-midnight-light: #0B0F19;
-  --color-midnight-dark: #030408;
-  --color-slate: #0F172A;
-  --color-slate-light: #1E293B;
-  --color-gold: #FFB800;
-  --color-gold-light: #FFE500;
-  --color-gold-dark: #FF7A00;
-  --color-cyan: #00F5A0;
+  --bg-primary: #06080F;
+  --bg-surface: #0B0F19;
+  --bg-card: #111827;
+  --accent-gold: #FFB800;
+  --accent-orange: #FF7A00;
+  --accent-cyan: #00F5A0;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-gold: rgba(255, 184, 0, 0.3);
 }
 
 body {
@@ -19,7 +21,6 @@ body {
   color: #F8FAFC;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   overflow-x: hidden;
-  min-height: 100vh;
 }
 
 /* Custom Scrollbar */
@@ -27,50 +28,131 @@ body {
   width: 8px;
   height: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: #06080F;
 }
-
 ::-webkit-scrollbar-thumb {
   background: #1E293B;
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: #FFB800;
 }
 
-/* Glassmorphism Classes */
-.glass-panel {
+/* ===================================================
+   Gradients & Text Effects
+   =================================================== */
+.gradient-text-gold {
+  background: linear-gradient(135deg, #FFF5A0 0%, #FFB800 50%, #FF7A00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-cyan {
+  background: linear-gradient(135deg, #A7F3D0 0%, #00F5A0 50%, #06B6D4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-border-gold {
+  position: relative;
+  background: #0B0F19;
+  border: 1px solid rgba(255, 184, 0, 0.25);
+}
+.gradient-border-gold:hover {
+  border-color: rgba(255, 184, 0, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 184, 0, 0.15);
+}
+
+/* ===================================================
+   Cards & Glassmorphism
+   =================================================== */
+.glass-card {
   background: rgba(11, 15, 25, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.glass-card {
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+.glass-card-hover {
+  background: rgba(11, 15, 25, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-.glass-card:hover {
+.glass-card-hover:hover {
+  transform: translateY(-4px);
   border-color: rgba(255, 184, 0, 0.35);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 184, 0, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 184, 0, 0.12);
 }
 
-/* Gold Gradient Text */
-.gold-gradient-text {
+.shadow-glow-gold {
+  box-shadow: 0 0 25px rgba(255, 184, 0, 0.3);
+}
+
+.shadow-glow-cyan {
+  box-shadow: 0 0 25px rgba(0, 245, 160, 0.3);
+}
+
+/* ===================================================
+   Buttons
+   =================================================== */
+.btn-primary {
   background: linear-gradient(135deg, #FFE500 0%, #FFB800 50%, #FF7A00 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #06080F;
+  font-weight: 800;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px rgba(255, 184, 0, 0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 184, 0, 0.45);
+  opacity: 0.95;
+}
+.btn-primary:active {
+  transform: translateY(0);
 }
 
-/* Cyan Gradient Text */
-.cyan-gradient-text {
-  background: linear-gradient(135deg, #3BFFB6 0%, #00F5A0 50%, #00D084 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: #F8FAFC;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.25s ease;
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 184, 0, 0.4);
+  color: #FFB800;
+  transform: translateY(-2px);
+}
+
+/* ===================================================
+   Animations
+   =================================================== */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
 }

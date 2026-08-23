@@ -1,14 +1,26 @@
 import React from 'react';
-import Link from 'next/link';
+import type { Metadata } from 'next';
 import { HeroSection } from '@/components/home/HeroSection';
+import { TopPicks } from '@/components/home/TopPicks';
 import { CategoryGrid } from '@/components/home/CategoryGrid';
+import { LatestReviews } from '@/components/home/LatestReviews';
 import { FaqSection } from '@/components/home/FaqSection';
-import { ProductCard } from '@/components/products/ProductCard';
+import { Newsletter } from '@/components/home/Newsletter';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { getAllNeonProducts } from '@/utils/neondb';
 import productsData from '@/data/products.json';
-import { Award, TrendingUp, BookOpen, ArrowRight, Zap, Flame } from 'lucide-react';
+import Link from 'next/link';
+import { Award, ArrowRight, ShieldCheck } from 'lucide-react';
 
-export const revalidate = 60; // Revalidate every 60 seconds (ISR)
+export const metadata: Metadata = {
+  title: 'BudgetTechIndia - Best Budget Tech Products Under ₹2000 in India (2026)',
+  description: 'Honest reviews, in-depth lab testing, and curated daily price drops on the best TWS earbuds, power banks, smartwatches, and tech accessories under ₹2000 in India.',
+  alternates: {
+    canonical: 'https://budget-tech-india.vercel.app/',
+  },
+};
+
+export const revalidate = 60; // ISR 60 seconds
 
 export default async function HomePage() {
   let products: any[] = [];
@@ -23,130 +35,118 @@ export default async function HomePage() {
     products = (productsData as any).products || [];
   }
 
-  const topDeals = products.slice(0, 8);
+  const TOP_5_GUIDES = [
+    {
+      title: 'Top 5 Best Budget Earbuds Under ₹1,000 in India (2026)',
+      slug: 'best-budget-earbuds-2026',
+      badge: 'Gold Pick: boAt Airdopes 141',
+      desc: 'Ranked comparison of latency, 13mm bass drivers, mic clarity, and battery endurance.',
+      count: '5 Tested',
+    },
+    {
+      title: 'Top 5 Bluetooth Calling Smartwatches Under ₹2,000',
+      slug: 'top-smartwatches-under-2000',
+      badge: 'Gold Pick: Noise Pulse 2 Max',
+      desc: 'Tested for sunlight legibility, sensor accuracy, build resilience, and battery longevity.',
+      count: '5 Tested',
+    },
+    {
+      title: 'Top 5 Fast Chargers & GaN Power Adapters Under ₹1,000',
+      slug: 'best-fast-chargers-2026',
+      badge: 'Gold Pick: Portronics Adapto 22',
+      desc: 'Thermal performance and multi-device fast charging tests for iPhone and Android.',
+      count: '5 Tested',
+    },
+  ];
 
   return (
-    <div className="space-y-16">
-      
+    <div className="space-y-0">
+      <JsonLd type="website" data={{}} />
+      <JsonLd type="organization" data={{}} />
+
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Categories Grid */}
+      {/* Trending Deals & Top Picks */}
+      <TopPicks products={products} />
+
+      {/* Featured Categories Showcase */}
       <CategoryGrid />
 
-      {/* Latest Curated Deals */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-          <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFB800]/10 text-[#FFB800] text-xs font-bold mb-2 border border-[#FFB800]/20">
-              <Flame className="w-3.5 h-3.5 fill-[#FFB800]" /> Verified Today
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white">
-              Trending Deals Under ₹2,000
-            </h2>
-          </div>
-          <Link
-            href="/categories"
-            className="text-xs text-[#FFB800] hover:underline font-bold flex items-center gap-1"
-          >
-            Explore All Categories <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {topDeals.map((prod) => (
-            <ProductCard key={prod.id} product={prod} />
-          ))}
-        </div>
-      </section>
-
-      {/* Top 5 Ranked Guides Section */}
-      <section className="bg-[#0B0F19] border-y border-white/5 py-16">
+      {/* Ranked Top 5 Comparison Lists Showcase */}
+      <section className="py-16 bg-[#06080F]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs uppercase font-extrabold tracking-widest text-[#FFB800] block mb-2">
-              Expertly Ranked
-            </span>
-            <h2 className="text-3xl font-black text-white mb-4">
-              Top 5 Comparison Lists
-            </h2>
-            <p className="text-sm text-slate-400">
-              We rank every product against its closest competitors based on real testing metrics, sound profiles, battery endurance, and value.
-            </p>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+            <div>
+              <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#FFB800] mb-2">
+                <Award className="w-3.5 h-3.5" /> Curated Rankings
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black text-white">
+                Top 5 Ranked Buying Guides
+              </h2>
+            </div>
+            <Link
+              href="/top-5"
+              className="text-xs font-bold text-[#FFB800] hover:underline flex items-center gap-1 self-start md:self-auto"
+            >
+              View All Ranked Guides <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            {/* Guide 1 */}
-            <div className="glass-card p-6 rounded-2xl flex flex-col justify-between group">
-              <div>
-                <div className="p-3 rounded-xl bg-[#FFB800]/10 text-[#FFB800] w-fit mb-4 font-bold text-xs flex items-center gap-2">
-                  <Award className="w-4 h-4" /> Ranked #1 Guide
-                </div>
-                <h3 className="text-lg font-bold text-white group-hover:text-[#FFB800] transition-colors mb-2">
-                  Top 5 Best TWS Earbuds Under ₹1,000
-                </h3>
-                <p className="text-xs text-slate-400 leading-relaxed mb-4">
-                  Detailed comparison of boAt Airdopes 141, Noise Buds VS104, pTron Bassbuds, and Mivi Duopods.
-                </p>
-              </div>
+            {TOP_5_GUIDES.map((guide) => (
               <Link
-                href="/top-5/best-budget-earbuds-2026"
-                className="text-xs font-bold text-[#FFB800] hover:underline flex items-center gap-1.5 pt-4 border-t border-white/5"
+                key={guide.slug}
+                href={`/top-5/${guide.slug}`}
+                className="p-6 rounded-3xl bg-[#0B0F19] border border-white/5 hover:border-[#FFB800]/40 transition-all duration-300 shadow-xl flex flex-col justify-between group hover:-translate-y-1.5"
               >
-                Read Complete Ranked List <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <span className="px-2.5 py-1 rounded-md bg-[#FFB800]/10 text-[#FFB800] border border-[#FFB800]/20 text-[11px] font-bold">
+                      {guide.badge}
+                    </span>
+                    <span className="text-xs font-bold text-slate-400">{guide.count}</span>
+                  </div>
 
-            {/* Guide 2 */}
-            <div className="glass-card p-6 rounded-2xl flex flex-col justify-between group">
-              <div>
-                <div className="p-3 rounded-xl bg-[#00F5A0]/10 text-[#00F5A0] w-fit mb-4 font-bold text-xs flex items-center gap-2">
-                  <Zap className="w-4 h-4" /> Battery Champions
+                  <h3 className="text-lg font-black text-white group-hover:text-[#FFB800] transition-colors leading-snug mb-3">
+                    {guide.title}
+                  </h3>
+
+                  <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                    {guide.desc}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-white group-hover:text-[#FFB800] transition-colors mb-2">
-                  Top 5 Power Banks Under ₹1,500
-                </h3>
-                <p className="text-xs text-slate-400 leading-relaxed mb-4">
-                  Tested 20000mAh vs 10000mAh units with Power Delivery and integrated cables from Ambrane, Mi, and URBN.
-                </p>
-              </div>
-              <Link
-                href="/top-5/best-fast-chargers-2026"
-                className="text-xs font-bold text-[#00F5A0] hover:underline flex items-center gap-1.5 pt-4 border-t border-white/5"
-              >
-                Read Complete Ranked List <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
 
-            {/* Guide 3 */}
-            <div className="glass-card p-6 rounded-2xl flex flex-col justify-between group">
-              <div>
-                <div className="p-3 rounded-xl bg-purple-500/10 text-purple-400 w-fit mb-4 font-bold text-xs flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4" /> Calling & Displays
+                <div className="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-bold text-[#00F5A0]">
+                  <span>View Ranked Showdown</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
-                <h3 className="text-lg font-bold text-white group-hover:text-[#FFB800] transition-colors mb-2">
-                  Top 5 Smartwatches Under ₹2,000
-                </h3>
-                <p className="text-xs text-slate-400 leading-relaxed mb-4">
-                  Comparing display nits, calling clarity, and health sensors on Noise Pulse 2 Max, Fire-Boltt, and boAt Wave.
-                </p>
-              </div>
-              <Link
-                href="/top-5/top-smartwatches-under-2000"
-                className="text-xs font-bold text-purple-400 hover:underline flex items-center gap-1.5 pt-4 border-t border-white/5"
-              >
-                Read Complete Ranked List <ArrowRight className="w-3.5 h-3.5" />
               </Link>
-            </div>
-
+            ))}
           </div>
         </div>
       </section>
 
+      {/* Latest Hands-On Reviews */}
+      <LatestReviews />
+
       {/* FAQ Section */}
       <FaqSection />
+
+      {/* Newsletter Subscription Card */}
+      <Newsletter />
+
+      {/* Affiliate Transparency Disclosure Banner */}
+      <section className="py-8 bg-[#0B0F19] border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 text-xs text-slate-400 max-w-3xl">
+            <ShieldCheck className="w-4 h-4 text-[#00F5A0] shrink-0" />
+            <span>
+              <strong>Affiliate Disclosure:</strong> BudgetTechIndia is an independent publication. When you purchase through links on our site, we may earn an affiliate commission from Amazon India at zero additional cost to you.
+            </span>
+          </div>
+        </div>
+      </section>
 
     </div>
   );
