@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { CategoryProductList } from '@/components/categories/CategoryProductList';
+import { ProductCard } from '@/components/products/ProductCard';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getAllNeonProducts } from '@/utils/neondb';
 import productsData from '@/data/products.json';
@@ -16,7 +16,7 @@ const CATEGORY_MAP: Record<string, { name: string; title: string; desc: string; 
     buyingTips: [
       'Look for minimum 10mm to 13mm dynamic drivers for balanced bass in budget TWS.',
       'Ensure Bluetooth 5.2 or 5.3 is supported for stable low latency connections (<50ms).',
-      'Dual mic or quad mic with ENC (Environmental Noise Cancellation) is essential for clear calls on commutes.',
+      'Dual mic or quad mic with ENC is essential for clear calls on commutes.',
     ],
   },
   'power-banks': {
@@ -25,20 +25,20 @@ const CATEGORY_MAP: Record<string, { name: string; title: string; desc: string; 
     desc: 'Tested high-capacity fast charging power banks with 22.5W Power Delivery and integrated cables from Ambrane, Mi, and URBN.',
     icon: BatteryCharging,
     buyingTips: [
-      'Choose minimum 20W or 22.5W Power Delivery (PD 3.0) for fast charging iPhones and Androids.',
-      'Check for 12-layer multi-protection circuits against short-circuit and overcharging.',
-      'Integrated Type-C cords eliminate the need to carry loose charging wires while commuting.',
+      'Choose minimum 20W or 22.5W Power Delivery (PD 3.0) for fast charging.',
+      'Check for 12-layer multi-protection circuits against short-circuits.',
+      'Integrated Type-C cords eliminate carrying loose cables.',
     ],
   },
   'smartwatches': {
     name: 'Smartwatches',
     title: 'Best Bluetooth Calling Smartwatches Under ₹2,000 in India',
-    desc: 'Feature-packed smartwatches with vibrant AMOLED/HD displays, clear Bluetooth calling, and comprehensive health monitoring sensors.',
+    desc: 'Feature-packed smartwatches with vibrant AMOLED/HD displays, clear Bluetooth calling, and health monitoring sensors.',
     icon: Watch,
     buyingTips: [
-      'Prioritize displays with 550+ nits brightness for outdoor legibility in Indian sunlight.',
-      'Single-chip BT calling solutions consume up to 40% less battery than dual-chip setups.',
-      'Verify IP68 water resistance rating for workout sweat and rain resistance.',
+      'Prioritize displays with 550+ nits brightness for outdoor legibility.',
+      'Single-chip BT calling consumes up to 40% less battery than dual-chip.',
+      'Verify IP68 water resistance rating for workouts.',
     ],
   },
   'fast-chargers-cables': {
@@ -47,18 +47,18 @@ const CATEGORY_MAP: Record<string, { name: string; title: string; desc: string; 
     desc: 'Durable braided fast charging cables and multi-port GaN power adapters for iPhone, Android, and laptops.',
     icon: Zap,
     buyingTips: [
-      'GaN (Gallium Nitride) technology keeps multi-port chargers 50% cooler and significantly more compact.',
-      'Ensure cables have reinforced nylon braiding and 10,000+ bend lifespan ratings.',
+      'GaN technology keeps multi-port chargers 50% cooler and compact.',
+      'Ensure cables have reinforced nylon braiding with 10,000+ bend lifespan.',
     ],
   },
   'laptop-accessories': {
     name: 'Laptop Accessories',
     title: 'Best Budget Laptop Accessories Under ₹1,000 in India',
-    desc: 'Ergonomic aluminum laptop stands, wireless mice, keyboards, and USB hubs to upgrade your work-from-home setup.',
+    desc: 'Ergonomic aluminum laptop stands, wireless mice, keyboards, and USB hubs to upgrade your work setup.',
     icon: Laptop,
     buyingTips: [
-      'Aluminum laptop stands provide passive heat dissipation to prevent laptop thermal throttling.',
-      'Optical wireless mice with 1000+ DPI provide smooth everyday navigation without mousepad friction.',
+      'Aluminum laptop stands provide passive heat dissipation.',
+      'Optical wireless mice with 1000+ DPI provide smooth navigation.',
     ],
   },
   'budget-gadgets-under-999': {
@@ -67,18 +67,18 @@ const CATEGORY_MAP: Record<string, { name: string; title: string; desc: string; 
     desc: 'Super affordable tech gifts, cables, earphones, and desk accessories under ₹999 that punch well above their weight.',
     icon: Sparkles,
     buyingTips: [
-      'Look for established Indian warranty service centers from brands like boAt, Portronics, and Ambrane.',
-      'Always verify customer return windows on Amazon India before ordering.',
+      'Look for established brand warranty support.',
+      'Always verify customer return windows on Amazon India.',
     ],
   },
   'work-from-home-essentials': {
     name: 'Work From Home Essentials',
     title: 'Best Work From Home & Desk Setup Tech Under ₹2,000',
-    desc: 'Essential productivity gadgets including desk mats, cable organizers, mice, and laptop stands for remote workers.',
+    desc: 'Essential productivity gadgets including desk mats, cable organizers, mice, and laptop stands.',
     icon: Laptop,
     buyingTips: [
-      'Ergonomic alignment reduces neck strain during 8+ hour remote workdays.',
-      'Multi-device charging hubs reduce desktop clutter and tangled wires.',
+      'Ergonomic alignment reduces neck strain during long hours.',
+      'Multi-device charging hubs reduce desktop clutter.',
     ],
   },
   'books': {
@@ -87,7 +87,7 @@ const CATEGORY_MAP: Record<string, { name: string; title: string; desc: string; 
     desc: 'Curated psychological masterworks, tech guides, and strategy books on Amazon India.',
     icon: Sparkles,
     buyingTips: [
-      'Timeless strategic masterworks provide enduring mental models for career and life.',
+      'Timeless strategic masterworks provide enduring mental models.',
     ],
   },
 };
@@ -158,11 +158,9 @@ export default async function CategoryDetailPage({ params }: { params: { slug: s
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Category Hero Banner */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-[#0B0F19] to-[#06080F] border border-white/5 relative overflow-hidden mb-10 shadow-2xl">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-[#FFB800]/10 rounded-full blur-[100px] pointer-events-none" />
-
+        <div className="card-surface p-8 sm:p-12 relative overflow-hidden mb-10 shadow-2xl">
           <div className="relative z-10 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[#FFB800] text-xs font-bold mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[#F59E0B] text-xs font-bold mb-4">
               <Icon className="w-3.5 h-3.5" /> Category Guide
             </div>
             <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">
@@ -172,16 +170,16 @@ export default async function CategoryDetailPage({ params }: { params: { slug: s
               {cat.desc}
             </p>
 
-            {/* Quick Buying Advice Matrix */}
+            {/* Buying Advice */}
             {cat.buyingTips && (
               <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
-                <div className="text-xs uppercase font-extrabold text-[#00F5A0] tracking-wider flex items-center gap-1.5 mb-2">
+                <div className="text-xs uppercase font-extrabold text-[#10B981] tracking-wider flex items-center gap-1.5 mb-2">
                   <HelpCircle className="w-3.5 h-3.5" /> What to Look For Before Buying:
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
                   {cat.buyingTips.map((tip, i) => (
                     <div key={i} className="flex items-start gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#FFB800] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#F59E0B] shrink-0 mt-0.5" />
                       <span>{tip}</span>
                     </div>
                   ))}
@@ -191,11 +189,21 @@ export default async function CategoryDetailPage({ params }: { params: { slug: s
           </div>
         </div>
 
-        {/* Interactive Filter & Product List */}
-        <CategoryProductList 
-          initialProducts={categoryProducts} 
-          categoryName={cat.name} 
-        />
+        {/* Product Grid */}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-black text-white">
+              Verified Deals in {cat.name} ({categoryProducts.length})
+            </h2>
+            <span className="text-xs text-[#10B981] font-semibold">Live Amazon Prices</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {categoryProducts.map((prod) => (
+              <ProductCard key={prod.id} product={prod} />
+            ))}
+          </div>
+        </div>
 
       </div>
     </div>
