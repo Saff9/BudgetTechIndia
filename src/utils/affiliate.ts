@@ -208,7 +208,7 @@ const defaultConfig: AffiliateConfig = {
  * @returns Record of product slug to product data
  */
 export function getAllProducts(): Record<string, ProductAffiliateData> {
-  return affiliateData.products as Record<string, ProductAffiliateData>;
+  return (affiliateData.products as unknown) as Record<string, ProductAffiliateData>;
 }
 
 /**
@@ -333,9 +333,7 @@ export function getProductPrice(slug: string): {
  * @returns Complete Amazon affiliate URL
  */
 export function generateAmazonUrl(asin: string, affiliateTag?: string): string {
-  const envTag = typeof import.meta !== 'undefined' && import.meta.env
-    ? (import.meta.env.PUBLIC_AMAZON_AFFILIATE_TAG || import.meta.env.AMAZON_AFFILIATE_TAG)
-    : undefined;
+  const envTag = (typeof process !== 'undefined' && (process.env.PUBLIC_AMAZON_AFFILIATE_TAG || process.env.AMAZON_AFFILIATE_TAG)) || undefined;
   const tag = affiliateTag || envTag || affiliateData.defaultAffiliateTag || 'budgettechpro-21';
   return `https://www.amazon.in/dp/${asin}?tag=${tag}`;
 }
@@ -384,7 +382,7 @@ export function trackAffiliateClick(slug: string, store: StoreType, url: string)
   }
   
   // Log to console in development
-  if (import.meta.env?.DEV) {
+  if (typeof process !== 'undefined' && process.env?.NODE_ENV === 'development') {
     console.log('[Affiliate Click]', clickEvent);
   }
 }

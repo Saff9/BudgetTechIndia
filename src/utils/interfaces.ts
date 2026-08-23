@@ -45,7 +45,15 @@ export interface Product {
   /** Product disadvantages */
   cons: string[];
   /** Last update date (ISO string) */
-  lastUpdated: string;
+  lastUpdated?: string;
+  /** Optional description */
+  description?: string;
+  /** In stock flag */
+  inStock?: boolean;
+  /** Creation timestamp */
+  createdAt?: string;
+  /** Expiration timestamp */
+  expiresAt?: string;
   /** Whether product is currently available */
   isActive: boolean;
 }

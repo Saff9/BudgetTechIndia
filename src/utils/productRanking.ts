@@ -48,7 +48,7 @@ export function sortProducts(products: Product[], sortType: SortType = 'newest')
   switch (sortType) {
     case 'newest':
       return sortedProducts.sort((a, b) => 
-        new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
+        new Date(b.lastUpdated || b.createdAt || 0).getTime() - new Date(a.lastUpdated || a.createdAt || 0).getTime()
       );
       
     case 'price-low':

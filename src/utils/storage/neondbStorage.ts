@@ -20,12 +20,12 @@ export class NeonDbStorage implements StorageSystem {
     try {
       const dbProducts = await getAllNeonProducts();
       if (dbProducts.length === 0) {
-        return productsData.products as Product[];
+        return (productsData.products as unknown) as Product[];
       }
       return dbProducts;
     } catch (e) {
       console.error('[NeonDbStorage] Error getting all products:', e);
-      return productsData.products as Product[];
+      return (productsData.products as unknown) as Product[];
     }
   }
 
@@ -33,9 +33,9 @@ export class NeonDbStorage implements StorageSystem {
     try {
       const prod = await getNeonProductBySlug(id);
       if (prod) return prod;
-      return (productsData.products as Product[]).find(p => p.id === id || p.slug === id) || null;
+      return ((productsData.products as unknown) as Product[]).find(p => p.id === id || p.slug === id) || null;
     } catch (e) {
-      return (productsData.products as Product[]).find(p => p.id === id || p.slug === id) || null;
+      return ((productsData.products as unknown) as Product[]).find(p => p.id === id || p.slug === id) || null;
     }
   }
 

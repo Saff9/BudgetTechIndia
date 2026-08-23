@@ -12,7 +12,7 @@ import { neon } from '@neondatabase/serverless';
 import type { Product } from './interfaces';
 
 export function getNeonSql() {
-  const connectionString = import.meta.env.NEON_DATABASE_URL || process.env.NEON_DATABASE_URL;
+  const connectionString = process.env.NEON_DATABASE_URL || (typeof import.meta !== 'undefined' && (import.meta as any).env?.NEON_DATABASE_URL);
   if (!connectionString) {
     throw new Error('[NeonDB Error] NEON_DATABASE_URL environment variable is not defined. Please set NEON_DATABASE_URL in your .env file.');
   }
@@ -158,11 +158,11 @@ export async function addNeonProduct(productData: Partial<Product>, retentionDay
     const category = productData.category || 'budget-gadgets-under-999';
     const price = productData.price || 999;
     const mrp = productData.mrp || price * 1.5;
-    const affiliateUrl = productData.affiliateUrl || productData.affiliate_url || `https://www.amazon.in/dp/${slug}?tag=budgettechpro-21`;
-    const imageUrl = productData.imageUrl || productData.image_url || 'https://m.media-amazon.com/images/I/61K-84k5wEL._SL1500_.jpg';
+    const affiliateUrl = productData.affiliateUrl || (productData as any).affiliate_url || `https://www.amazon.in/dp/${slug}?tag=budgettechpro-21`;
+    const imageUrl = productData.imageUrl || (productData as any).image_url || 'https://m.media-amazon.com/images/I/61K-84k5wEL._SL1500_.jpg';
     const description = productData.description || 'Awesome budget tech product with high rating.';
     const rating = productData.rating || 4.5;
-    const reviewCount = productData.reviewCount || productData.review_count || 100;
+    const reviewCount = productData.reviewCount || (productData as any).review_count || 100;
     const features = JSON.stringify(productData.features || {});
 
     const rows = await sql`
@@ -219,11 +219,15 @@ function mapRowToProduct(row: any): Product {
     category: row.category,
     price: Number(row.price),
     mrp: Number(row.mrp || row.price),
+    currency: 'INR',
+    asin: row.id || row.slug,
     affiliateUrl: row.affiliate_url,
     imageUrl: row.image_url || '',
     description: row.description || '',
     rating: Number(row.rating || 4.5),
     reviewCount: Number(row.review_count || 0),
+    pros: row.pros || [],
+    cons: row.cons || [],
     inStock: Boolean(row.in_stock),
     isActive: Boolean(row.is_active),
     features: typeof row.features === 'string' ? JSON.parse(row.features) : (row.features || {}),

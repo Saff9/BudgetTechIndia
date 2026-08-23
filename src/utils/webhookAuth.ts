@@ -4,7 +4,7 @@
  */
 
 export function verifyWebhookPassword(request: Request, bodyData?: any): boolean {
-  const secretPassword = import.meta.env.WEBHOOK_PASSWORD || process.env.WEBHOOK_PASSWORD;
+  const secretPassword = process.env.WEBHOOK_PASSWORD || (typeof import.meta !== 'undefined' && (import.meta as any).env?.WEBHOOK_PASSWORD);
 
   if (!secretPassword) {
     console.warn('[Webhook Auth] WEBHOOK_PASSWORD environment variable is not configured in .env. Rejecting request for security.');

@@ -16,8 +16,8 @@ export interface AuthState {
   error: string | null;
 }
 
-const ADMIN_EMAIL = import.meta.env.PUBLIC_ADMIN_EMAIL || process.env.PUBLIC_ADMIN_EMAIL || 'admin@budgettechindia.com';
-const ADMIN_PASSWORD = import.meta.env.PUBLIC_ADMIN_PASSWORD || process.env.PUBLIC_ADMIN_PASSWORD || 'CHANGE_THIS_TO_A_SECURE_PASSWORD';
+const ADMIN_EMAIL = process.env.PUBLIC_ADMIN_EMAIL || (typeof import.meta !== 'undefined' && (import.meta as any).env?.PUBLIC_ADMIN_EMAIL) || 'admin@budgettechindia.com';
+const ADMIN_PASSWORD = process.env.PUBLIC_ADMIN_PASSWORD || (typeof import.meta !== 'undefined' && (import.meta as any).env?.PUBLIC_ADMIN_PASSWORD) || 'CHANGE_THIS_TO_A_SECURE_PASSWORD';
 
 export async function signInAdmin(email: string, password: string): Promise<{
   success: boolean;
@@ -45,6 +45,9 @@ export async function signOutAdmin(): Promise<{ success: boolean }> {
   }
   return { success: true };
 }
+
+export const loginAdmin = signInAdmin;
+export const logoutAdmin = signOutAdmin;
 
 export async function isAdminAuthenticated(): Promise<boolean> {
   if (typeof localStorage !== 'undefined') {

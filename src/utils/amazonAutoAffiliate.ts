@@ -16,11 +16,8 @@ export interface AmazonAffiliateResult {
  * Get active Amazon Associate Tag from environment or fallback
  */
 export function getAmazonTag(): string {
-  if (typeof process !== 'undefined' && process.env?.AMAZON_AFFILIATE_TAG) {
-    return process.env.AMAZON_AFFILIATE_TAG;
-  }
-  if (typeof import.meta !== 'undefined' && import.meta.env) {
-    return import.meta.env.PUBLIC_AMAZON_AFFILIATE_TAG || import.meta.env.AMAZON_AFFILIATE_TAG || 'budgettechpro-21';
+  if (typeof process !== 'undefined' && (process.env.AMAZON_AFFILIATE_TAG || process.env.PUBLIC_AMAZON_AFFILIATE_TAG)) {
+    return process.env.AMAZON_AFFILIATE_TAG || process.env.PUBLIC_AMAZON_AFFILIATE_TAG || 'budgettechpro-21';
   }
   return 'budgettechpro-21';
 }

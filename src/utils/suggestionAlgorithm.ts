@@ -79,7 +79,7 @@ function calculateFeatureScore(product: Product, targetProduct: Product): number
   const productFeatures = new Set(Object.values(product.features));
   const targetFeatures = new Set(Object.values(targetProduct.features));
   
-  const commonFeatures = [...productFeatures].filter(feature => targetFeatures.has(feature));
+  const commonFeatures = Array.from(productFeatures).filter(feature => targetFeatures.has(feature));
   const totalFeatures = Math.max(productFeatures.size, targetFeatures.size);
   
   return totalFeatures > 0 ? commonFeatures.length / totalFeatures : 0;
@@ -233,7 +233,7 @@ export function getTrendingProducts(products: Product[], limit: number = 8): Pro
       const dateWeight = 0.6;
       const reviewCountWeight = 0.4;
       
-      const dateScore = new Date(a.lastUpdated).getTime() - new Date(b.lastUpdated).getTime();
+      const dateScore = new Date(a.lastUpdated || a.createdAt || 0).getTime() - new Date(b.lastUpdated || b.createdAt || 0).getTime();
       const reviewScore = Math.log10(a.reviewCount) - Math.log10(b.reviewCount);
       
       return (dateScore * dateWeight) + (reviewScore * reviewCountWeight);

@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-midnight: #06080F;
+  --color-midnight-light: #0B0F19;
+  --color-midnight-dark: #030408;
+  --color-slate: #0F172A;
+  --color-slate-light: #1E293B;
+  --color-gold: #FFB800;
+  --color-gold-light: #FFE500;
+  --color-gold-dark: #FF7A00;
+  --color-cyan: #00F5A0;
+}
+
+body {
+  background-color: #06080F;
+  color: #F8FAFC;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #06080F;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FFB800;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: rgba(11, 15, 25, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 184, 0, 0.35);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 184, 0, 0.15);
+}
+
+/* Gold Gradient Text */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #FFE500 0%, #FFB800 50%, #FF7A00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Cyan Gradient Text */
+.cyan-gradient-text {
+  background: linear-gradient(135deg, #3BFFB6 0%, #00F5A0 50%, #00D084 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

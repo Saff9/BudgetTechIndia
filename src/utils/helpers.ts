@@ -196,7 +196,7 @@ export function generateSlugWithPrefix(text: string, prefix: string): string {
  * @returns Complete Amazon affiliate URL
  */
 export function generateAmazonAffiliateUrl(asin: string, tag?: string): string {
-  const affiliateTag = tag || import.meta.env.AMAZON_AFFILIATE_TAG || 'budgettechin-21';
+  const affiliateTag = tag || (typeof process !== 'undefined' && process.env.AMAZON_AFFILIATE_TAG) || 'budgettechpro-21';
   return `https://www.amazon.in/dp/${asin}?tag=${affiliateTag}`;
 }
 
@@ -418,7 +418,7 @@ export function formatRating(rating: number): string {
  * @returns Full URL with site origin
  */
 export function getFullUrl(path: string): string {
-  const siteUrl = import.meta.env.SITE_URL || 'https://budget-tech-india.vercel.app';
+  const siteUrl = (typeof process !== 'undefined' && process.env.SITE_URL) || 'https://budget-tech-india.vercel.app';
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   return `${siteUrl}${normalizedPath}`;
 }

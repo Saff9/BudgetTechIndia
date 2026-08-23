@@ -14,7 +14,7 @@
 import { trackProductView, trackProductClick, trackProductPurchase } from './userBehavior';
 
 // Analytics configuration
-const ANALYTICS_ENABLED = import.meta.env.PROD;
+const ANALYTICS_ENABLED = typeof process !== 'undefined' && process.env?.NODE_ENV === 'production';
 
 /**
  * Track page view

@@ -16,11 +16,11 @@ export async function getAllProducts(): Promise<Product[]> {
   try {
     const products = await getAllNeonProducts();
     if (products.length === 0) {
-      return productsData.products as Product[];
+      return (productsData.products as unknown) as Product[];
     }
     return products;
   } catch (error) {
-    return productsData.products as Product[];
+    return (productsData.products as unknown) as Product[];
   }
 }
 
@@ -28,9 +28,9 @@ export async function getProductById(id: string): Promise<Product | null> {
   try {
     const product = await getNeonProductBySlug(id);
     if (product) return product;
-    return (productsData.products as Product[]).find((p) => p.id === id || p.slug === id) || null;
+    return ((productsData.products as unknown) as Product[]).find((p) => p.id === id || p.slug === id) || null;
   } catch (error) {
-    return (productsData.products as Product[]).find((p) => p.id === id || p.slug === id) || null;
+    return ((productsData.products as unknown) as Product[]).find((p) => p.id === id || p.slug === id) || null;
   }
 }
 

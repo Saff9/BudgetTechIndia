@@ -135,7 +135,7 @@ export type StorageType = 'firebase' | 'neondb' | 'local';
  * @returns Storage system instance
  */
 export async function getStorageSystem(type?: StorageType): Promise<StorageSystem> {
-  const storageType = type || (import.meta.env.PUBLIC_STORAGE_TYPE as StorageType) || 'neondb';
+  const storageType = type || (typeof process !== 'undefined' && process.env?.PUBLIC_STORAGE_TYPE as StorageType) || 'neondb';
 
   switch (storageType) {
     case 'neondb':
@@ -169,10 +169,11 @@ export async function getStorageSystem(type?: StorageType): Promise<StorageSyste
  * Check if Firebase storage is configured
  */
 export function isFirebaseConfigured(): boolean {
+  if (typeof process === 'undefined') return false;
   return !!(
-    import.meta.env.PUBLIC_FIREBASE_API_KEY &&
-    import.meta.env.PUBLIC_FIREBASE_AUTH_DOMAIN &&
-    import.meta.env.PUBLIC_FIREBASE_PROJECT_ID
+    process.env.PUBLIC_FIREBASE_API_KEY &&
+    process.env.PUBLIC_FIREBASE_AUTH_DOMAIN &&
+    process.env.PUBLIC_FIREBASE_PROJECT_ID
   );
 }
 
