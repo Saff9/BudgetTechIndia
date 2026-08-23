@@ -11,10 +11,15 @@
 import { neon } from '@neondatabase/serverless';
 import type { Product } from './interfaces';
 
+export function hasNeonDb(): boolean {
+  const connectionString = process.env.NEON_DATABASE_URL || (typeof import.meta !== 'undefined' && (import.meta as any).env?.NEON_DATABASE_URL);
+  return Boolean(connectionString && connectionString.trim().length > 0);
+}
+
 export function getNeonSql() {
   const connectionString = process.env.NEON_DATABASE_URL || (typeof import.meta !== 'undefined' && (import.meta as any).env?.NEON_DATABASE_URL);
   if (!connectionString) {
-    throw new Error('[NeonDB Error] NEON_DATABASE_URL environment variable is not defined. Please set NEON_DATABASE_URL in your .env file.');
+    return null;
   }
   return neon(connectionString);
 }
@@ -35,9 +40,12 @@ export function clearNeonCache() {
  * Initialize PostgreSQL table for products with created_at & expires_at columns
  */
 export async function initNeonDB(): Promise<boolean> {
+  if (!hasNeonDb()) return false;
   if (isInitialized) return true;
   try {
     const sql = getNeonSql();
+    if (!sql) return false;
+
     await sql`
       CREATE TABLE IF NOT EXISTS products (
         id VARCHAR(255) PRIMARY KEY,
@@ -63,7 +71,7 @@ export async function initNeonDB(): Promise<boolean> {
     console.log('[NeonDB] Table initialized successfully');
     return true;
   } catch (error) {
-    console.error('[NeonDB] Error initializing database:', error);
+    console.warn('[NeonDB] Note: Could not connect to NeonDB (using local fallback):', error);
     return false;
   }
 }
@@ -72,9 +80,12 @@ export async function initNeonDB(): Promise<boolean> {
  * Automatically purge products older than 7 days or past expires_at date
  */
 export async function purgeExpiredProducts(): Promise<number> {
+  if (!hasNeonDb()) return 0;
   try {
     await initNeonDB();
     const sql = getNeonSql();
+    if (!sql) return 0;
+
     const result = await sql`
       DELETE FROM products 
       WHERE created_at < (NOW() - INTERVAL '7 days') 
@@ -84,7 +95,7 @@ export async function purgeExpiredProducts(): Promise<number> {
     console.log('[NeonDB] Purged expired products');
     return result.length || 0;
   } catch (error) {
-    console.error('[NeonDB] Error purging expired products:', error);
+    console.warn('[NeonDB] Note: Could not purge products:', error);
     return 0;
   }
 }
@@ -93,6 +104,8 @@ export async function purgeExpiredProducts(): Promise<number> {
  * Get all active and non-expired products (Cached in-memory for lightning speed)
  */
 export async function getAllNeonProducts(forceRefresh = false): Promise<Product[]> {
+  if (!hasNeonDb()) return cachedProducts || [];
+
   const now = Date.now();
   if (!forceRefresh && cachedProducts && (now - lastCacheTime < CACHE_TTL_MS)) {
     return cachedProducts;
@@ -101,6 +114,8 @@ export async function getAllNeonProducts(forceRefresh = false): Promise<Product[
   try {
     await purgeExpiredProducts();
     const sql = getNeonSql();
+    if (!sql) return cachedProducts || [];
+
     const rows = await sql`
       SELECT * FROM products 
       WHERE is_active = true 
@@ -112,44 +127,46 @@ export async function getAllNeonProducts(forceRefresh = false): Promise<Product[
     lastCacheTime = now;
     return cachedProducts;
   } catch (error) {
-    console.error('[NeonDB] Error getting products:', error);
     return cachedProducts || [];
   }
 }
 
 /**
- * Get single product by slug or id
+ * Get a single product by slug or id
  */
 export async function getNeonProductBySlug(slugOrId: string): Promise<Product | null> {
-  const products = await getAllNeonProducts();
-  const match = products.find((p) => p.slug === slugOrId || p.id === slugOrId);
-  if (match) return match;
+  if (!hasNeonDb()) return null;
 
   try {
     const sql = getNeonSql();
+    if (!sql) return null;
+
     const rows = await sql`
       SELECT * FROM products 
-      WHERE (slug = ${slugOrId} OR id = ${slugOrId})
-        AND is_active = true 
-        AND created_at >= (NOW() - INTERVAL '7 days')
+      WHERE (slug = ${slugOrId} OR id = ${slugOrId}) 
+        AND is_active = true
       LIMIT 1;
     `;
-    if (rows.length > 0) {
-      return mapRowToProduct(rows[0]);
-    }
+    if (rows.length === 0) return null;
+    return mapRowToProduct(rows[0]);
   } catch (error) {
-    console.error('[NeonDB] Error fetching product by slug:', error);
+    return null;
   }
-  return null;
 }
 
 /**
- * Add or update product in Neon DB with auto 7-day retention
+ * Insert or update a product in Neon DB with auto-expiration (default: 7 days)
  */
-export async function addNeonProduct(productData: Partial<Product>, retentionDays = 7): Promise<Product | null> {
+export async function addNeonProduct(
+  productData: Partial<Product>,
+  retentionDays: number = 7
+): Promise<Product | null> {
+  if (!hasNeonDb()) return null;
+
   try {
     await initNeonDB();
     const sql = getNeonSql();
+    if (!sql) return null;
 
     const slug = productData.slug || (productData.name ? productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : `product-${Date.now()}`);
     const id = productData.id || slug;
@@ -178,32 +195,39 @@ export async function addNeonProduct(productData: Partial<Product>, retentionDay
         affiliate_url = EXCLUDED.affiliate_url,
         image_url = EXCLUDED.image_url,
         description = EXCLUDED.description,
-        expires_at = NOW() + (${retentionDays} || ' days')::INTERVAL
+        rating = EXCLUDED.rating,
+        review_count = EXCLUDED.review_count,
+        features = EXCLUDED.features,
+        expires_at = EXCLUDED.expires_at,
+        is_active = true
       RETURNING *;
     `;
 
     clearNeonCache();
-    if (rows.length > 0) {
-      return mapRowToProduct(rows[0]);
-    }
+    if (rows.length === 0) return null;
+    return mapRowToProduct(rows[0]);
   } catch (error) {
     console.error('[NeonDB] Error adding product:', error);
+    return null;
   }
-  return null;
 }
 
 /**
- * Delete product from Neon DB
+ * Delete a product by ID or slug
  */
 export async function deleteNeonProduct(idOrSlug: string): Promise<boolean> {
+  if (!hasNeonDb()) return false;
+
   try {
-    await initNeonDB();
     const sql = getNeonSql();
-    await sql`
-      DELETE FROM products WHERE id = ${idOrSlug} OR slug = ${idOrSlug};
+    if (!sql) return false;
+
+    const result = await sql`
+      DELETE FROM products 
+      WHERE id = ${idOrSlug} OR slug = ${idOrSlug};
     `;
     clearNeonCache();
-    return true;
+    return result.length > 0;
   } catch (error) {
     console.error('[NeonDB] Error deleting product:', error);
     return false;
