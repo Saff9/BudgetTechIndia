@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { ProductCard } from '@/components/products/ProductCard';
-import { SpecVisualizer } from '@/components/products/SpecVisualizer';
 import { getAllNeonProducts } from '@/utils/neondb';
 import productsData from '@/data/products.json';
 import { 
@@ -19,8 +18,7 @@ import {
   Zap,
   ArrowLeft,
   Flame,
-  Award,
-  TrendingDown
+  Award
 } from 'lucide-react';
 
 export const revalidate = 60;
@@ -91,22 +89,22 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
         {/* Navigation Breadcrumb */}
         <Link
           href={`/categories/${product.category}`}
-          className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-[#FFB800] mb-8 font-semibold transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-[#F59E0B] mb-8 font-semibold transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back to {product.category.replace(/-/g, ' ')}
         </Link>
 
         {/* Main Product Showcase Box */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 bg-[#0B0F19] rounded-3xl border border-white/5 p-6 sm:p-10 mb-12 shadow-2xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 card-surface p-6 sm:p-10 mb-12 shadow-2xl">
           
           {/* Col 1: High-res Gallery Frame */}
-          <div className="lg:col-span-5 flex items-center justify-center p-8 bg-black/40 rounded-3xl border border-white/5 relative group overflow-hidden">
+          <div className="lg:col-span-5 flex items-center justify-center p-8 bg-black/40 rounded-2xl border border-white/5 relative group overflow-hidden">
             {discount > 0 ? (
-              <span className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#FF7A00] to-[#FFB800] text-black text-xs font-black uppercase tracking-wider shadow-lg flex items-center gap-1">
-                <Flame className="w-3.5 h-3.5 fill-black" /> {discount}% OFF
+              <span className="absolute top-4 left-4 badge-discount">
+                {discount}% OFF
               </span>
             ) : (
-              <span className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold">
+              <span className="absolute top-4 left-4 badge-verified">
                 Verified Deal
               </span>
             )}
@@ -116,15 +114,15 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
               src={product.imageUrl || '/images/placeholder-product.svg'}
               alt={product.name}
               referrerPolicy="no-referrer"
-              className="max-h-[360px] w-auto object-contain transition-transform duration-500 group-hover:scale-105 drop-shadow-2xl"
+              className="max-h-[340px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </div>
 
-          {/* Col 2: Product Overview, Price History & Amazon Buy Box */}
+          {/* Col 2: Product Overview, Price & Amazon Buy Box */}
           <div className="lg:col-span-7 flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <span className="px-3 py-1 rounded-full bg-[#00F5A0]/10 text-[#00F5A0] text-xs font-extrabold uppercase tracking-wider border border-[#00F5A0]/20">
+                <span className="px-3 py-1 rounded-full bg-[#10B981]/10 text-[#10B981] text-xs font-bold uppercase tracking-wider border border-[#10B981]/20">
                   {product.category.replace(/-/g, ' ')}
                 </span>
                 {product.brand && (
@@ -132,9 +130,6 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
                     {product.brand}
                   </span>
                 )}
-                <span className="px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-semibold border border-purple-500/20 flex items-center gap-1">
-                  <Award className="w-3 h-3" /> Lab Verified
-                </span>
               </div>
 
               <h1 className="text-2xl sm:text-4xl font-black text-white leading-tight mb-4">
@@ -143,23 +138,18 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
 
               {/* Rating & Review Breakdown */}
               <div className="flex items-center gap-4 mb-6 pb-6 border-b border-white/5">
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[#FFD700]">
-                  <Star className="w-4 h-4 fill-[#FFD700]" />
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[#FBBF24]">
+                  <Star className="w-4 h-4 fill-[#FBBF24]" />
                   <span className="font-extrabold text-sm text-white">{product.rating || 4.4}</span>
                 </div>
                 <span className="text-xs text-slate-400">
-                  Tested and aggregated from Amazon India buyers
+                  Tested and verified by BudgetTechIndia editorial team
                 </span>
               </div>
 
-              {/* Verified Deal Price Box with Price History Flag */}
-              <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 mb-6 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs uppercase font-bold text-slate-400">Verified Deal Price</span>
-                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
-                    <TrendingDown className="w-3.5 h-3.5" /> Lowest in 30 Days
-                  </span>
-                </div>
+              {/* Verified Deal Price Box */}
+              <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 mb-6 space-y-2">
+                <div className="text-xs uppercase font-bold text-slate-400">Verified Amazon Price</div>
 
                 <div className="flex items-baseline gap-3">
                   <span className="text-3xl sm:text-5xl font-black text-white">
@@ -171,7 +161,7 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
                     </span>
                   )}
                   {discount > 0 && (
-                    <span className="text-xs font-bold text-[#00F5A0]">
+                    <span className="text-xs font-bold text-[#10B981]">
                       Save ₹{(product.mrp - product.price).toLocaleString('en-IN')} ({discount}%)
                     </span>
                   )}
@@ -185,7 +175,7 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
                 href={product.affiliateUrl}
                 target="_blank"
                 rel="nofollow sponsored"
-                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-[#FFB800] via-[#FF9E00] to-[#FF7A00] text-black font-black text-sm uppercase tracking-wider flex items-center justify-center gap-3 shadow-[0_4px_25px_rgba(255,184,0,0.4)] hover:scale-[1.01] active:scale-[0.99] transition-all"
+                className="w-full py-4 px-6 rounded-2xl btn-primary text-sm flex items-center justify-center gap-3 shadow-lg"
               >
                 <ShoppingCart className="w-5 h-5" />
                 Check Lowest Price on Amazon India
@@ -194,11 +184,11 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
 
               <div className="grid grid-cols-3 gap-2 text-center text-[11px] font-semibold text-slate-400 pt-2">
                 <div className="p-2.5 rounded-xl bg-white/[0.02] flex items-center justify-center gap-1.5">
-                  <Truck className="w-3.5 h-3.5 text-[#00F5A0]" />
+                  <Truck className="w-3.5 h-3.5 text-[#10B981]" />
                   <span>Amazon Fulfilled</span>
                 </div>
                 <div className="p-2.5 rounded-xl bg-white/[0.02] flex items-center justify-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#FFB800]" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#F59E0B]" />
                   <span>100% Original</span>
                 </div>
                 <div className="p-2.5 rounded-xl bg-white/[0.02] flex items-center justify-center gap-1.5">
@@ -211,74 +201,63 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
           </div>
         </div>
 
-        {/* Lab Scores & Technical Specs Grid */}
+        {/* Technical Specifications & Pros/Cons */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
           
-          {/* Col 1: Visual Metric Benchmark */}
-          <div className="lg:col-span-5">
-            <SpecVisualizer 
-              category={product.category}
-              rating={product.rating}
-              price={product.price}
-            />
+          {/* Specs Table */}
+          <div className="lg:col-span-7 card-surface p-6 sm:p-8">
+            <h2 className="text-base font-extrabold uppercase tracking-wider text-white mb-6 flex items-center gap-2">
+              <Zap className="w-4 h-4 text-[#F59E0B]" /> Technical Specifications
+            </h2>
+            {product.features && Object.keys(product.features).length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {Object.entries(product.features).map(([key, val]) => (
+                  <div key={key} className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
+                    <div className="text-[11px] text-slate-400 font-medium">{key}</div>
+                    <div className="text-sm text-white font-bold">{String(val)}</div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-xs text-slate-400">Standard budget tech specifications apply.</p>
+            )}
           </div>
 
-          {/* Col 2: Technical Specifications & Pros/Cons */}
-          <div className="lg:col-span-7 space-y-6">
-            
-            {/* Specs Table */}
-            {product.features && Object.keys(product.features).length > 0 && (
-              <div className="glass-card p-6 sm:p-8 rounded-3xl">
-                <h2 className="text-base font-extrabold uppercase tracking-wider text-white mb-6 flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-[#FFB800]" /> Technical Specifications
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {Object.entries(product.features).map(([key, val]) => (
-                    <div key={key} className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5">
-                      <div className="text-[11px] text-slate-400 font-medium">{key}</div>
-                      <div className="text-sm text-white font-bold">{String(val)}</div>
-                    </div>
-                  ))}
+          {/* Pros & Cons */}
+          <div className="lg:col-span-5 space-y-6">
+            {product.pros && product.pros.length > 0 && (
+              <div className="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/20">
+                <div className="text-xs uppercase font-extrabold text-[#10B981] tracking-wider mb-3">
+                  Highlights & Pros
                 </div>
+                <ul className="space-y-2">
+                  {product.pros.map((pro: string, i: number) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981] shrink-0 mt-0.5" />
+                      <span>{pro}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
 
-            {/* Pros & Cons */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {product.pros && product.pros.length > 0 && (
-                <div className="p-6 rounded-3xl bg-emerald-500/5 border border-emerald-500/20">
-                  <div className="text-xs uppercase font-extrabold text-[#00F5A0] tracking-wider mb-3">
-                    The Highlights (Pros)
-                  </div>
-                  <ul className="space-y-2">
-                    {product.pros.map((pro: string, i: number) => (
-                      <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#00F5A0] shrink-0 mt-0.5" />
-                        <span>{pro}</span>
-                      </li>
-                    ))}
-                  </ul>
+            {product.cons && product.cons.length > 0 && (
+              <div className="p-6 rounded-2xl bg-rose-500/5 border border-rose-500/20">
+                <div className="text-xs uppercase font-extrabold text-rose-400 tracking-wider mb-3">
+                  Drawbacks to Note
                 </div>
-              )}
-
-              {product.cons && product.cons.length > 0 && (
-                <div className="p-6 rounded-3xl bg-rose-500/5 border border-rose-500/20">
-                  <div className="text-xs uppercase font-extrabold text-rose-400 tracking-wider mb-3">
-                    Drawbacks to Note
-                  </div>
-                  <ul className="space-y-2">
-                    {product.cons.map((con: string, i: number) => (
-                      <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
-                        <XCircle className="w-3.5 h-3.5 text-rose-400 shrink-0 mt-0.5" />
-                        <span>{con}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-
+                <ul className="space-y-2">
+                  {product.cons.map((con: string, i: number) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
+                      <XCircle className="w-3.5 h-3.5 text-rose-400 shrink-0 mt-0.5" />
+                      <span>{con}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
+
         </div>
 
         {/* Related Category Deals */}

@@ -4,11 +4,9 @@ import './globals.css';
 import { Header } from '@/components/common/Header';
 import { Footer } from '@/components/common/Footer';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { CompareProvider } from '@/components/compare/CompareContext';
-import { CompareDrawer } from '@/components/compare/CompareDrawer';
 
 export const viewport: Viewport = {
-  themeColor: '#06080F',
+  themeColor: '#07090E',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -28,7 +26,6 @@ export const metadata: Metadata = {
     'power banks india',
     'tech gadgets under 500',
     'amazon india deals',
-    'cheap electronics india',
   ],
   authors: [{ name: 'BudgetTechIndia Team', url: 'https://budget-tech-india.vercel.app' }],
   creator: 'BudgetTechIndia',
@@ -121,16 +118,13 @@ export default function RootLayout({
         />
       </head>
 
-      <body className="flex flex-col min-h-screen bg-[#06080F] text-[#F8FAFC] antialiased">
+      <body className="flex flex-col min-h-screen bg-[#07090E] text-[#F8FAFC] antialiased">
         <JsonLd type="website" data={{}} />
         <JsonLd type="organization" data={{}} />
 
-        <CompareProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <CompareDrawer />
-        </CompareProvider>
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   );

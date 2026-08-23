@@ -47,22 +47,22 @@ const REVIEWS = [
 
 export const LatestReviews: React.FC = () => {
   return (
-    <section className="py-16 bg-[#06080F]">
+    <section className="py-16 bg-[#07090E]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#00F5A0] mb-2">
+            <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#10B981] mb-2">
               <Award className="w-3.5 h-3.5" /> Hands-On Testing
             </div>
-            <h2 className="text-2xl sm:text-4xl font-black text-white">
-              Latest In-Depth Reviews
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+              Latest Editorial Reviews
             </h2>
           </div>
           <Link
             href="/reviews"
-            className="text-xs font-bold text-[#FFB800] hover:underline flex items-center gap-1 self-start md:self-auto"
+            className="text-xs font-bold text-[#F59E0B] hover:underline flex items-center gap-1 self-start md:self-auto"
           >
             View All Reviews <ArrowRight className="w-3.5 h-3.5" />
           </Link>
@@ -73,11 +73,11 @@ export const LatestReviews: React.FC = () => {
           {REVIEWS.map((rev) => (
             <div
               key={rev.slug}
-              className="p-6 rounded-3xl bg-[#0B0F19] border border-white/5 hover:border-[#FFB800]/30 transition-all duration-300 shadow-xl flex flex-col sm:flex-row gap-6 justify-between group"
+              className="card-surface p-6 flex flex-col sm:flex-row gap-6 justify-between group"
             >
               {/* Product Image Frame */}
-              <div className="w-full sm:w-40 h-40 bg-black/40 rounded-2xl border border-white/5 p-4 flex items-center justify-center shrink-0 relative overflow-hidden">
-                <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-[#FFB800] text-black font-black text-[10px]">
+              <div className="w-full sm:w-36 h-36 bg-black/40 rounded-2xl border border-white/5 p-4 flex items-center justify-center shrink-0 relative overflow-hidden">
+                <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-[#F59E0B] text-black font-black text-[10px]">
                   {rev.score} / 10
                 </span>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -92,7 +92,7 @@ export const LatestReviews: React.FC = () => {
               <div className="flex-1 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between text-xs mb-2">
-                    <span className="text-[10px] uppercase font-bold text-[#00F5A0]">
+                    <span className="text-[10px] uppercase font-bold text-[#10B981]">
                       {rev.category}
                     </span>
                     <span className="font-extrabold text-white text-sm">
@@ -100,7 +100,7 @@ export const LatestReviews: React.FC = () => {
                     </span>
                   </div>
 
-                  <h3 className="text-base font-black text-white group-hover:text-[#FFB800] transition-colors leading-snug mb-2">
+                  <h3 className="text-base font-black text-white group-hover:text-[#F59E0B] transition-colors leading-snug mb-2">
                     <Link href={`/reviews/${rev.slug}`}>
                       {rev.title}
                     </Link>
@@ -113,7 +113,7 @@ export const LatestReviews: React.FC = () => {
                   <div className="space-y-1 mb-4">
                     {rev.pros.slice(0, 2).map((pro, i) => (
                       <div key={i} className="flex items-center gap-1.5 text-[11px] text-slate-300">
-                        <CheckCircle2 className="w-3 h-3 text-[#00F5A0] shrink-0" />
+                        <CheckCircle2 className="w-3 h-3 text-[#10B981] shrink-0" />
                         <span>{pro}</span>
                       </div>
                     ))}
@@ -122,7 +122,7 @@ export const LatestReviews: React.FC = () => {
 
                 <Link
                   href={`/reviews/${rev.slug}`}
-                  className="text-xs font-bold text-[#FFB800] group-hover:text-white flex items-center gap-1 transition-colors"
+                  className="text-xs font-bold text-[#F59E0B] group-hover:text-white flex items-center gap-1 transition-colors"
                 >
                   Read Full Verdict <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </Link>

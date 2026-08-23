@@ -74,20 +74,20 @@ export default async function HomePage() {
       <CategoryGrid />
 
       {/* Ranked Top 5 Comparison Lists Showcase */}
-      <section className="py-16 bg-[#06080F]">
+      <section className="py-16 bg-[#07090E]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
-              <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#FFB800] mb-2">
+              <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#F59E0B] mb-2">
                 <Award className="w-3.5 h-3.5" /> Curated Rankings
               </div>
-              <h2 className="text-2xl sm:text-4xl font-black text-white">
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
                 Top 5 Ranked Buying Guides
               </h2>
             </div>
             <Link
               href="/top-5"
-              className="text-xs font-bold text-[#FFB800] hover:underline flex items-center gap-1 self-start md:self-auto"
+              className="text-xs font-bold text-[#F59E0B] hover:underline flex items-center gap-1 self-start md:self-auto"
             >
               View All Ranked Guides <ArrowRight className="w-3.5 h-3.5" />
             </Link>
@@ -98,17 +98,17 @@ export default async function HomePage() {
               <Link
                 key={guide.slug}
                 href={`/top-5/${guide.slug}`}
-                className="p-6 rounded-3xl bg-[#0B0F19] border border-white/5 hover:border-[#FFB800]/40 transition-all duration-300 shadow-xl flex flex-col justify-between group hover:-translate-y-1.5"
+                className="card-surface p-6 flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-4">
-                    <span className="px-2.5 py-1 rounded-md bg-[#FFB800]/10 text-[#FFB800] border border-[#FFB800]/20 text-[11px] font-bold">
+                    <span className="px-2.5 py-1 rounded-md bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/20 text-[11px] font-bold">
                       {guide.badge}
                     </span>
                     <span className="text-xs font-bold text-slate-400">{guide.count}</span>
                   </div>
 
-                  <h3 className="text-lg font-black text-white group-hover:text-[#FFB800] transition-colors leading-snug mb-3">
+                  <h3 className="text-lg font-black text-white group-hover:text-[#F59E0B] transition-colors leading-snug mb-3">
                     {guide.title}
                   </h3>
 
@@ -117,7 +117,7 @@ export default async function HomePage() {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-bold text-[#00F5A0]">
+                <div className="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-bold text-[#10B981]">
                   <span>View Ranked Showdown</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -137,10 +137,10 @@ export default async function HomePage() {
       <Newsletter />
 
       {/* Affiliate Transparency Disclosure Banner */}
-      <section className="py-8 bg-[#0B0F19] border-t border-white/5">
+      <section className="py-8 bg-[#0D111A] border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 text-xs text-slate-400 max-w-3xl">
-            <ShieldCheck className="w-4 h-4 text-[#00F5A0] shrink-0" />
+            <ShieldCheck className="w-4 h-4 text-[#10B981] shrink-0" />
             <span>
               <strong>Affiliate Disclosure:</strong> BudgetTechIndia is an independent publication. When you purchase through links on our site, we may earn an affiliate commission from Amazon India at zero additional cost to you.
             </span>
